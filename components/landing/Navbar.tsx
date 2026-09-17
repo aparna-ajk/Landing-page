@@ -14,6 +14,7 @@ import {
   Star,
   Cpu,
   Home as HomeIcon,
+  HeartPulse,
 } from 'lucide-react';
 import { MediCareLogo } from '@/components/branding/MediCareLogo';
 
@@ -32,13 +33,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDemo }) => {
     { name: 'Our Doctors', href: '#doctors', id: 'doctors', icon: Stethoscope },
     { name: 'Specialization', href: '#specialization', id: 'specialization', icon: Sparkles },
     { name: 'Review', href: '#review', id: 'review', icon: Star },
+    { name: 'Health Checks', href: '#prohealth', id: 'prohealth', icon: HeartPulse },
   ];
 
   // Track active section on scroll for dynamic active pill highlight
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 120;
-      const sections = ['hero', 'about', 'hospital-tech', 'specialization', 'doctors', 'review', 'emergency'];
+      const sections = ['hero', 'about', 'hospital-tech', 'specialization', 'doctors', 'review', 'prohealth', 'emergency'];
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i]);

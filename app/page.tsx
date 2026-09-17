@@ -11,6 +11,7 @@ import Footer from '@/components/landing/Footer';
 import DemoModal from '@/components/landing/DemoModal';
 import ThemeAndAccessibilityModal from '@/components/ui/ThemeAndAccessibilityModal';
 import HospitalInteriorTechnologies from '@/components/landing/HospitalInteriorTechnologies';
+import ProHealthPackagesSection from '@/components/landing/ProHealthPackagesSection';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import ScrollProgress from '@/components/ui/ScrollProgress';
 import ThreeDScrollNavigator from '@/components/ui/ThreeDScrollNavigator';
@@ -60,6 +61,12 @@ export default function MediCareLandingPage() {
         {/* 5b. Verified Patient Recovery Testimonials (Interactive 3D Hoverboards) */}
         <ScrollReveal direction="3d-rise" distance={36} delay={60}>
           <PatientReviewsHoverboards />
+        </ScrollReveal>
+
+        {/* 5c. MediCare ProHealth Personalized Health Check Packages (Animated Carousel) */}
+        <div id="prohealth" className="scroll-mt-24" />
+        <ScrollReveal direction="3d-rise" distance={36} delay={60}>
+          <ProHealthPackagesSection onOpenDemo={handleOpenDemo} />
         </ScrollReveal>
 
         {/* 6. High-Conversion Enterprise Demo & Sandbox CTA */}

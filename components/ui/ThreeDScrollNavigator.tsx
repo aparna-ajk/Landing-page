@@ -16,7 +16,8 @@ const SECTIONS: SectionInfo[] = [
   { id: 'hospital-tech', num: '03', name: 'Smart Interiors', tag: 'TECH' },
   { id: 'doctors', num: '04', name: 'Specialists', tag: 'DOCTOR' },
   { id: 'review', num: '05', name: 'Patient Reviews', tag: 'HOVER' },
-  { id: 'pricing-cta', num: '06', name: 'Deployment', tag: 'PILOT' },
+  { id: 'prohealth', num: '06', name: 'Health Checks', tag: 'PLANS' },
+  { id: 'pricing-cta', num: '07', name: 'Deployment', tag: 'PILOT' },
 ];
 
 export const ThreeDScrollNavigator: React.FC = () => {

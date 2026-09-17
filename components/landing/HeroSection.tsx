@@ -21,46 +21,50 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDemo }) => {
           {/* Left Hero Content */}
           <div className="lg:col-span-6 flex flex-col items-start">
             {/* Small Animated Status Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide text-black bg-black/5 border border-black/15 shadow-sm mb-6">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide text-zinc-800 bg-zinc-100/90 border border-zinc-200/80 shadow-sm backdrop-blur-md mb-6 hover:bg-zinc-100 transition-colors">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600" />
               </span>
-              <span>● Hospital Core v4.8 — Online</span>
+              <span className="font-semibold text-zinc-900">Hospital Core v4.8</span>
+              <span className="text-zinc-300">•</span>
+              <span className="text-emerald-600 font-medium">Online</span>
             </div>
 
-            {/* Main Headline in Refined Small Letter Sizing */}
-            <h1 className="text-sm sm:text-base lg:text-lg font-bold text-black tracking-tight leading-snug mb-4">
-              connected healthcare.<br />
-              <span className="text-zinc-600 font-semibold">
+            {/* Main Headline - Bold, commanding, highlighted with brand gradient */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-[4.25rem] font-black text-black tracking-[-0.035em] leading-[1.08] mb-6">
+              <span className="block text-black">
+                connected healthcare.
+              </span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#1479FF] via-[#0284C7] to-[#18C7C9] py-0.5 drop-shadow-sm">
                 smarter decisions.
-              </span><br />
-              <span className="text-zinc-500 font-medium">
+              </span>
+              <span className="block text-zinc-500 font-extrabold">
                 better outcomes.
               </span>
             </h1>
 
             {/* Supporting Text */}
-            <p className="text-sm sm:text-base text-zinc-600 max-w-xl leading-relaxed mb-8 font-normal">
-              An intelligent hospital management platform connecting doctors, patients, diagnostics, operations, billing and administration through one powerful digital ecosystem.
+            <p className="text-base sm:text-lg lg:text-xl text-zinc-600 max-w-xl leading-relaxed mb-8 font-normal">
+              An intelligent hospital management platform connecting <span className="text-zinc-900 font-medium">doctors</span>, <span className="text-zinc-900 font-medium">patients</span>, <span className="text-zinc-900 font-medium">diagnostics</span>, operations, billing and administration through one powerful digital ecosystem.
             </p>
 
             {/* CTA Buttons & Secondary Link */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
               <a
                 href="#ecosystem"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-black hover:bg-zinc-800 shadow-lg shadow-black/10 hover:-translate-y-0.5 active:translate-y-0 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm sm:text-base text-white bg-black hover:bg-zinc-800 shadow-lg shadow-black/10 hover:-translate-y-0.5 active:translate-y-0 transition-all"
               >
                 <span>Explore Platform</span>
-                <ArrowRight size={16} />
+                <ArrowRight size={18} />
               </a>
 
               <button
                 type="button"
                 onClick={onOpenDemo}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm text-black bg-white border-2 border-black/20 hover:border-black hover:shadow-md hover:-translate-y-0.5 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm sm:text-base text-black bg-white border-2 border-black/20 hover:border-black hover:shadow-md hover:-translate-y-0.5 transition-all"
               >
-                <Calendar size={16} className="text-black" />
+                <Calendar size={18} className="text-black" />
                 <span>Book a Demo</span>
               </button>
             </div>
