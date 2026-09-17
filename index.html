@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediCare – Modern Healthcare, Intelligently Connected | Hospital Core</title>
+  <meta name="description"
+    content="One unified platform for doctors, nurses, administrators and hospital teams to deliver faster, smarter and more connected care.">
+  <meta name="keywords" content="MediCare, Healthcare Management System, Hospital SaaS, EHR, Telehealth, Clinical Workflows">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231687F5'><path d='M19 10.5h-5.5V5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v5.5H5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5h5.5V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-5.5H19c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z'/></svg>">
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       MediCare Design Tokens & Reset
+       ========================================================================== */
+    :root {
+      --med-navy: #0B1F33;
+      --med-blue: #1479FF;
+      --med-teal: #18C7C9;
+      --med-softBg: #EAF4FF;
+      --med-darkBg: #071521;
+      --med-darkCard: #0E2438;
+      --med-lightCard: #FFFFFF;
+      --med-borderLight: rgba(98, 125, 152, 0.18);
+      --med-borderDark: rgba(54, 163, 255, 0.18);
+      --text-main: #102A43;
+      --text-muted: #627D98;
+      --card-bg: var(--med-lightCard);
+      --page-bg: #F7FAFC;
+      --border-color: var(--med-borderLight);
+      --success-green: #20B26B;
+    }
+
+    html.dark {
+      --page-bg: #071521;
+      --text-main: #F0F6FC;
+      --text-muted: #9FB3C8;
+      --card-bg: #0E2438;
+      --border-color: var(--med-borderDark);
+      --med-blue: #36A3FF;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--page-bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.5;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Ambient background mesh */
+    .bg-mesh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(22, 135, 245, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 20%, rgba(18, 184, 166, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(18, 59, 120, 0.06) 0%, transparent 50%);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Header */
+    header {
+      padding: 1.25rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-emblem {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--med-navy), var(--med-blue) 60%, var(--med-teal));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(22, 135, 245, 0.25);
+      transition: transform 0.3s ease;
+    }
+
+    .brand-logo:hover .logo-emblem {
+      transform: scale(1.05);
+    }
+
+    .logo-text-title {
+      font-size: 1.45rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .logo-text-title span {
+      color: var(--med-blue);
+    }
+
+    .logo-text-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    /* Status Badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: #059669;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+    }
+
+    html.dark .status-badge {
+      color: #34d399;
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+
+    /* Header Controls */
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .ctrl-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all 0.2s ease;
+    }
+
+    .ctrl-btn:hover {
+      border-color: var(--med-blue);
+      transform: translateY(-1px);
+    }
+
+    .theme-toggle-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      padding: 0;
+    }
+
+    /* Split-screen Layout */
+    .split-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3.5rem;
+      align-items: center;
+      padding: 2.5rem 0;
+      flex: 1;
+    }
+
+    /* Left Section */
+    .left-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--med-blue);
+      background: rgba(22, 135, 245, 0.08);
+      border: 1px solid rgba(22, 135, 245, 0.2);
+      width: fit-content;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-heading {
+      font-size: clamp(2.2rem, 3.8vw, 3.25rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      margin-bottom: 1rem;
+    }
+
+    .hero-heading .gradient-text {
+      background: linear-gradient(135deg, var(--med-blue), #06b6d4, var(--med-teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtext {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      max-width: 540px;
+      margin-bottom: 2rem;
+    }
+
+    /* Hero Illustration Container */
+    .illustration-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* Floating Cards */
+    .float-card {
+      position: absolute;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 0.65rem 1rem;
+      box-shadow: 0 10px 30px rgba(18, 59, 120, 0.12);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      z-index: 20;
+    }
+
+    .float-card-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .float-card-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .float-card-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    .fc-1 { top: -10px; left: -10px; animation: floatGentle 7s ease-in-out infinite; }
+    .fc-2 { top: 15px; right: -15px; animation: floatReverse 8s ease-in-out infinite; }
+    .fc-3 { top: 50%; left: -25px; transform: translateY(-50%); animation: floatReverse 6.5s ease-in-out infinite; }
+    .fc-4 { bottom: 35px; right: -10px; animation: floatGentle 7.5s ease-in-out infinite; }
+    .fc-5 { bottom: -15px; left: 40px; animation: floatReverse 8s ease-in-out infinite; }
+
+    /* Healthcare Statistics Box */
+    .stats-container {
+      margin-top: 2rem;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 16px 40px rgba(18, 59, 120, 0.08);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-box {
+      position: relative;
+    }
+
+    .stat-box:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: -0.75rem;
+      top: 15%;
+      height: 70%;
+      width: 1px;
+      background: var(--border-color);
+    }
+
+    .stat-num {
+      font-size: 1.75rem;
+      font-weight: 900;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--med-navy);
+      line-height: 1.1;
+    }
+
+    html.dark .stat-num {
+      color: #fff;
+    }
+
+    .stat-num span {
+      color: var(--med-blue);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Right Authentication Panel */
+    .auth-panel {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 28px;
+      padding: 2.25rem 2.5rem;
+      box-shadow: 0 20px 50px rgba(18, 59, 120, 0.12);
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .auth-header h2 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .auth-header p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.15rem;
+    }
+
+    .form-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    .form-link {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--med-blue);
+      text-decoration: none;
+    }
+
+    .form-link:hover {
+      text-decoration: underline;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.85rem 1.15rem;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      background: rgba(248, 250, 252, 0.8);
+      color: var(--text-main);
+      font-size: 0.92rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    html.dark .form-input {
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .form-input:focus {
+      border-color: var(--med-blue);
+      box-shadow: 0 0 0 4px rgba(22, 135, 245, 0.15);
+    }
+
+    .eye-btn {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 4px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 0.95rem;
+      border-radius: 16px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, var(--med-navy), var(--med-blue) 60%, var(--med-teal));
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 8px 25px rgba(22, 135, 245, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(22, 135, 245, 0.45);
+    }
+
+    .btn-submit span.arrow {
+      transition: transform 0.25s ease;
+    }
+
+    .btn-submit:hover span.arrow {
+      transform: translateX(4px);
+    }
+
+    /* OR Divider */
+    .or-divider {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .or-divider::before, .or-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
+    }
+
+    .or-divider span {
+      padding: 0 0.85rem;
+    }
+
+    /* Google SSO */
+    .btn-google {
+      width: 100%;
+      padding: 0.85rem;
+      border-radius: 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-google:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+      transform: translateY(-1px);
+    }
+
+    /* Quick Demo Access */
+    .demo-access-wrap {
+      margin-top: 1.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .demo-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .demo-sub {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.65rem;
+    }
+
+    .demo-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .demo-card:hover {
+      border-color: var(--med-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(22, 135, 245, 0.15);
+    }
+
+    .demo-card.active {
+      border-color: var(--med-blue);
+      background: rgba(22, 135, 245, 0.08);
+      box-shadow: 0 0 16px rgba(22, 135, 245, 0.2);
+    }
+
+    .demo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.35rem;
+    }
+
+    .demo-role-name {
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .demo-role-desc {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .auth-footer a {
+      font-weight: 700;
+      color: var(--med-blue);
+      text-decoration: none;
+    }
+
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    footer a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: var(--med-blue);
+    }
+
+    /* Keyframes */
+    @keyframes floatGentle {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes floatReverse {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(10px); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.4; }
+    }
+
+    @keyframes ecgPulse {
+      0% { stroke-dashoffset: 600; }
+      100% { stroke-dashoffset: 0; }
+    }
+
+    .ecg-animated {
+      stroke-dasharray: 200;
+      animation: ecgPulse 3s linear infinite;
+    }
+
+    /* Responsive Rules */
+    @media (max-width: 1024px) {
+      .split-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .left-section {
+        order: 1; /* Mobile priority: Branding & Compact Illustration first */
+      }
+      .right-section {
+        order: 2; /* Followed by Welcome Back, Login form, Google SSO, Demo access */
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stats-container {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+      .stat-box:not(:last-child)::after {
+        display: none;
+      }
+      .demo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .auth-panel {
+        padding: 1.75rem 1.25rem;
+      }
+      .float-card {
+        padding: 0.45rem 0.75rem;
+      }
+      .fc-1, .fc-2, .fc-3, .fc-4, .fc-5 {
+        transform: scale(0.9);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-mesh"></div>
+
+  <!-- Header -->
+  <div class="container">
+    <header>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="#" class="brand-logo">
+          <div class="logo-emblem">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 2v20M2 12h20" stroke-linecap="round"/>
+              <circle cx="5" cy="5" r="2" fill="#5eead4"/>
+              <circle cx="19" cy="19" r="2" fill="#5eead4"/>
+            </svg>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+              <div class="logo-text-title">Medi<span>Care</span></div>
+              <span style="font-size: 0.62rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 6px; background: rgba(22, 135, 245, 0.1); color: var(--med-blue); text-transform: uppercase; letter-spacing: 0.06em;">Hospital Management System</span>
+            </div>
+            <div class="logo-text-tag">MediCare Connected Healthcare • Smarter Decisions</div>
+          </div>
+        </a>
+        <div class="status-badge" style="margin-left: 0.5rem;">
+          <span class="pulse-dot"></span>
+          <span>Hospital Core v4.8</span>
+          <span style="opacity: 0.4;">•</span>
+          <span style="font-weight: 800;">Online</span>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div style="position: relative; display: inline-block;">
+          <button class="ctrl-btn" type="button" id="langBtn" aria-expanded="false" aria-haspopup="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span id="currentLang">EN</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div id="langMenu" style="display: none; position: absolute; right: 0; top: 110%; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); min-width: 155px; z-index: 100; overflow: hidden; backdrop-filter: blur(16px);">
+            <button type="button" class="lang-option" data-lang="EN" style="width: 100%; text-align: left; padding: 0.55rem 0.85rem; border: none; background: none; font-size: 0.78rem; font-weight: 700; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: space-between;"><span>English</span><span style="font-size: 0.65rem; color: var(--text-muted);">EN</span></button>
+            <button type="button" class="lang-option" data-lang="HI" style="width: 100%; text-align: left; padding: 0.55rem 0.85rem; border: none; background: none; font-size: 0.78rem; font-weight: 700; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: space-between;"><span>Hindi</span><span style="font-size: 0.65rem; color: var(--text-muted);">हिन्दी</span></button>
+            <button type="button" class="lang-option" data-lang="TE" style="width: 100%; text-align: left; padding: 0.55rem 0.85rem; border: none; background: none; font-size: 0.78rem; font-weight: 700; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: space-between;"><span>Telugu</span><span style="font-size: 0.65rem; color: var(--text-muted);">తెలుగు</span></button>
+          </div>
+        </div>
+        <button class="ctrl-btn theme-toggle-btn" type="button" id="themeBtn" aria-label="Toggle Light/Dark Theme">
+          <span id="themeSymbol" style="font-size: 1rem; line-height: 1;">☾</span>
+        </button>
+      </div>
+    </header>
+  </div>
+
+  <!-- Main Split-Screen Container -->
+  <div class="container">
+    <main class="split-layout">
+      <!-- Left Column (Branding, Illustration, Stats) -->
+      <section class="left-section">
+        <div class="hero-pill">
+          <span class="pulse-dot" style="width: 5px; height: 5px;"></span>
+          Next-Gen Enterprise Hospital OS
+        </div>
+
+        <h1 class="hero-heading">
+          One Connected Platform for<br>
+          <span class="gradient-text">Smarter Healthcare.</span>
+        </h1>
+
+        <p class="hero-subtext">
+          Empowering hospitals, clinicians, and care teams with intelligent tools to manage patients, workflows, and clinical operations — all from one secure platform.
+        </p>
+
+        <!-- Illustration with 5 Floating Cards -->
+        <div class="illustration-wrapper">
+          <svg viewBox="0 0 740 500" fill="none" style="width: 100%; height: auto; display: block;">
+            <defs>
+              <linearGradient id="hGrad" x1="160" y1="60" x2="360" y2="400" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#123B78"/>
+                <stop offset="45%" stop-color="#1687F5"/>
+                <stop offset="100%" stop-color="#0B1E3B"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Background Grid Lines -->
+            <g opacity="0.15" stroke="#1687F5" stroke-width="1" stroke-dasharray="3 3">
+              <line x1="60" y1="100" x2="680" y2="100"/>
+              <line x1="60" y1="200" x2="680" y2="200"/>
+              <line x1="60" y1="300" x2="680" y2="300"/>
+              <line x1="60" y1="400" x2="680" y2="400"/>
+              <line x1="160" y1="40" x2="160" y2="460"/>
+              <line x1="360" y1="40" x2="360" y2="460"/>
+              <line x1="560" y1="40" x2="560" y2="460"/>
+            </g>
+
+            <!-- Hospital Main Tower -->
+            <rect x="180" y="80" width="190" height="340" rx="16" fill="url(#hGrad)" opacity="0.95"/>
+            <rect x="195" y="95" width="160" height="42" rx="8" fill="#ffffff" fill-opacity="0.08"/>
+            <circle cx="275" cy="116" r="15" fill="#12B8A6"/>
+            <path d="M272 108H278V124H272Z" fill="#ffffff"/>
+            <path d="M267 113H283V119H267Z" fill="#ffffff"/>
+            <!-- Rooftop Beacon -->
+            <circle cx="275" cy="74" r="4" fill="#ef4444"/>
+
+            <!-- Hospital Windows -->
+            <g fill="#67e8f9" fill-opacity="0.5">
+              <rect x="205" y="160" width="35" height="24" rx="4"/>
+              <rect x="255" y="160" width="40" height="24" rx="4" fill-opacity="0.8"/>
+              <rect x="310" y="160" width="35" height="24" rx="4"/>
+              <rect x="205" y="205" width="35" height="24" rx="4"/>
+              <rect x="255" y="205" width="40" height="24" rx="4"/>
+              <rect x="310" y="205" width="35" height="24" rx="4" fill-opacity="0.8"/>
+              <rect x="205" y="250" width="35" height="24" rx="4" fill-opacity="0.7"/>
+              <rect x="255" y="250" width="40" height="24" rx="4"/>
+              <rect x="310" y="250" width="35" height="24" rx="4"/>
+              <rect x="205" y="295" width="35" height="24" rx="4"/>
+              <rect x="255" y="295" width="40" height="24" rx="4" fill-opacity="0.85"/>
+              <rect x="310" y="295" width="35" height="24" rx="4"/>
+            </g>
+
+            <!-- West Wing -->
+            <rect x="95" y="190" width="100" height="230" rx="12" fill="#0f2b57" opacity="0.9"/>
+            <g fill="#38bdf8" fill-opacity="0.5">
+              <rect x="110" y="220" width="30" height="28" rx="4"/>
+              <rect x="150" y="220" width="30" height="28" rx="4" fill-opacity="0.75"/>
+              <rect x="110" y="275" width="30" height="28" rx="4"/>
+              <rect x="150" y="275" width="30" height="28" rx="4"/>
+            </g>
+
+            <!-- Ambulance in Bay -->
+            <g transform="translate(30, 20)">
+              <rect x="90" y="380" width="140" height="50" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+              <rect x="180" y="385" width="40" height="22" rx="4" fill="#38bdf8" fill-opacity="0.4"/>
+              <circle cx="130" cy="405" r="9" fill="#fee2e2"/>
+              <path d="M128 400H132V410H128Z" fill="#ef4444"/>
+              <path d="M125 403H135V407H125Z" fill="#ef4444"/>
+              <circle cx="120" cy="430" r="12" fill="#1e293b"/>
+              <circle cx="120" cy="430" r="5" fill="#94a3b8"/>
+              <circle cx="200" cy="430" r="12" fill="#1e293b"/>
+              <circle cx="200" cy="430" r="5" fill="#94a3b8"/>
+              <circle cx="140" cy="374" r="5" fill="#ef4444"/>
+            </g>
+
+            <!-- Telemetry Monitor Screen -->
+            <g transform="translate(350, 110)">
+              <rect x="65" y="25" width="240" height="165" rx="18" fill="#0c1e38" stroke="#1687F5" stroke-width="1.8"/>
+              <rect x="85" y="42" width="110" height="8" rx="4" fill="#38bdf8" fill-opacity="0.8"/>
+              <circle cx="285" cy="46" r="4.5" fill="#12B8A6"/>
+              <!-- Heartbeat ECG -->
+              <path d="M85 92H130L140 65L150 125L160 75L170 105L180 92H285" stroke="#12B8A6" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round" class="ecg-animated"/>
+              <!-- Bar chart telemetry -->
+              <g transform="translate(85, 125)">
+                <rect x="0" y="25" width="22" height="25" rx="4" fill="#1687F5" fill-opacity="0.45"/>
+                <rect x="30" y="10" width="22" height="40" rx="4" fill="#1687F5" fill-opacity="0.8"/>
+                <rect x="60" y="20" width="22" height="30" rx="4" fill="#12B8A6" fill-opacity="0.75"/>
+                <rect x="90" y="0" width="22" height="50" rx="4" fill="#22d3ee"/>
+                <rect x="120" y="15" width="22" height="35" rx="4" fill="#3b82f6" fill-opacity="0.9"/>
+                <rect x="150" y="5" width="22" height="45" rx="4" fill="#12B8A6"/>
+              </g>
+            </g>
+
+            <!-- Nurse Character -->
+            <g transform="translate(380, 180)">
+              <path d="M30 200C30 160 50 145 75 145C100 145 120 160 120 200V250H30V200Z" fill="#12B8A6"/>
+              <path d="M60 145L75 170L90 145Z" fill="#ffffff"/>
+              <circle cx="75" cy="115" r="24" fill="#fed7aa"/>
+              <path d="M55 105C55 90 65 85 75 85C85 85 95 90 95 105Z" fill="#ffffff"/>
+              <rect x="25" y="180" width="30" height="42" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+            </g>
+
+            <!-- Lead Doctor Character with Tablet -->
+            <g transform="translate(470, 130)">
+              <path d="M30 210C30 150 60 130 110 130C160 130 190 150 190 210V300H30V210Z" fill="#ffffff" stroke="#e2e8f0" stroke-width="2.5"/>
+              <path d="M95 130L110 170L125 130Z" fill="#1687F5"/>
+              <path d="M85 135C85 170 95 195 110 195C125 195 135 170 135 135" stroke="#123B78" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <circle cx="110" cy="205" r="7" fill="#1687F5" stroke="#ffffff" stroke-width="2"/>
+              <circle cx="110" cy="85" r="34" fill="#fed7aa"/>
+              <path d="M76 80C76 55 88 45 110 45C132 45 144 55 144 80C132 70 90 70 76 80Z" fill="#1e293b"/>
+              <circle cx="98" cy="80" r="5" fill="none" stroke="#1e293b" stroke-width="1.8"/>
+              <circle cx="122" cy="80" r="5" fill="none" stroke="#1e293b" stroke-width="1.8"/>
+              <!-- Digital Tablet -->
+              <g transform="translate(65, 175)">
+                <rect x="0" y="0" width="90" height="62" rx="10" fill="#1687F5" stroke="#ffffff" stroke-width="2.5"/>
+                <rect x="6" y="6" width="78" height="50" rx="6" fill="#071426"/>
+                <path d="M12 32H28L34 20L40 44L46 26L52 38H78" stroke="#22d3ee" stroke-width="2" fill="none" stroke-linecap="round"/>
+              </g>
+            </g>
+          </svg>
+
+          <!-- 5 Floating Glass Cards -->
+          <div class="float-card fc-1">
+            <div class="float-card-icon" style="background: rgba(22, 135, 245, 0.1); color: var(--med-blue);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div>
+              <div class="float-card-title">Digital Health Records</div>
+              <div class="float-card-sub" style="color: #10b981;">99.8% Synced</div>
+            </div>
+          </div>
+
+          <div class="float-card fc-2">
+            <div class="float-card-icon" style="background: rgba(18, 184, 166, 0.1); color: var(--med-teal);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>
+            </div>
+            <div>
+              <div class="float-card-title">Smart Appointments</div>
+              <div class="float-card-sub">Auto-Triage Active</div>
+            </div>
+          </div>
+
+          <div class="float-card fc-3">
+            <div class="float-card-icon" style="background: rgba(6, 182, 212, 0.1); color: #06b6d4;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <div>
+              <div class="float-card-title">AI Assisted Care</div>
+              <div class="float-card-sub" style="color: #06b6d4;">Decision Support ON</div>
+            </div>
+          </div>
+
+          <div class="float-card fc-4">
+            <div class="float-card-icon" style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <div>
+              <div class="float-card-title">Patient Monitoring</div>
+              <div class="float-card-sub" style="color: #10b981;">Vitals: Normal</div>
+            </div>
+          </div>
+
+          <div class="float-card fc-5">
+            <div class="float-card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <div class="float-card-title">Secure &amp; Connected</div>
+              <div class="float-card-sub">AES-256 Encrypted</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Healthcare Statistics Container -->
+        <div class="stats-container">
+          <div class="stat-box">
+            <div class="stat-num"><span id="docCount">2.4</span>k<span>+</span></div>
+            <div class="stat-label">Doctors &amp; Specialists</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num"><span id="slaCount">99.98</span>%</div>
+            <div class="stat-label">Clinical SLA Uptime</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num"><span id="patCount">450</span>k<span>+</span></div>
+            <div class="stat-label">Patients Served</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column (Authentication / Login Panel) -->
+      <section class="right-section">
+        <div class="auth-panel">
+          <div class="auth-header">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem; gap: 0.5rem; flex-wrap: wrap;">
+              <h2 style="font-size: 1.6rem; font-weight: 900; letter-spacing: -0.02em; margin: 0;">Welcome Back</h2>
+              <div style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.68rem; font-weight: 700; color: #059669; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); white-space: nowrap;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span>Secure Healthcare Access</span>
+              </div>
+            </div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;">Sign in securely to continue to your healthcare workspace.</p>
+          </div>
+
+          <form id="loginForm">
+            <!-- Work Email Address -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label class="form-label" for="workEmail">Work Email Address</label>
+              </div>
+              <div class="input-wrapper">
+                <input type="email" id="workEmail" class="form-input" placeholder="you@hospital.com" required value="dr.smith@medicare-health.org">
+              </div>
+            </div>
+
+            <!-- Password with working eye toggle -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label class="form-label" for="workPassword">Password</label>
+                <a href="#forgot" class="form-link" onclick="alert('Password reset link sent to work email.'); return false;">Forgot Password?</a>
+              </div>
+              <div class="input-wrapper">
+                <input type="password" id="workPassword" class="form-input" placeholder="Enter your password" required value="••••••••••••" style="padding-right: 2.5rem;">
+                <button type="button" class="eye-btn" id="eyeToggle" aria-label="Toggle password visibility">
+                  <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Keep me signed in -->
+            <div class="checkbox-row">
+              <input type="checkbox" id="keepSignedIn" checked style="cursor: pointer;">
+              <label for="keepSignedIn" style="cursor: pointer;">Keep me signed in</label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-submit" id="submitBtn">
+              <span id="btnText">Sign In to Dashboard</span>
+              <span class="arrow">→</span>
+            </button>
+          </form>
+
+          <!-- OR Divider -->
+          <div class="or-divider"><span>OR</span></div>
+
+          <!-- Google SSO -->
+          <button type="button" class="btn-google" id="googleBtn" onclick="selectDemo('doctor')">
+            <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+            </svg>
+            <span>Continue with Google Workspace</span>
+          </button>
+
+          <!-- Quick Demo Access -->
+          <div class="demo-access-wrap">
+            <div class="demo-title">Quick Demo Access</div>
+            <div class="demo-sub">Explore MediCare using a predefined role.</div>
+            <div class="demo-grid">
+              <div class="demo-card active" id="demoDoc" onclick="selectDemo('doctor')">
+                <div class="demo-icon" style="background: rgba(20, 121, 255, 0.1); color: var(--med-blue);">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 3.5-2 5.5h19c0-2-.5-4.24-2-5.5"/><circle cx="12" cy="7" r="4"/><path d="M12 11v6"/></svg>
+                </div>
+                <div class="demo-role-name">Doctor</div>
+                <div class="demo-role-desc">Clinical Dashboard</div>
+              </div>
+
+              <div class="demo-card" id="demoNurse" onclick="selectDemo('nurse')">
+                <div class="demo-icon" style="background: rgba(24, 199, 201, 0.1); color: var(--med-teal);">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M12 11v6"/><path d="M9 14h6"/></svg>
+                </div>
+                <div class="demo-role-name">Nurse</div>
+                <div class="demo-role-desc">Care Workspace</div>
+              </div>
+
+              <div class="demo-card" id="demoAdmin" onclick="selectDemo('admin')">
+                <div class="demo-icon" style="background: rgba(20, 121, 255, 0.1); color: var(--med-blue);">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                </div>
+                <div class="demo-role-name">Admin</div>
+                <div class="demo-role-desc">Hospital Operations</div>
+              </div>
+
+              <div class="demo-card" id="demoStaff" onclick="selectDemo('staff')">
+                <div class="demo-icon" style="background: rgba(24, 199, 201, 0.1); color: var(--med-teal);">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg>
+                </div>
+                <div class="demo-role-name">Staff</div>
+                <div class="demo-role-desc">Staff Workspace</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="auth-footer" style="margin-top: 1rem;">
+            Don't have an account? <a href="#create" onclick="alert('To setup a new hospital tenant, please contact MediCare enterprise onboarding.'); return false;">Create Account →</a>
+          </div>
+
+          <!-- Security Footer Notice -->
+          <div style="margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid var(--border-color); text-align: center;">
+            <p style="font-size: 0.72rem; font-weight: 600; color: var(--text-muted); margin: 0;">
+              🔒 Secure • HIPAA-ready architecture • Enterprise-grade access
+            </p>
+            <p style="font-size: 0.68rem; color: var(--text-muted); opacity: 0.8; margin-top: 0.25rem;">
+              © 2026 MediCare Health Systems
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <div class="container">
+    <footer>
+      <div>
+        &copy; 2026 MediCare Health Systems. All rights reserved. • HIPAA-ready Architecture.
+      </div>
+      <div style="display: flex; gap: 1.5rem;">
+        <a href="admin-portal.html">Clinical Portal</a>
+        <a href="super-admin-portal.html">Hospital Admin</a>
+        <a href="patient-portal.html">Patient Portal</a>
+        <a href="pharmacist-portal.html">Pharmacy POS</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Theme Toggle Controller
+    const htmlEl = document.documentElement;
+    const themeBtn = document.getElementById('themeBtn');
+    const themeSymbol = document.getElementById('themeSymbol');
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        htmlEl.classList.add('dark');
+        htmlEl.classList.remove('light');
+        if (themeSymbol) themeSymbol.textContent = '☀';
+      } else {
+        htmlEl.classList.remove('dark');
+        htmlEl.classList.add('light');
+        if (themeSymbol) themeSymbol.textContent = '☾';
+      }
+      localStorage.setItem('medicare-theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('medicare-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(savedTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const isDark = htmlEl.classList.contains('dark');
+      applyTheme(isDark ? 'light' : 'dark');
+    });
+
+    // Password Show/Hide Toggle
+    const passwordInput = document.getElementById('workPassword');
+    const eyeToggle = document.getElementById('eyeToggle');
+    let isPasswordVisible = false;
+
+    eyeToggle.addEventListener('click', () => {
+      isPasswordVisible = !isPasswordVisible;
+      passwordInput.type = isPasswordVisible ? 'text' : 'password';
+      eyeToggle.innerHTML = isPasswordVisible
+        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+        : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+    });
+
+    // Quick Demo Role Switcher
+    let currentRole = 'doctor';
+    const emailInput = document.getElementById('workEmail');
+
+    const demoAccounts = {
+      doctor: { email: 'dr.smith@medicare-health.org', target: 'admin-portal.html#doctor-consult' },
+      nurse: { email: 'nurse.clara@medicare-health.org', target: 'admin-portal.html#triage' },
+      admin: { email: 'admin.marcus@medicare-health.org', target: 'super-admin-portal.html' },
+      staff: { email: 'staff.james@medicare-health.org', target: 'pharmacist-portal.html' }
+    };
+
+    function selectDemo(role) {
+      currentRole = role;
+      document.querySelectorAll('.demo-card').forEach(c => c.classList.remove('active'));
+      const cardMap = { doctor: 'demoDoc', nurse: 'demoNurse', admin: 'demoAdmin', staff: 'demoStaff' };
+      const card = document.getElementById(cardMap[role]);
+      if (card) card.classList.add('active');
+
+      const account = demoAccounts[role];
+      if (account) {
+        emailInput.value = account.email;
+        passwordInput.value = '••••••••••••';
+      }
+    }
+
+    // Form Submit with Loading and Redirection
+    const form = document.getElementById('loginForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      btnText.textContent = 'Verifying Credentials...';
+
+      setTimeout(() => {
+        const dest = demoAccounts[currentRole] ? demoAccounts[currentRole].target : 'admin-portal.html';
+        window.location.href = dest;
+      }, 900);
+    });
+
+    // Language Dropdown Controller
+    const langBtn = document.getElementById('langBtn');
+    const langMenu = document.getElementById('langMenu');
+    const currentLang = document.getElementById('currentLang');
+
+    if (langBtn && langMenu) {
+      langBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = langMenu.style.display === 'block';
+        langMenu.style.display = isOpen ? 'none' : 'block';
+        langBtn.setAttribute('aria-expanded', !isOpen);
+      });
+
+      document.querySelectorAll('.lang-option').forEach((opt) => {
+        opt.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const selected = opt.getAttribute('data-lang');
+          if (currentLang) currentLang.textContent = selected;
+          langMenu.style.display = 'none';
+          langBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!langBtn.contains(e.target) && !langMenu.contains(e.target)) {
+          langMenu.style.display = 'none';
+          langBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

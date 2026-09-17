@@ -1,0 +1,2453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pharmacist & Clinical Dispensary Portal | HSM Healthcare</title>
+  <meta name="description" content="HSM Pharmacist Portal: Complete drug catalog, batch & expiry tracking, clinical prescription screening, POS dispensing, supplier orders, stock transfers, and GST tax management.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;850&display=swap" rel="stylesheet">
+
+  <!-- Core & Portal Styles -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/pharmacist.css">
+</head>
+<body class="pharm-body">
+
+  <div class="pharm-layout">
+    <!-- ======================================================================
+         Sidebar Navigation (All 14 Pharmacist Modules)
+         ====================================================================== -->
+    <aside class="pharm-sidebar" id="pharmSidebar">
+      <div class="pharm-sidebar-brand">
+        <div class="pharm-logo-flex">
+          <div class="pharm-logo-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 2v20M2 12h20M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24"/>
+            </svg>
+          </div>
+          <span>HSM Pharmacy</span>
+        </div>
+        <span class="pharm-role-badge">DISPENSARY</span>
+      </div>
+
+      <div class="pharm-nav-scroll">
+        <div class="pharm-nav-heading">Master Data & Procurement</div>
+        <a href="#medicine-master" class="pharm-nav-item active">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+          1. Medicine Master
+        </a>
+        <a href="#categories-manufacturers" class="pharm-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+          2. Categories & Mfrs
+        </a>
+        <a href="#suppliers" class="pharm-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          3. Suppliers & Vendors
+        </a>
+        <a href="#batch-expiry" class="pharm-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01M7 12h.01M7 17h.01M12 7h.01M12 12h.01M12 17h.01M17 7h.01M17 12h.01M17 17h.01"/></svg>
+          4. Batch & Expiry
+        </a>
+        <a href="#purchase-returns" class="pharm-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          5. Purchase & Returns
+        </a>
+
+        <div class="pharm-nav-heading">Inventory & Movements</div>
+        <a href="#stock-overview" class="pharm-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+          6. Stock Levels & Audit
+        </a>
+        <a href="#stock-transfers" class="pharm-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          7. Transfer & Adjustments
+        </a>
+
+        <div class="pharm-nav-heading">Clinical Rx & Dispensing</div>
+        <a href="#prescription-processing" class="pharm-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          8. Prescription Queue
+        </a>
+        <a href="#dispensing-counter" class="pharm-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11h-6"/><path d="M19 8v6"/></svg>
+          9. Dispensing Counter
+        </a>
+        <a href="#sales-returns" class="pharm-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+          10. Sales & Billing POS
+        </a>
+
+        <div class="pharm-nav-heading">Safety & Intelligence</div>
+        <a href="#low-stock-alerts" class="pharm-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          11. Low-Stock Alerts
+        </a>
+        <a href="#expiry-alerts" class="pharm-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          12. Expiry Alerts
+        </a>
+        <a href="#pricing-tax" class="pharm-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          13. Pricing & Tax (GST)
+        </a>
+        <a href="#pharmacy-reports" class="pharm-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          14. Pharmacy Reports
+        </a>
+      </div>
+
+      <div class="pharm-sidebar-footer">
+        <a href="super-admin-portal.html" class="btn btn-secondary btn-sm" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: rgba(255,255,255,0.08); color: #cbd5e1; border-color: rgba(255,255,255,0.15);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          Super Admin Console
+        </a>
+        <a href="index.html" class="btn btn-secondary btn-sm" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: rgba(255,255,255,0.06); color: #cbd5e1; border-color: rgba(255,255,255,0.15);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Return to HSM Home
+        </a>
+      </div>
+    </aside>
+
+    <!-- ======================================================================
+         Main Content Area
+         ====================================================================== -->
+    <main class="pharm-main">
+      <!-- Topbar Header -->
+      <header class="pharm-topbar">
+        <div class="pharm-topbar-title">
+          <h1>Central Hospital Pharmacy & Dispensary Operations</h1>
+          <div class="pharm-live-badge">
+            <span class="pulse-dot"></span>
+            Dispensary Terminal Active • Shift 1
+          </div>
+        </div>
+
+        <div class="pharm-topbar-actions">
+          <select class="pharm-branch-select" id="pharmBranchSelect" onchange="switchPharmacyBranch(this.value)">
+            <option value="main">Central Pharmacy Bulk Store (Block B)</option>
+            <option value="opd">OPD Fast-Track Dispensary (Atrium)</option>
+            <option value="ipd">Inpatient (IPD) Satellite (Floor 3)</option>
+            <option value="icu">Emergency & Trauma Station (ER Core)</option>
+          </select>
+
+          <div class="pharm-user-info">
+            <div class="pharm-user-avatar">RX</div>
+            <div>
+              <strong style="display: block; font-size: 0.85rem;">Elena Vance, PharmD</strong>
+              <span style="font-size: 0.725rem; color: var(--pharm-muted);">Chief Hospital Pharmacist • Lic #RX-9941</span>
+            </div>
+          </div>
+          <a href="index.html" class="btn btn-secondary btn-sm">Log Out</a>
+        </div>
+      </header>
+
+      <div class="pharm-container">
+        <!-- ====================================================================
+             Executive Pharmacy KPI Banner
+             ==================================================================== -->
+        <div class="pharm-kpi-banner">
+          <div class="pharm-kpi-box">
+            <div class="pharm-kpi-label">Active Medicine SKUs</div>
+            <div class="pharm-kpi-val" id="kpiTotalSkus">1,482</div>
+            <div class="pharm-kpi-sub">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              100% Formulary Synced
+            </div>
+          </div>
+
+          <div class="pharm-kpi-box">
+            <div class="pharm-kpi-label">Prescription Queue</div>
+            <div class="pharm-kpi-val" id="kpiRxQueue">14 <small style="font-size: 0.85rem; color: #64748b;">Pending</small></div>
+            <div class="pharm-kpi-sub" style="color: #0284c7;">Avg Fill Time: 3.4 mins</div>
+          </div>
+
+          <div class="pharm-kpi-box kpi-alert">
+            <div class="pharm-kpi-label">Low-Stock Buffer Breached</div>
+            <div class="pharm-kpi-val" style="color: #ea580c;" id="kpiLowStock">6 <small style="font-size: 0.85rem; color: #64748b;">Items</small></div>
+            <div class="pharm-kpi-sub" style="color: #ea580c;">2 Critical (Zero Stock)</div>
+          </div>
+
+          <div class="pharm-kpi-box kpi-alert">
+            <div class="pharm-kpi-label">Near-Expiry Batches (&lt;60d)</div>
+            <div class="pharm-kpi-val" style="color: #dc2626;" id="kpiNearExpiry">9 <small style="font-size: 0.85rem; color: #64748b;">Batches</small></div>
+            <div class="pharm-kpi-sub" style="color: #dc2626;">RTV Action Required</div>
+          </div>
+
+          <div class="pharm-kpi-box">
+            <div class="pharm-kpi-label">Today's Dispensing Revenue</div>
+            <div class="pharm-kpi-val" id="kpiTodaySales">$18,420</div>
+            <div class="pharm-kpi-sub">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              +14.2% vs Last Week
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             1. Medicine Master
+             ==================================================================== -->
+        <section class="pharm-module-card" id="medicine-master">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+                1. Medicine Master Catalog
+              </h2>
+              <p class="pharm-module-desc">Centralized formulary index, generic mapping, dosage formulations, regulatory drug schedules, and standard reorder thresholds.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openAddMedicineModal()">+ Add New Formulation</button>
+          </div>
+
+          <div class="filter-search-strip">
+            <div class="search-input-group">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="medMasterSearch" placeholder="Search by brand, generic name, or SKU barcode..." oninput="filterMedMasterTable()">
+            </div>
+            <div class="filter-btn-group">
+              <button class="pill-filter-btn active" onclick="setMedScheduleFilter('all', this)">All Schedules</button>
+              <button class="pill-filter-btn" onclick="setMedScheduleFilter('H', this)">Schedule H</button>
+              <button class="pill-filter-btn" onclick="setMedScheduleFilter('X', this)">Schedule X (Narcotics)</button>
+              <button class="pill-filter-btn" onclick="setMedScheduleFilter('OTC', this)">OTC</button>
+            </div>
+          </div>
+
+          <div class="pharm-table-wrap">
+            <table class="pharm-table" id="medMasterTable">
+              <thead>
+                <tr>
+                  <th>Drug SKU</th>
+                  <th>Brand & Generic Name</th>
+                  <th>Dosage Form & Strength</th>
+                  <th>Schedule</th>
+                  <th>Storage Spec</th>
+                  <th>Min Reorder</th>
+                  <th>Current Stock</th>
+                  <th>Unit MRP</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-schedule="H">
+                  <td><strong>MED-1001</strong></td>
+                  <td>
+                    <div style="font-weight: 750;">Augmentin 625 Duo</div>
+                    <small style="color: var(--pharm-muted);">Amoxicillin 500mg + Clavulanic 125mg</small>
+                  </td>
+                  <td>Tablet • Oral</td>
+                  <td><span class="badge-sched sched-h">Schedule H</span></td>
+                  <td>Store below 25°C Dry</td>
+                  <td>50 strips</td>
+                  <td><span class="stock-pill stock-in">240 strips</span></td>
+                  <td>$12.50</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="quickEditDrug('MED-1001')">Edit</button>
+                  </td>
+                </tr>
+                <tr data-schedule="H">
+                  <td><strong>MED-1002</strong></td>
+                  <td>
+                    <div style="font-weight: 750;">Clexane 40mg Enoxaparin</div>
+                    <small style="color: var(--pharm-muted);">Enoxaparin Sodium 40mg/0.4ml</small>
+                  </td>
+                  <td>Pre-filled Syringe • SC</td>
+                  <td><span class="badge-sched sched-h">Schedule H</span></td>
+                  <td>Cold Chain 2°C - 8°C</td>
+                  <td>30 units</td>
+                  <td><span class="stock-pill stock-low">14 units</span></td>
+                  <td>$28.00</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="quickEditDrug('MED-1002')">Edit</button>
+                  </td>
+                </tr>
+                <tr data-schedule="OTC">
+                  <td><strong>MED-1003</strong></td>
+                  <td>
+                    <div style="font-weight: 750;">Dolo 650 Fast Tab</div>
+                    <small style="color: var(--pharm-muted);">Paracetamol (Acetaminophen) 650mg</small>
+                  </td>
+                  <td>Tablet • Oral</td>
+                  <td><span class="badge-sched sched-otc">OTC</span></td>
+                  <td>Room Temp &lt; 30°C</td>
+                  <td>100 strips</td>
+                  <td><span class="stock-pill stock-in">850 strips</span></td>
+                  <td>$3.20</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="quickEditDrug('MED-1003')">Edit</button>
+                  </td>
+                </tr>
+                <tr data-schedule="X">
+                  <td><strong>MED-1004</strong></td>
+                  <td>
+                    <div style="font-weight: 750;">Morphine Sulfate Injection</div>
+                    <small style="color: var(--pharm-muted);">Morphine 10mg/ml Preservative Free</small>
+                  </td>
+                  <td>Ampoule (IV / IM)</td>
+                  <td><span class="badge-sched sched-x">Schedule X</span></td>
+                  <td>Double-Lock Narcotic Safe</td>
+                  <td>25 ampoules</td>
+                  <td><span class="stock-pill stock-in">68 ampoules</span></td>
+                  <td>$45.00</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="quickEditDrug('MED-1004')">Edit</button>
+                  </td>
+                </tr>
+                <tr data-schedule="H">
+                  <td><strong>MED-1005</strong></td>
+                  <td>
+                    <div style="font-weight: 750;">Lantus SoloStar Pen</div>
+                    <small style="color: var(--pharm-muted);">Insulin Glargine 100 IU/ml</small>
+                  </td>
+                  <td>Cartridge Pen • SC</td>
+                  <td><span class="badge-sched sched-h">Schedule H</span></td>
+                  <td>Refrigerated 2°C - 8°C</td>
+                  <td>40 pens</td>
+                  <td><span class="stock-pill stock-out">0 pens (Out)</span></td>
+                  <td>$34.50</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm" onclick="triggerFastPO('MED-1005', 'Lantus SoloStar')">Reorder PO</button>
+                  </td>
+                </tr>
+                <tr data-schedule="OTC">
+                  <td><strong>MED-1006</strong></td>
+                  <td>
+                    <div style="font-weight: 750;">Normal Saline 0.9% IV</div>
+                    <small style="color: var(--pharm-muted);">Sodium Chloride 0.9% w/v 500ml</small>
+                  </td>
+                  <td>IV Infusion Bottle</td>
+                  <td><span class="badge-sched sched-g">General</span></td>
+                  <td>Store Clean Dry &lt; 25°C</td>
+                  <td>150 bottles</td>
+                  <td><span class="stock-pill stock-in">420 bottles</span></td>
+                  <td>$2.10</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="quickEditDrug('MED-1006')">Edit</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             2. Categories and Manufacturers
+             ==================================================================== -->
+        <section class="pharm-module-card" id="categories-manufacturers">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+                2. Therapeutic Categories & Manufacturer Registry
+              </h2>
+              <p class="pharm-module-desc">ATC classification directory and verified WHO-GMP licensed pharmaceutical manufacturers with contracted lead-times.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="showPharmToast('Manufacturer registry audit up-to-date with CDSCO & FDA licenses.')">Audit Compliance</button>
+          </div>
+
+          <!-- Therapeutic Categories Cards -->
+          <div style="margin-bottom: 1.5rem;">
+            <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--pharm-dark); margin-bottom: 0.75rem;">Therapeutic Classes & Formulary Distribution</h3>
+            <div class="pharm-four-col">
+              <div class="pharm-kpi-box" style="padding: 1rem;">
+                <div style="font-size: 0.85rem; font-weight: 800; color: #0d9488;">Antibiotics & Antimicrobials</div>
+                <div style="font-size: 1.3rem; font-weight: 850; margin: 0.3rem 0;">184 SKUs</div>
+                <div style="font-size: 0.75rem; color: #64748b;">ATC: J01 • Value: $62,400</div>
+              </div>
+              <div class="pharm-kpi-box" style="padding: 1rem;">
+                <div style="font-size: 0.85rem; font-weight: 800; color: #0284c7;">Cardiovascular & Hypertensive</div>
+                <div style="font-size: 1.3rem; font-weight: 850; margin: 0.3rem 0;">142 SKUs</div>
+                <div style="font-size: 0.75rem; color: #64748b;">ATC: C01-C09 • Value: $51,200</div>
+              </div>
+              <div class="pharm-kpi-box" style="padding: 1rem;">
+                <div style="font-size: 0.85rem; font-weight: 800; color: #e11d48;">Analgesics, NSAIDs & Pain</div>
+                <div style="font-size: 1.3rem; font-weight: 850; margin: 0.3rem 0;">96 SKUs</div>
+                <div style="font-size: 0.75rem; color: #64748b;">ATC: N02 • Value: $24,800</div>
+              </div>
+              <div class="pharm-kpi-box" style="padding: 1rem;">
+                <div style="font-size: 0.85rem; font-weight: 800; color: #059669;">Endocrine & Antidiabetics</div>
+                <div style="font-size: 1.3rem; font-weight: 850; margin: 0.3rem 0;">88 SKUs</div>
+                <div style="font-size: 0.75rem; color: #64748b;">ATC: A10 • Value: $78,500</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Manufacturer Registry Table -->
+          <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--pharm-dark); margin-bottom: 0.75rem;">Verified Pharmaceutical Manufacturers</h3>
+          <div class="pharm-table-wrap">
+            <table class="pharm-table">
+              <thead>
+                <tr>
+                  <th>Manufacturer Name</th>
+                  <th>License / WHO-GMP Cert</th>
+                  <th>Supply Agreement</th>
+                  <th>Key Rep Contact</th>
+                  <th>Avg Lead Time</th>
+                  <th>Defect Rate</th>
+                  <th>Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Pfizer Healthcare Inc.</strong></td>
+                  <td>GMP-US-2024-9182</td>
+                  <td><span class="badge-sched sched-otc">Direct Tier-1</span></td>
+                  <td>clara.ross@pfizer.com • +1-800-422-918</td>
+                  <td>2 Business Days</td>
+                  <td>0.01%</td>
+                  <td><strong style="color: #059669;">★ 4.95</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Sun Pharmaceutical Industries</strong></td>
+                  <td>GMP-IND-8821-X</td>
+                  <td><span class="badge-sched sched-otc">Direct Tier-1</span></td>
+                  <td>rk.mehta@sunpharma.in • +91-22-6789-112</td>
+                  <td>3 Business Days</td>
+                  <td>0.03%</td>
+                  <td><strong style="color: #059669;">★ 4.88</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Cipla Healthcare Corp.</strong></td>
+                  <td>WHO-GMP-CIP-4410</td>
+                  <td><span class="badge-sched sched-otc">Direct Tier-1</span></td>
+                  <td>supply.desk@cipla.com • +91-22-4412-889</td>
+                  <td>2 Business Days</td>
+                  <td>0.02%</td>
+                  <td><strong style="color: #059669;">★ 4.91</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Abbott Laboratories</strong></td>
+                  <td>FDA-ABB-99231</td>
+                  <td><span class="badge-sched sched-otc">Institutional Contract</span></td>
+                  <td>orders.hosp@abbott.com • +1-847-937-610</td>
+                  <td>4 Business Days</td>
+                  <td>0.01%</td>
+                  <td><strong style="color: #059669;">★ 4.94</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             3. Suppliers
+             ==================================================================== -->
+        <section class="pharm-module-card" id="suppliers">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                3. Approved Distributors & Supplier Directory
+              </h2>
+              <p class="pharm-module-desc">Vendor credentials, wholesale drug licenses, credit terms, and supplier performance scorecards.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openRegisterSupplierModal()">+ Register New Supplier</button>
+          </div>
+
+          <div class="pharm-table-wrap">
+            <table class="pharm-table">
+              <thead>
+                <tr>
+                  <th>Vendor ID & Name</th>
+                  <th>Drug License & GSTIN</th>
+                  <th>Payment Terms</th>
+                  <th>Credit Limit</th>
+                  <th>Outstanding Dues</th>
+                  <th>Fulfillment Rate</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Apex Pharma Logistics</strong>
+                    <div style="font-size: 0.75rem; color: #64748b;">orders@apexlogistics.com • +1-800-482-1100</div>
+                  </td>
+                  <td>
+                    <div>DL: 20B/21B-84712</div>
+                    <small style="color: #64748b;">GSTIN: 27AAACA9182C1Z4</small>
+                  </td>
+                  <td>Net 30 Days</td>
+                  <td>$100,000</td>
+                  <td><strong style="color: #c2410c;">$14,250</strong></td>
+                  <td>98.4% On-Time</td>
+                  <td><span class="stock-pill stock-in">Active Preferred</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="openCreatePOModal('Apex Pharma Logistics')">New PO</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Metro Medi-Distributors</strong>
+                    <div style="font-size: 0.75rem; color: #64748b;">sales@metromedi.org • +1-888-291-3320</div>
+                  </td>
+                  <td>
+                    <div>DL: 20B/21B-39182</div>
+                    <small style="color: #64748b;">GSTIN: 27AABCM4401L1Z9</small>
+                  </td>
+                  <td>Net 15 Days</td>
+                  <td>$50,000</td>
+                  <td><strong style="color: #059669;">$0 (Settled)</strong></td>
+                  <td>96.8% On-Time</td>
+                  <td><span class="stock-pill stock-in">Active</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="openCreatePOModal('Metro Medi-Distributors')">New PO</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Global Lifecare Wholesalers</strong>
+                    <div style="font-size: 0.75rem; color: #64748b;">contact@globallifecare.net • +1-800-771-4921</div>
+                  </td>
+                  <td>
+                    <div>DL: 20B/21B-99104</div>
+                    <small style="color: #64748b;">GSTIN: 27AABCG7721K1Z2</small>
+                  </td>
+                  <td>Net 45 Days</td>
+                  <td>$150,000</td>
+                  <td><strong style="color: #c2410c;">$28,600</strong></td>
+                  <td>99.2% On-Time</td>
+                  <td><span class="stock-pill stock-in">Active Preferred</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="openCreatePOModal('Global Lifecare Wholesalers')">New PO</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Zenith Biotech Supply</strong>
+                    <div style="font-size: 0.75rem; color: #64748b;">dispatch@zenithbiotech.io • +1-877-331-8910</div>
+                  </td>
+                  <td>
+                    <div>DL: 20B/21B-60192</div>
+                    <small style="color: #64748b;">GSTIN: 27AABCZ1092M1Z5</small>
+                  </td>
+                  <td>Advance / COD</td>
+                  <td>$20,000</td>
+                  <td><strong style="color: #64748b;">$0</strong></td>
+                  <td>89.1% On-Time</td>
+                  <td><span class="stock-pill stock-low">Under Review</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="openCreatePOModal('Zenith Biotech Supply')">New PO</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             4. Batch and Expiry Tracking
+             ==================================================================== -->
+        <section class="pharm-module-card" id="batch-expiry">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01M7 12h.01M7 17h.01M12 7h.01M12 12h.01M12 17h.01M17 7h.01M17 12h.01M17 17h.01"/></svg>
+                4. Batch Number & Expiry Matrix
+              </h2>
+              <p class="pharm-module-desc">Lot-by-lot FEFO (First-Expired-First-Out) traceability, manufacturing seals, quarantine locking, and barcode scanner lookup.</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-secondary btn-sm" onclick="simulateBarcodeScan()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5v14M8 5v14M12 5v14M17 5v14M21 5v14"/></svg>
+                Scan Barcode
+              </button>
+            </div>
+          </div>
+
+          <div class="pharm-table-wrap">
+            <table class="pharm-table" id="batchTable">
+              <thead>
+                <tr>
+                  <th>Medicine Name</th>
+                  <th>Batch Number</th>
+                  <th>Mfg Date</th>
+                  <th>Expiry Date</th>
+                  <th>Days Left</th>
+                  <th>Units on Hand</th>
+                  <th>Shelf Location</th>
+                  <th>Batch Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="batch-row-1">
+                  <td>
+                    <strong>Clexane 40mg (Enoxaparin)</strong>
+                    <div style="font-size: 0.725rem; color: #64748b;">SKU: MED-1002</div>
+                  </td>
+                  <td><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-weight: 700;">BT-CX-2024-09</code></td>
+                  <td>2024-10-15</td>
+                  <td><strong>2026-09-28</strong></td>
+                  <td><span style="color: #dc2626; font-weight: 800;">25 Days</span></td>
+                  <td>14 Syringes</td>
+                  <td>Cold Unit Rack #2</td>
+                  <td><span class="badge-expiry exp-critical">Critical &lt;30d</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="toggleBatchQuarantine('batch-row-1', 'BT-CX-2024-09')">Quarantine</button>
+                  </td>
+                </tr>
+                <tr id="batch-row-2">
+                  <td>
+                    <strong>Augmentin 625 Duo</strong>
+                    <div style="font-size: 0.725rem; color: #64748b;">SKU: MED-1001</div>
+                  </td>
+                  <td><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-weight: 700;">BT-AG-2025-11</code></td>
+                  <td>2025-05-10</td>
+                  <td><strong>2026-10-20</strong></td>
+                  <td><span style="color: #ea580c; font-weight: 800;">47 Days</span></td>
+                  <td>60 Strips</td>
+                  <td>Aisle 3 • Shelf B-1</td>
+                  <td><span class="badge-expiry exp-warning">Warning &lt;60d</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="toggleBatchQuarantine('batch-row-2', 'BT-AG-2025-11')">Quarantine</button>
+                  </td>
+                </tr>
+                <tr id="batch-row-3">
+                  <td>
+                    <strong>Augmentin 625 Duo (Fresh Lot)</strong>
+                    <div style="font-size: 0.725rem; color: #64748b;">SKU: MED-1001</div>
+                  </td>
+                  <td><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-weight: 700;">BT-AG-2026-02</code></td>
+                  <td>2026-02-01</td>
+                  <td><strong>2028-01-30</strong></td>
+                  <td><span style="color: #059669; font-weight: 800;">514 Days</span></td>
+                  <td>180 Strips</td>
+                  <td>Aisle 3 • Shelf B-2</td>
+                  <td><span class="badge-expiry exp-safe">Active Healthy</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="toggleBatchQuarantine('batch-row-3', 'BT-AG-2026-02')">Quarantine</button>
+                  </td>
+                </tr>
+                <tr id="batch-row-4">
+                  <td>
+                    <strong>Morphine Sulfate Inj 10mg</strong>
+                    <div style="font-size: 0.725rem; color: #64748b;">SKU: MED-1004</div>
+                  </td>
+                  <td><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-weight: 700;">BT-MS-2025-88</code></td>
+                  <td>2025-08-12</td>
+                  <td><strong>2027-08-11</strong></td>
+                  <td><span style="color: #059669; font-weight: 800;">342 Days</span></td>
+                  <td>68 Ampoules</td>
+                  <td>Vault Safe #1</td>
+                  <td><span class="badge-expiry exp-safe">Active Healthy</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="toggleBatchQuarantine('batch-row-4', 'BT-MS-2025-88')">Quarantine</button>
+                  </td>
+                </tr>
+                <tr id="batch-row-5">
+                  <td>
+                    <strong>Ceftriaxone 1g Injection</strong>
+                    <div style="font-size: 0.725rem; color: #64748b;">SKU: MED-1008</div>
+                  </td>
+                  <td><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-weight: 700;">BT-CF-2024-01</code></td>
+                  <td>2024-01-10</td>
+                  <td><strong style="color: #dc2626;">2026-08-30 (Expired)</strong></td>
+                  <td><span style="color: #dc2626; font-weight: 800;">Expired 4d ago</span></td>
+                  <td>12 Vials</td>
+                  <td>Quarantine Bin Q-3</td>
+                  <td><span class="badge-expiry exp-quarantine">Quarantined Locked</span></td>
+                  <td>
+                    <button class="btn btn-primary btn-sm" style="background: #dc2626; border-color: #dc2626;" onclick="initiateRtvReturn('BT-CF-2024-01', 'Expired Lot')">RTV Return</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             5. Purchase and Purchase Return
+             ==================================================================== -->
+        <section class="pharm-module-card" id="purchase-returns">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                5. Purchase Orders (PO) & Purchase Returns (RTV)
+              </h2>
+              <p class="pharm-module-desc">Procurement lifecycle, automated Goods Received Notes (GRN), invoice matching, and Return-to-Vendor debit notes.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openCreatePOModal()">+ Generate Purchase Order</button>
+          </div>
+
+          <div class="pharm-two-col">
+            <!-- Left: Purchase Orders -->
+            <div>
+              <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--pharm-dark); margin-bottom: 0.75rem;">Recent Purchase Orders & GRN</h3>
+              <div class="pharm-table-wrap">
+                <table class="pharm-table">
+                  <thead>
+                    <tr>
+                      <th>PO Ref</th>
+                      <th>Distributor</th>
+                      <th>Items</th>
+                      <th>Total ($)</th>
+                      <th>GRN Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>PO-2026-1048</strong></td>
+                      <td>Apex Pharma</td>
+                      <td>4 Formulations</td>
+                      <td>$8,450</td>
+                      <td><span class="stock-pill stock-in">Received & Verified</span></td>
+                    </tr>
+                    <tr>
+                      <td><strong>PO-2026-1049</strong></td>
+                      <td>Global Lifecare</td>
+                      <td>12 Formulations</td>
+                      <td>$19,200</td>
+                      <td><span class="stock-pill stock-low">In Transit (ETA Today)</span></td>
+                    </tr>
+                    <tr>
+                      <td><strong>PO-2026-1050</strong></td>
+                      <td>Metro Medi</td>
+                      <td>2 Formulations</td>
+                      <td>$3,150</td>
+                      <td><span class="badge-sched sched-otc">Pending Delivery</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Right: Purchase Returns / RTV Debit Notes -->
+            <div>
+              <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--pharm-dark); margin-bottom: 0.75rem;">Return To Vendor (RTV) & Debit Notes</h3>
+              <div class="pharm-table-wrap">
+                <table class="pharm-table">
+                  <thead>
+                    <tr>
+                      <th>Debit Note #</th>
+                      <th>Batch / SKU</th>
+                      <th>Return Reason</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>DN-2026-881</strong></td>
+                      <td>BT-CF-2024-01</td>
+                      <td>Expired Shelf Recall</td>
+                      <td>$320.00</td>
+                      <td><span class="stock-pill stock-in">Credit Note Issued</span></td>
+                    </tr>
+                    <tr>
+                      <td><strong>DN-2026-882</strong></td>
+                      <td>BT-IV-912</td>
+                      <td>Transit Vial Breakage (6u)</td>
+                      <td>$145.50</td>
+                      <td><span class="stock-pill stock-low">Under Inspection</span></td>
+                    </tr>
+                    <tr>
+                      <td><strong>DN-2026-883</strong></td>
+                      <td>BT-AM-409</td>
+                      <td>Short Expiry on Intake</td>
+                      <td>$890.00</td>
+                      <td><span class="badge-sched sched-h">Dispatch Ready</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             6. Stock
+             ==================================================================== -->
+        <section class="pharm-module-card" id="stock-overview">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                6. Multi-Store Stock Census & Physical Count Reconciliation
+              </h2>
+              <p class="pharm-module-desc">Real-time inventory levels across Central Bulk, Satellite Units, Wards, and ICU Crash Carts with book vs physical audit reconciliation.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="openPhysicalAuditModal()">Run Physical Count Audit</button>
+          </div>
+
+          <div class="pharm-three-col" style="margin-bottom: 1.5rem;">
+            <div class="pharm-kpi-box">
+              <div class="pharm-kpi-label">Central Bulk Depot (Block B)</div>
+              <div class="pharm-kpi-val">$324,500</div>
+              <div class="pharm-kpi-sub">12,400 Units • Primary Resupply Hub</div>
+            </div>
+            <div class="pharm-kpi-box">
+              <div class="pharm-kpi-label">OPD Fast-Track Dispensary</div>
+              <div class="pharm-kpi-val">$68,200</div>
+              <div class="pharm-kpi-sub">3,120 Units • Counter Service</div>
+            </div>
+            <div class="pharm-kpi-box">
+              <div class="pharm-kpi-label">IPD & ICU Emergency Stock</div>
+              <div class="pharm-kpi-val">$90,200</div>
+              <div class="pharm-kpi-sub">2,730 Units • Crash Carts & Pyxis</div>
+            </div>
+          </div>
+
+          <!-- Stock Table with quick department breakdown -->
+          <div class="pharm-table-wrap">
+            <table class="pharm-table">
+              <thead>
+                <tr>
+                  <th>Drug Name</th>
+                  <th>Formulation</th>
+                  <th>Central Bulk</th>
+                  <th>OPD Disp</th>
+                  <th>IPD Floors</th>
+                  <th>ICU / ER</th>
+                  <th>Total System Stock</th>
+                  <th>Valuation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Augmentin 625 Duo</strong></td>
+                  <td>Tablet 10s</td>
+                  <td>180 strips</td>
+                  <td>40 strips</td>
+                  <td>15 strips</td>
+                  <td>5 strips</td>
+                  <td><strong style="color: #059669;">240 strips</strong></td>
+                  <td>$3,000.00</td>
+                </tr>
+                <tr>
+                  <td><strong>Clexane 40mg Injection</strong></td>
+                  <td>Syringe 0.4ml</td>
+                  <td>8 units</td>
+                  <td>2 units</td>
+                  <td>3 units</td>
+                  <td>1 units</td>
+                  <td><strong style="color: #c2410c;">14 units (Low)</strong></td>
+                  <td>$392.00</td>
+                </tr>
+                <tr>
+                  <td><strong>Dolo 650 Fast Tab</strong></td>
+                  <td>Tablet 15s</td>
+                  <td>600 strips</td>
+                  <td>150 strips</td>
+                  <td>70 strips</td>
+                  <td>30 strips</td>
+                  <td><strong style="color: #059669;">850 strips</strong></td>
+                  <td>$2,720.00</td>
+                </tr>
+                <tr>
+                  <td><strong>Normal Saline 0.9% 500ml</strong></td>
+                  <td>IV Bottle</td>
+                  <td>250 bottles</td>
+                  <td>20 bottles</td>
+                  <td>100 bottles</td>
+                  <td>50 bottles</td>
+                  <td><strong style="color: #059669;">420 bottles</strong></td>
+                  <td>$882.00</td>
+                </tr>
+                <tr>
+                  <td><strong>Insulin Glargine (Lantus)</strong></td>
+                  <td>Cartridge Pen</td>
+                  <td>0 pens</td>
+                  <td>0 pens</td>
+                  <td>0 pens</td>
+                  <td>0 pens</td>
+                  <td><strong style="color: #dc2626;">0 pens (STOCKOUT)</strong></td>
+                  <td>$0.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             7. Stock Transfer and Adjustment
+             ==================================================================== -->
+        <section class="pharm-module-card" id="stock-transfers">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                7. Inter-Department Stock Transfer & Adjustments
+              </h2>
+              <p class="pharm-module-desc">Internal requisition indents between Central Store, Operating Theatres, ICU, and Spillage/Breakage write-off records.</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-secondary btn-sm" onclick="openAdjustmentModal()">+ Record Breakage / Adjustment</button>
+              <button class="btn btn-primary btn-sm" onclick="openTransferModal()">+ New Inter-Store Transfer</button>
+            </div>
+          </div>
+
+          <div class="pharm-two-col">
+            <!-- Transfer Table -->
+            <div>
+              <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--pharm-dark); margin-bottom: 0.75rem;">Internal Store Indent Transfers</h3>
+              <div class="pharm-table-wrap">
+                <table class="pharm-table">
+                  <thead>
+                    <tr>
+                      <th>Transfer ID</th>
+                      <th>Source → Target</th>
+                      <th>Drug & Batch</th>
+                      <th>Qty</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>TR-2026-301</strong></td>
+                      <td>Central → ICU Core</td>
+                      <td>Propofol 1% (BT-PF-88)</td>
+                      <td>20 Vials</td>
+                      <td><span class="stock-pill stock-in">Delivered & Acknowledged</span></td>
+                    </tr>
+                    <tr>
+                      <td><strong>TR-2026-302</strong></td>
+                      <td>Central → OPD Counter</td>
+                      <td>Dolo 650 (BT-DL-04)</td>
+                      <td>50 Strips</td>
+                      <td><span class="stock-pill stock-low">In Transit (Nurse Transit)</span></td>
+                    </tr>
+                    <tr>
+                      <td><strong>TR-2026-303</strong></td>
+                      <td>Central → OT Suite 3</td>
+                      <td>Fentanyl 50mcg (BT-FN-12)</td>
+                      <td>10 Amps</td>
+                      <td><span class="badge-sched sched-x">Vault Escort Ready</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Adjustment / Write-Off Log -->
+            <div>
+              <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--pharm-dark); margin-bottom: 0.75rem;">Breakage, Spillage & Discard Adjustments</h3>
+              <div class="pharm-table-wrap">
+                <table class="pharm-table">
+                  <thead>
+                    <tr>
+                      <th>Log ID</th>
+                      <th>Item & Batch</th>
+                      <th>Reason Code</th>
+                      <th>Qty</th>
+                      <th>Authorized By</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>ADJ-901</strong></td>
+                      <td>Normal Saline 500ml</td>
+                      <td>Accidental Dropped Bottle</td>
+                      <td>-2 btls</td>
+                      <td>Elena Vance, PharmD</td>
+                    </tr>
+                    <tr>
+                      <td><strong>ADJ-902</strong></td>
+                      <td>Syrup Amox-Clav 30ml</td>
+                      <td>Broken Glass Seal in Transit</td>
+                      <td>-1 btl</td>
+                      <td>Marcus Brody, PhD</td>
+                    </tr>
+                    <tr>
+                      <td><strong>ADJ-903</strong></td>
+                      <td>Ceftriaxone 1g Inj</td>
+                      <td>Expired Shelf Discard</td>
+                      <td>-12 vials</td>
+                      <td>Medical Supdt. Signoff</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             8. Prescription Processing
+             ==================================================================== -->
+        <section class="pharm-module-card" id="prescription-processing">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                8. Clinical Prescription Queue & CDS Safety Screen
+              </h2>
+              <p class="pharm-module-desc">Incoming doctor e-prescriptions with automated Clinical Decision Support (CDS) for drug-drug interactions and allergy warnings.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="showPharmToast('Prescription Queue synced with Hospital OPD/IPD EHR.')">Sync Queue</button>
+          </div>
+
+          <!-- Active Clinical CDS Alert Example -->
+          <div class="cds-alert-box" id="cdsAlertBanner">
+            <div class="cds-alert-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div>
+              <div class="cds-alert-title">CRITICAL CDS WARNING: Severe Drug-Drug Interaction Detected!</div>
+              <p class="cds-alert-text">
+                Prescription <strong>#RX-8841 (Robert Chen)</strong> contains <strong>Warfarin 5mg</strong> co-prescribed with <strong>Aspirin 81mg</strong>. Concomitant administration significantly elevates major gastrointestinal and intracranial hemorrhage risk (Relative Risk 3.4x). <em>Pharmacist clinical review required before dispensing!</em>
+              </p>
+            </div>
+          </div>
+
+          <!-- Prescriptions Table -->
+          <div class="pharm-table-wrap">
+            <table class="pharm-table">
+              <thead>
+                <tr>
+                  <th>Rx ID & Time</th>
+                  <th>Patient Name & UHID</th>
+                  <th>Prescribing Doctor</th>
+                  <th>Diagnosis</th>
+                  <th>Prescribed Drugs</th>
+                  <th>Safety Flag</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: #fff1f2;">
+                  <td>
+                    <strong>RX-8841</strong>
+                    <div style="font-size: 0.725rem; color: #64748b;">Today, 10:14 AM</div>
+                  </td>
+                  <td>
+                    <strong>Robert Chen</strong>
+                    <div style="font-size: 0.725rem; color: #64748b;">UHID: HSM-PT-4091 (Age 64)</div>
+                  </td>
+                  <td>Dr. Sarah Jenkins (Cardiology)</td>
+                  <td>Atrial Fibrillation, CAD</td>
+                  <td>Warfarin 5mg, Aspirin 81mg, Atorvastatin 40mg</td>
+                  <td><span class="badge-sched sched-h" style="background: #fee2e2; color: #991b1b;">High Interaction Alert</span></td>
+                  <td><span class="stock-pill stock-low">Flagged for Review</span></td>
+                  <td>
+                    <button class="btn btn-primary btn-sm" onclick="reviewPrescription('RX-8841', 'Robert Chen', 'Dr. Sarah Jenkins', 'Warfarin 5mg, Aspirin 81mg, Atorvastatin 40mg')">Review & Resolve</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>RX-8842</strong>
+                    <div style="font-size: 0.725rem; color: #64748b;">Today, 10:28 AM</div>
+                  </td>
+                  <td>
+                    <strong>Maria Garcia</strong>
+                    <div style="font-size: 0.725rem; color: #64748b;">UHID: HSM-PT-4092 (Age 42)</div>
+                  </td>
+                  <td>Dr. David Miller (Internal Med)</td>
+                  <td>Acute Bacterial Sinusitis</td>
+                  <td>Augmentin 625 Duo, Dolo 650, Levocetirizine 5mg</td>
+                  <td><span class="badge-expiry exp-safe">CDS Clear</span></td>
+                  <td><span class="badge-sched sched-otc">Ready to Dispense</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="loadToDispenseCounter('RX-8842', 'Maria Garcia')">Load to POD Counter</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>RX-8843</strong>
+                    <div style="font-size: 0.725rem; color: #64748b;">Today, 10:45 AM</div>
+                  </td>
+                  <td>
+                    <strong>Amara Okafor</strong>
+                    <div style="font-size: 0.725rem; color: #64748b;">UHID: HSM-PT-4093 (Age 29)</div>
+                  </td>
+                  <td>Dr. Priya Nair (Pulmonology)</td>
+                  <td>Bronchial Asthma Flare</td>
+                  <td>Budesonide Inhaler 200mcg, Montelukast 10mg</td>
+                  <td><span class="badge-expiry exp-safe">CDS Clear</span></td>
+                  <td><span class="badge-sched sched-otc">Ready to Dispense</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="loadToDispenseCounter('RX-8843', 'Amara Okafor')">Load to POD Counter</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             9. Dispensing
+             ==================================================================== -->
+        <section class="pharm-module-card" id="dispensing-counter">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11h-6"/><path d="M19 8v6"/></svg>
+                9. Point of Dispensing (POD) Station & Label Generator
+              </h2>
+              <p class="pharm-module-desc">High-speed verification workstation with 5-Rights medication safety checklist, auto-FEFO batch allocation, and bilingual direction labels.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="printMedicineLabel()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+              Print Label
+            </button>
+          </div>
+
+          <div class="dispense-station-grid">
+            <!-- Dispense verification panel -->
+            <div class="pos-cart-panel">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <div>
+                  <h3 style="font-size: 1rem; font-weight: 800; margin: 0; color: var(--pharm-dark);" id="dispensePatientTitle">Active Dispense: Maria Garcia (RX-8842)</h3>
+                  <small style="color: var(--pharm-muted);">Doctor: Dr. David Miller • Ward: OPD Consultation 104</small>
+                </div>
+                <span class="stock-pill stock-in">FEFO Batches Pre-Allocated</span>
+              </div>
+
+              <!-- 5-Rights Checklist -->
+              <div style="background: #ffffff; border: 1px solid var(--pharm-border); border-radius: 8px; padding: 0.85rem; margin-bottom: 1rem;">
+                <div style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: #64748b; margin-bottom: 0.4rem;">Clinical 5-Rights Verification</div>
+                <div style="display: flex; gap: 1.25rem; font-size: 0.825rem; font-weight: 600; flex-wrap: wrap;">
+                  <label style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer;"><input type="checkbox" checked id="rightPatient"> Right Patient</label>
+                  <label style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer;"><input type="checkbox" checked id="rightDrug"> Right Drug</label>
+                  <label style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer;"><input type="checkbox" checked id="rightDose"> Right Dose</label>
+                  <label style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer;"><input type="checkbox" checked id="rightRoute"> Right Route</label>
+                  <label style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer;"><input type="checkbox" checked id="rightTime"> Right Time</label>
+                </div>
+              </div>
+
+              <!-- Allocated items -->
+              <div class="pharm-table-wrap" style="margin-bottom: 1rem;">
+                <table class="pharm-table">
+                  <thead>
+                    <tr>
+                      <th>Allocated Drug</th>
+                      <th>Batch (FEFO)</th>
+                      <th>Dispense Qty</th>
+                      <th>Stock After</th>
+                      <th>Directions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Augmentin 625 Duo</strong></td>
+                      <td><code>BT-AG-2025-11</code> (47d left)</td>
+                      <td>2 Strips (20 tabs)</td>
+                      <td>58 Strips left</td>
+                      <td>1 tab BID with food × 10d</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Dolo 650 Fast Tab</strong></td>
+                      <td><code>BT-DL-2026-04</code> (420d left)</td>
+                      <td>1 Strip (15 tabs)</td>
+                      <td>849 Strips left</td>
+                      <td>1 tab SOS for fever/pain</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+                <button class="btn btn-secondary" onclick="showPharmToast('Dispense queue skipped. Returning to next patient.')">Skip</button>
+                <button class="btn btn-primary" onclick="executeDispenseDeduction('RX-8842', 'Maria Garcia')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Confirm Dispense & Deduct Stock
+                </button>
+              </div>
+            </div>
+
+            <!-- Direction Label Preview Card -->
+            <div class="med-label-preview">
+              <div class="label-hospital-header">
+                <span>HSM CENTRAL DISPENSARY</span>
+                <span>PH: +1-800-HSM-CARE</span>
+              </div>
+              <div style="font-size: 0.8rem; margin-bottom: 0.2rem;">Pt: <strong>Maria Garcia</strong> (Age 42 • F)</div>
+              <div style="font-size: 0.8rem; margin-bottom: 0.5rem;">Rx #RX-8842 • Date: 2026-09-03</div>
+              <div style="border-top: 1px dashed #334155; padding-top: 0.4rem;">
+                <div style="font-size: 0.95rem; font-weight: bold;">AUGMENTIN 625 DUO (AMOXICILLIN/CLAV)</div>
+                <div class="label-sig">TAKE 1 TABLET TWICE DAILY AFTER MEALS FOR 10 DAYS</div>
+                <div style="font-size: 0.75rem; color: #475569; margin: 0.25rem 0;">
+                  ⚠️ Finish all medication unless instructed otherwise. Store below 25°C.
+                </div>
+                <div style="font-size: 0.7rem; border-top: 1px solid #334155; padding-top: 0.25rem; margin-top: 0.5rem; display: flex; justify-content: space-between;">
+                  <span>Dispenser: E. Vance, RPh</span>
+                  <span>Batch: BT-AG-2025-11</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             10. Sales and Returns
+             ==================================================================== -->
+        <section class="pharm-module-card" id="sales-returns">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                10. Pharmacy Point of Sale (POS) & Patient Sales Returns
+              </h2>
+              <p class="pharm-module-desc">Direct outpatient retail billing, multi-channel payment split (Cash, Card, Insurance, TPA), and patient medicine refund restocking.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="openPatientReturnModal()">+ Process Patient Sales Return</button>
+          </div>
+
+          <div class="dispense-station-grid">
+            <!-- Active POS Register Table -->
+            <div>
+              <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                <input type="text" id="posDrugInput" class="form-control" placeholder="Quick add drug to POS register by SKU or name..." style="font-size: 0.85rem;">
+                <button class="btn btn-secondary btn-sm" onclick="posQuickAddDrug()">Add Item</button>
+              </div>
+
+              <div class="pharm-table-wrap">
+                <table class="pharm-table" id="posItemsTable">
+                  <thead>
+                    <tr>
+                      <th>Product Description</th>
+                      <th>Batch</th>
+                      <th>Qty</th>
+                      <th>Rate ($)</th>
+                      <th>GST %</th>
+                      <th>Total ($)</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Augmentin 625 Duo (Strip of 10)</td>
+                      <td><code>BT-AG-2025-11</code></td>
+                      <td><input type="number" value="2" min="1" max="10" style="width: 50px; padding: 2px 4px;" onchange="recalcPosTotal()"></td>
+                      <td>$12.50</td>
+                      <td>12%</td>
+                      <td><strong>$25.00</strong></td>
+                      <td><button class="btn btn-secondary btn-sm" onclick="removePosRow(this)" style="color: #dc2626;">×</button></td>
+                    </tr>
+                    <tr>
+                      <td>Dolo 650 Fast Tab (Strip of 15)</td>
+                      <td><code>BT-DL-2026-04</code></td>
+                      <td><input type="number" value="1" min="1" max="10" style="width: 50px; padding: 2px 4px;" onchange="recalcPosTotal()"></td>
+                      <td>$3.20</td>
+                      <td>12%</td>
+                      <td><strong>$3.20</strong></td>
+                      <td><button class="btn btn-secondary btn-sm" onclick="removePosRow(this)" style="color: #dc2626;">×</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Checkout Price Breakdown & Tender Card -->
+            <div class="pos-summary-card">
+              <h3 style="font-size: 1.05rem; font-weight: 850; color: var(--pharm-dark); margin: 0 0 1rem 0;">Sales Receipt Summary</h3>
+              
+              <div class="pos-total-row">
+                <span>Subtotal Items (3 units)</span>
+                <span id="posSubtotal">$28.20</span>
+              </div>
+              <div class="pos-total-row">
+                <span>Applicable GST (12% Pharma)</span>
+                <span id="posTax">$3.38</span>
+              </div>
+              <div class="pos-total-row">
+                <span>Hospital Loyalty / Co-Pay Discount (5%)</span>
+                <span style="color: #059669;" id="posDiscount">-$1.58</span>
+              </div>
+              <div class="pos-total-row pos-grand-total">
+                <span>Grand Total Net</span>
+                <span id="posGrandTotal">$30.00</span>
+              </div>
+
+              <!-- Payment Tender Selector -->
+              <div style="margin-top: 1.25rem;">
+                <label style="font-size: 0.8rem; font-weight: 750; color: #475569; display: block; margin-bottom: 0.4rem;">Select Payment Method</label>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-bottom: 1rem;">
+                  <button class="pill-filter-btn active" type="button" onclick="setPosPayment('cash', this)">Cash Tender</button>
+                  <button class="pill-filter-btn" type="button" onclick="setPosPayment('card', this)">Credit/Debit Card</button>
+                  <button class="pill-filter-btn" type="button" onclick="setPosPayment('insurance', this)">Insurance / TPA</button>
+                  <button class="pill-filter-btn" type="button" onclick="setPosPayment('ipd', this)">IPD Bed Folio</button>
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%; padding: 0.85rem; font-size: 0.95rem;" onclick="finalizePosSale()">
+                  Authorize Payment & Print Tax Invoice
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             11. Low-stock alerts
+             ==================================================================== -->
+        <section class="pharm-module-card" id="low-stock-alerts">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                11. Safety Stock Buffer & Critical Low-Stock Radar
+              </h2>
+              <p class="pharm-module-desc">Automated stock breach threshold notifications with one-click direct Purchase Requisition (PR) to primary suppliers.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="bulkReorderLowStock()">1-Click Bulk PO Requisition</button>
+          </div>
+
+          <div class="pharm-table-wrap">
+            <table class="pharm-table">
+              <thead>
+                <tr>
+                  <th>Drug SKU</th>
+                  <th>Formulation</th>
+                  <th>Therapeutic Class</th>
+                  <th>Safety Min Threshold</th>
+                  <th>Current Stock</th>
+                  <th>Deficit</th>
+                  <th>Preferred Supplier</th>
+                  <th>Urgency Level</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: #fff1f2;">
+                  <td><strong>MED-1005</strong></td>
+                  <td><strong>Lantus SoloStar Pen (Insulin Glargine)</strong></td>
+                  <td>Endocrine / Diabetes</td>
+                  <td>40 pens</td>
+                  <td><strong style="color: #dc2626;">0 pens</strong></td>
+                  <td>-40 pens</td>
+                  <td>Sanofi / Global Lifecare</td>
+                  <td><span class="badge-sched sched-h" style="background: #fee2e2; color: #991b1b;">CRITICAL ZERO</span></td>
+                  <td>
+                    <button class="btn btn-primary btn-sm" style="background: #dc2626; border-color: #dc2626;" onclick="triggerFastPO('MED-1005', 'Lantus SoloStar')">Instant PO</button>
+                  </td>
+                </tr>
+                <tr style="background: #fff7ed;">
+                  <td><strong>MED-1002</strong></td>
+                  <td><strong>Clexane 40mg Enoxaparin</strong></td>
+                  <td>Anticoagulant / Hematology</td>
+                  <td>30 units</td>
+                  <td><strong style="color: #ea580c;">14 units</strong></td>
+                  <td>-16 units</td>
+                  <td>Apex Pharma Logistics</td>
+                  <td><span class="stock-pill stock-low">URGENT LOW</span></td>
+                  <td>
+                    <button class="btn btn-primary btn-sm" onclick="triggerFastPO('MED-1002', 'Clexane 40mg')">Create PO</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>MED-1014</strong></td>
+                  <td><strong>Atorvastatin 40mg Tablets</strong></td>
+                  <td>Cardiology / Lipid</td>
+                  <td>100 strips</td>
+                  <td><strong>65 strips</strong></td>
+                  <td>-35 strips</td>
+                  <td>Sun Pharmaceutical</td>
+                  <td><span class="stock-pill stock-low">REORDER LEVEL</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="triggerFastPO('MED-1014', 'Atorvastatin 40mg')">Create PO</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>MED-1022</strong></td>
+                  <td><strong>Ondansetron 4mg Injection</strong></td>
+                  <td>Antiemetic / Oncology</td>
+                  <td>80 ampoules</td>
+                  <td><strong>42 ampoules</strong></td>
+                  <td>-38 ampoules</td>
+                  <td>Cipla Healthcare</td>
+                  <td><span class="stock-pill stock-low">REORDER LEVEL</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="triggerFastPO('MED-1022', 'Ondansetron 4mg')">Create PO</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             12. Expiry alerts
+             ==================================================================== -->
+        <section class="pharm-module-card" id="expiry-alerts">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                12. Proactive Expiry Timeline Radar
+              </h2>
+              <p class="pharm-module-desc">Graduated countdown surveillance for expired goods, &lt;30 days critical batches, &lt;60 days warnings, and supplier return protocols.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="showPharmToast('Expiry audit report printed for clinical supervisor.')">Print Expiry Log</button>
+          </div>
+
+          <div class="pharm-four-col" style="margin-bottom: 1.5rem;">
+            <div class="pharm-kpi-box" style="border-top: 4px solid #dc2626;">
+              <div class="pharm-kpi-label" style="color: #dc2626;">Expired (Quarantine Required)</div>
+              <div class="pharm-kpi-val" style="color: #dc2626;">1 Batch</div>
+              <div class="pharm-kpi-sub" style="color: #dc2626;">12 Vials • Discard / RTV</div>
+            </div>
+            <div class="pharm-kpi-box" style="border-top: 4px solid #ea580c;">
+              <div class="pharm-kpi-label" style="color: #ea580c;">Critical: &lt; 30 Days Left</div>
+              <div class="pharm-kpi-val" style="color: #ea580c;">3 Batches</div>
+              <div class="pharm-kpi-sub" style="color: #ea580c;">Fast FEFO Dispense</div>
+            </div>
+            <div class="pharm-kpi-box" style="border-top: 4px solid #ca8a04;">
+              <div class="pharm-kpi-label" style="color: #ca8a04;">Warning: &lt; 60 Days Left</div>
+              <div class="pharm-kpi-val" style="color: #ca8a04;">5 Batches</div>
+              <div class="pharm-kpi-sub" style="color: #ca8a04;">Vendor Return Window</div>
+            </div>
+            <div class="pharm-kpi-box" style="border-top: 4px solid #0284c7;">
+              <div class="pharm-kpi-label" style="color: #0284c7;">Advisory: &lt; 90 Days Left</div>
+              <div class="pharm-kpi-val" style="color: #0284c7;">14 Batches</div>
+              <div class="pharm-kpi-sub" style="color: #0284c7;">Procurement Scheduled</div>
+            </div>
+          </div>
+
+          <div class="pharm-table-wrap">
+            <table class="pharm-table">
+              <thead>
+                <tr>
+                  <th>Drug Formulation</th>
+                  <th>Batch Number</th>
+                  <th>Expiry Date</th>
+                  <th>Days Remaining</th>
+                  <th>Quantity Remaining</th>
+                  <th>Estimated Value</th>
+                  <th>Recommended Protocol</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: #fff1f2;">
+                  <td><strong>Ceftriaxone 1g Injection</strong></td>
+                  <td><code>BT-CF-2024-01</code></td>
+                  <td><strong style="color: #dc2626;">2026-08-30</strong></td>
+                  <td><span style="color: #dc2626; font-weight: 800;">Expired (-4d)</span></td>
+                  <td>12 Vials</td>
+                  <td>$320.00</td>
+                  <td><span class="badge-expiry exp-quarantine">Hazardous Quarantine / RTV</span></td>
+                  <td>
+                    <button class="btn btn-primary btn-sm" style="background: #dc2626; border-color: #dc2626;" onclick="initiateRtvReturn('BT-CF-2024-01', 'Expired Lot')">RTV Debit Note</button>
+                  </td>
+                </tr>
+                <tr style="background: #fff7ed;">
+                  <td><strong>Clexane 40mg Injection</strong></td>
+                  <td><code>BT-CX-2024-09</code></td>
+                  <td>2026-09-28</td>
+                  <td><span style="color: #ea580c; font-weight: 800;">25 Days</span></td>
+                  <td>14 Syringes</td>
+                  <td>$392.00</td>
+                  <td><span class="badge-expiry exp-critical">FEFO Priority Dispense</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="showPharmToast('Batch BT-CX-2024-09 set to FEFO top priority.')">Prioritize FEFO</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Augmentin 625 Duo</strong></td>
+                  <td><code>BT-AG-2025-11</code></td>
+                  <td>2026-10-20</td>
+                  <td><span style="color: #ca8a04; font-weight: 800;">47 Days</span></td>
+                  <td>60 Strips</td>
+                  <td>$750.00</td>
+                  <td><span class="badge-expiry exp-warning">Return Window Open</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="initiateRtvReturn('BT-AG-2025-11', 'Near Expiry RTV Window')">Initiate Return</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             13. Pricing and tax
+             ==================================================================== -->
+        <section class="pharm-module-card" id="pricing-tax">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                13. Pricing Engine, Margin Management & GST Tax Slabs
+              </h2>
+              <p class="pharm-module-desc">Wholesale acquisition costs, HSN code classification, mandatory MRP compliance, and interactive margin calculator.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="showPharmToast('GST master rates verified against tax authority portal.')">Verify Tax Slabs</button>
+          </div>
+
+          <div class="dispense-station-grid">
+            <!-- Price & Tax Master Table -->
+            <div class="pharm-table-wrap">
+              <table class="pharm-table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>HSN Code</th>
+                    <th>Cost Price</th>
+                    <th>Markup %</th>
+                    <th>MRP ($)</th>
+                    <th>GST Slab</th>
+                    <th>Margin ($)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Augmentin 625 Duo</strong></td>
+                    <td>3004.10</td>
+                    <td>$8.40</td>
+                    <td>48.8%</td>
+                    <td><strong>$12.50</strong></td>
+                    <td><span class="badge-sched sched-h">12% GST</span></td>
+                    <td><strong style="color: #059669;">+$4.10</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Clexane 40mg Inj</strong></td>
+                    <td>3004.90</td>
+                    <td>$21.00</td>
+                    <td>33.3%</td>
+                    <td><strong>$28.00</strong></td>
+                    <td><span class="badge-sched sched-h">12% GST</span></td>
+                    <td><strong style="color: #059669;">+$7.00</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Dolo 650 Fast Tab</strong></td>
+                    <td>3004.90</td>
+                    <td>$2.10</td>
+                    <td>52.3%</td>
+                    <td><strong>$3.20</strong></td>
+                    <td><span class="badge-sched sched-otc">12% GST</span></td>
+                    <td><strong style="color: #059669;">+$1.10</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Normal Saline 0.9%</strong></td>
+                    <td>3004.90</td>
+                    <td>$1.40</td>
+                    <td>50.0%</td>
+                    <td><strong>$2.10</strong></td>
+                    <td><span class="badge-sched sched-g">5% GST</span></td>
+                    <td><strong style="color: #059669;">+$0.70</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Trastuzumab (Onco)</strong></td>
+                    <td>3002.10</td>
+                    <td>$780.00</td>
+                    <td>14.1%</td>
+                    <td><strong>$890.00</strong></td>
+                    <td><span class="badge-sched sched-otc">0% (Exempt)</span></td>
+                    <td><strong style="color: #059669;">+$110.00</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Margin & Tax Interactive Calculator -->
+            <div class="calc-card">
+              <h3 style="font-size: 1rem; font-weight: 850; color: #065f46; margin: 0 0 0.85rem 0;">
+                🧮 Interactive Margin & Pricing Calculator
+              </h3>
+              <p style="font-size: 0.8rem; color: #047857; margin-bottom: 1rem;">
+                Simulate retail retail selling price (RSP), GST liability, and net dispensary gross margin.
+              </p>
+
+              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div>
+                  <label style="font-size: 0.75rem; font-weight: 750; color: #0f172a;">Purchase Cost (Wholesale $)</label>
+                  <input type="number" id="calcCost" value="50.00" class="form-control" oninput="runPricingCalc()">
+                </div>
+                <div>
+                  <label style="font-size: 0.75rem; font-weight: 750; color: #0f172a;">Target Dispensary Markup (%)</label>
+                  <input type="number" id="calcMarkup" value="35" class="form-control" oninput="runPricingCalc()">
+                </div>
+                <div>
+                  <label style="font-size: 0.75rem; font-weight: 750; color: #0f172a;">GST / VAT Tax Slab</label>
+                  <select id="calcGst" class="form-control" onchange="runPricingCalc()">
+                    <option value="0">0% (Life Saving / Cancer Special)</option>
+                    <option value="5">5% (Essential IV / Infusions)</option>
+                    <option value="12" selected>12% (Standard Formulations & Antibiotics)</option>
+                    <option value="18">18% (OTC, Nutraceuticals & Cosmetics)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="background: #ffffff; border-radius: 8px; padding: 0.85rem; margin-top: 1rem; border: 1px solid #a7f3d0;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.25rem;">
+                  <span>Computed Pre-Tax Price:</span>
+                  <strong id="calcPreTax">$67.50</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.25rem;">
+                  <span>Applicable GST Tax Amount:</span>
+                  <strong id="calcTaxAmt">$8.10</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 1rem; font-weight: 850; color: #047857; border-top: 1px dashed #a7f3d0; padding-top: 0.4rem; margin-top: 0.4rem;">
+                  <span>Suggested Consumer MRP:</span>
+                  <strong id="calcSuggestedMrp">$75.60</strong>
+                </div>
+                <div style="font-size: 0.75rem; color: #059669; font-weight: 700; margin-top: 0.35rem;">
+                  Net Unit Profit: <span id="calcNetProfit">$17.50 (26.0% Margin)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             14. Pharmacy reports
+             ==================================================================== -->
+        <section class="pharm-module-card" id="pharmacy-reports">
+          <div class="pharm-module-header">
+            <div>
+              <h2 class="pharm-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                14. Pharmacy Analytics, Valuation & Audit Reports
+              </h2>
+              <p class="pharm-module-desc">ABC/VED drug classification, turnover velocity, consumption variance, and printable audit reports.</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-secondary btn-sm" onclick="exportPharmacyCsv()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Export CSV
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="window.print()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+                Print Report
+              </button>
+            </div>
+          </div>
+
+          <!-- ABC / Fast vs Slow Moving Drugs -->
+          <div class="pharm-two-col">
+            <div>
+              <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--pharm-dark); margin-bottom: 0.75rem;">ABC Fast vs Slow Moving Drug Analysis</h3>
+              <div class="pharm-table-wrap">
+                <table class="pharm-table">
+                  <thead>
+                    <tr>
+                      <th>Classification</th>
+                      <th>Revenue Share</th>
+                      <th>SKU Count</th>
+                      <th>Turnover Ratio</th>
+                      <th>Action Policy</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="stock-pill stock-in">Category A (High Value)</span></td>
+                      <td>70% ($294,000)</td>
+                      <td>148 SKUs (10%)</td>
+                      <td>18.4x / year</td>
+                      <td>Daily JIT Monitoring</td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge-sched sched-otc">Category B (Moderate)</span></td>
+                      <td>20% ($84,000)</td>
+                      <td>296 SKUs (20%)</td>
+                      <td>8.2x / year</td>
+                      <td>Weekly Review</td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge-sched sched-g">Category C (Low Value)</span></td>
+                      <td>10% ($42,000)</td>
+                      <td>1,038 SKUs (70%)</td>
+                      <td>3.1x / year</td>
+                      <td>Monthly Bulk Reorder</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div>
+              <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--pharm-dark); margin-bottom: 0.75rem;">Dispensary Loss & Audit Ledger (Past 30 Days)</h3>
+              <div class="pharm-table-wrap">
+                <table class="pharm-table">
+                  <thead>
+                    <tr>
+                      <th>Audit Metric</th>
+                      <th>Units Impacted</th>
+                      <th>Financial Value</th>
+                      <th>Variance Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Expired Drug Loss (Quarantined)</td>
+                      <td>12 Vials</td>
+                      <td>$320.00</td>
+                      <td><strong style="color: #059669;">0.07% (Within 0.2% Limit)</strong></td>
+                    </tr>
+                    <tr>
+                      <td>Transit & Storage Breakage</td>
+                      <td>3 Items</td>
+                      <td>$182.50</td>
+                      <td><strong style="color: #059669;">0.04% (Nominal)</strong></td>
+                    </tr>
+                    <tr>
+                      <td>Physical Count Discrepancy</td>
+                      <td>-2 Strips</td>
+                      <td>$25.00</td>
+                      <td><strong style="color: #059669;">99.9% System Match</strong></td>
+                    </tr>
+                    <tr>
+                      <td>Vendor Credit Notes Recovered</td>
+                      <td>DN-881 & DN-882</td>
+                      <td>+$465.50</td>
+                      <td><strong style="color: #0284c7;">100% Settled</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- ======================================================================
+       Modals for Interactive Workflows
+       ====================================================================== -->
+
+  <!-- Modal 1: Add New Medicine Master -->
+  <div class="modal-backdrop" id="addMedicineModal" aria-hidden="true" role="dialog">
+    <div class="modal-card" style="max-width: 650px;">
+      <button class="modal-close-btn" onclick="closeAddMedicineModal()">&times;</button>
+      <div class="modal-header">
+        <h3 class="modal-title">Formulary Master: Add Medicine</h3>
+        <p class="modal-subtitle">Register formulation, generic equivalents, schedule class, and reorder levels.</p>
+      </div>
+
+      <form onsubmit="submitNewMedicine(event)">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Brand Name</label>
+            <input type="text" id="newMedBrand" class="form-control" placeholder="e.g. Lipitor 20mg" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Generic / Active Salt</label>
+            <input type="text" id="newMedGeneric" class="form-control" placeholder="e.g. Atorvastatin Calcium" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Dosage Form</label>
+            <select id="newMedForm" class="form-control" required>
+              <option value="Tablet">Tablet</option>
+              <option value="Capsule">Capsule</option>
+              <option value="Injection">Injection</option>
+              <option value="Syrup">Syrup</option>
+              <option value="IV Infusion">IV Infusion</option>
+              <option value="Ointment">Ointment / Gel</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Drug Schedule</label>
+            <select id="newMedSchedule" class="form-control" required>
+              <option value="H">Schedule H</option>
+              <option value="X">Schedule X (Narcotics)</option>
+              <option value="OTC">OTC (Over the counter)</option>
+              <option value="General">General / Non-Rx</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Min Reorder Level</label>
+            <input type="number" id="newMedReorder" class="form-control" value="50" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Storage Spec</label>
+            <select id="newMedStorage" class="form-control" required>
+              <option value="Room Temp < 30°C">Room Temp &lt; 30°C</option>
+              <option value="Cool & Dry < 25°C">Cool &amp; Dry &lt; 25°C</option>
+              <option value="Cold Chain 2°C - 8°C">Cold Chain 2°C - 8°C</option>
+              <option value="Narcotic Vault">Narcotic Double-Lock Vault</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Unit MRP ($)</label>
+            <input type="number" step="0.01" id="newMedMrp" class="form-control" value="15.00" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">GST Slab</label>
+            <select id="newMedGst" class="form-control" required>
+              <option value="12">12% GST</option>
+              <option value="5">5% GST</option>
+              <option value="0">0% (Exempt)</option>
+              <option value="18">18% GST</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
+          Save Formulation to Medicine Master
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Create Purchase Order (PO) -->
+  <div class="modal-backdrop" id="createPoModal" aria-hidden="true" role="dialog">
+    <div class="modal-card" style="max-width: 600px;">
+      <button class="modal-close-btn" onclick="closeCreatePoModal()">&times;</button>
+      <div class="modal-header">
+        <h3 class="modal-title">Generate Pharmacy Purchase Order</h3>
+        <p class="modal-subtitle">Dispatch official procurement purchase order to approved pharmaceutical distributor.</p>
+      </div>
+
+      <form onsubmit="submitPurchaseOrder(event)">
+        <div class="form-group">
+          <label class="form-label">Select Distributor / Supplier</label>
+          <select id="poSupplierSelect" class="form-control" required>
+            <option value="Apex Pharma Logistics">Apex Pharma Logistics (Net 30)</option>
+            <option value="Metro Medi-Distributors">Metro Medi-Distributors (Net 15)</option>
+            <option value="Global Lifecare Wholesalers">Global Lifecare Wholesalers (Net 45)</option>
+            <option value="Zenith Biotech Supply">Zenith Biotech Supply (COD)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Product / Formulation</label>
+          <input type="text" id="poProductInput" class="form-control" value="Lantus SoloStar Pen (Insulin Glargine)" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Order Quantity</label>
+            <input type="number" id="poQuantityInput" class="form-control" value="100" min="1" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Expected Delivery Date</label>
+            <input type="date" id="poDeliveryDate" class="form-control" value="2026-09-05" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Special Delivery & Storage Conditions</label>
+          <input type="text" class="form-control" value="Cold Chain Box Required (2°C - 8°C Data Logger)">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
+          Issue & Transmit Electronic Purchase Order
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Prescription CDS Review & Resolution -->
+  <div class="modal-backdrop" id="rxReviewModal" aria-hidden="true" role="dialog">
+    <div class="modal-card" style="max-width: 620px;">
+      <button class="modal-close-btn" onclick="closeRxReviewModal()">&times;</button>
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: #dc2626;">Clinical Pharmacist Intervention</h3>
+        <p class="modal-subtitle">Review drug interaction and record prescriber consultation.</p>
+      </div>
+
+      <div style="background: #fff1f2; border: 1px solid #fecdd3; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+        <div style="font-weight: 800; color: #991b1b; margin-bottom: 0.35rem;">Rx Details: <span id="reviewRxId">RX-8841</span> • Patient: <span id="reviewPatientName">Robert Chen</span></div>
+        <div style="font-size: 0.85rem; color: #4c0519;" id="reviewMedList">Warfarin 5mg, Aspirin 81mg, Atorvastatin 40mg</div>
+        <div style="font-size: 0.8rem; color: #dc2626; margin-top: 0.4rem; font-weight: 700;">
+          ⚠️ Major bleeding risk from dual antiplatelet/anticoagulant therapy.
+        </div>
+      </div>
+
+      <form onsubmit="submitRxResolution(event)">
+        <div class="form-group">
+          <label class="form-label">Clinical Action Taken</label>
+          <select class="form-control" required id="rxResolutionAction">
+            <option value="contacted">Contacted Dr. Sarah Jenkins: Discontinue Aspirin, maintain Warfarin with INR monitoring</option>
+            <option value="adjusted">Adjusted dosage to low-dose alternative with gastro-protection (PPI co-prescribed)</option>
+            <option value="rejected">Rejected: Prescription sent back to Cardiology for formal revision</option>
+            <option value="override">Authorized with High-Risk Patient Counseling & Bleeding Alert Protocol</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Pharmacist Clinical Note</label>
+          <textarea class="form-control" rows="3" placeholder="Document prescriber verbal confirmation or INR targets..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
+          Confirm Clinical Resolution & Update Queue
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Inter-Store Stock Transfer -->
+  <div class="modal-backdrop" id="transferModal" aria-hidden="true" role="dialog">
+    <div class="modal-card" style="max-width: 580px;">
+      <button class="modal-close-btn" onclick="closeTransferModal()">&times;</button>
+      <div class="modal-header">
+        <h3 class="modal-title">Internal Drug Indent Transfer</h3>
+        <p class="modal-subtitle">Transfer verified inventory between Central Bulk and Satellite Dispensaries.</p>
+      </div>
+
+      <form onsubmit="submitStockTransfer(event)">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Source Department</label>
+            <select class="form-control" required>
+              <option value="central">Central Pharmacy Bulk (Block B)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Destination Station</label>
+            <select class="form-control" required>
+              <option value="icu">ICU Satellite &amp; Crash Carts</option>
+              <option value="opd">OPD Fast-Track Dispensary</option>
+              <option value="ipd3">IPD Floor 3 Ward Station</option>
+              <option value="ot">Operating Theatre Pharmacy</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Select Drug &amp; Available Batch</label>
+          <select class="form-control" required>
+            <option value="AUG">Augmentin 625 Duo (Batch: BT-AG-2025-11, 60 available)</option>
+            <option value="DOLO">Dolo 650 Fast Tab (Batch: BT-DL-2026-04, 850 available)</option>
+            <option value="NS">Normal Saline 0.9% 500ml (Batch: BT-NS-109, 420 available)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Transfer Quantity</label>
+          <input type="number" class="form-control" value="25" min="1" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
+          Dispatch Transfer Indent
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 5: Stock Adjustment / Breakage Write-off -->
+  <div class="modal-backdrop" id="adjustmentModal" aria-hidden="true" role="dialog">
+    <div class="modal-card" style="max-width: 580px;">
+      <button class="modal-close-btn" onclick="closeAdjustmentModal()">&times;</button>
+      <div class="modal-header">
+        <h3 class="modal-title">Record Stock Discard / Breakage</h3>
+        <p class="modal-subtitle">Log verified inventory write-offs for damaged, spilled, or broken vials.</p>
+      </div>
+
+      <form onsubmit="submitStockAdjustment(event)">
+        <div class="form-group">
+          <label class="form-label">Medicine Formulation</label>
+          <input type="text" class="form-control" value="Normal Saline 0.9% 500ml IV" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Batch Number</label>
+            <input type="text" class="form-control" value="BT-NS-109" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Quantity to Write Off</label>
+            <input type="number" class="form-control" value="2" min="1" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Reason Code</label>
+          <select class="form-control" required>
+            <option value="breakage">Accidental Dropped / Broken Bottle</option>
+            <option value="coldchain">Cold Chain Temperature Excursion Breach</option>
+            <option value="packaging">Defective Packaging / Contaminated Seal</option>
+            <option value="expired">Quarantined Expired Disposal Protocol</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
+          Authorize Adjustment &amp; Deduct Ledger
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 6: Tax Invoice Receipt Print Preview -->
+  <div class="modal-backdrop" id="posReceiptModal" aria-hidden="true" role="dialog">
+    <div class="modal-card" style="max-width: 540px;">
+      <button class="modal-close-btn" onclick="closePosReceiptModal()">&times;</button>
+      <div class="modal-header">
+        <h3 class="modal-title">Pharmacy GST Tax Invoice</h3>
+        <p class="modal-subtitle">Official computer-generated patient bill and tax breakdown.</p>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; font-family: monospace; font-size: 0.85rem; margin-bottom: 1.25rem;" id="printableReceiptArea">
+        <div style="text-align: center; border-bottom: 1px dashed #334155; padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
+          <strong style="font-size: 1.1rem; display: block;">HSM HEALTHCARE PHARMACY</strong>
+          <span>Metro Care Hospital Hub • Block B Dispensary</span><br>
+          <span>GSTIN: 27AAACH9941M1Z3 • DL: 20B/21B-48192</span>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+          <span>Invoice #: <strong id="recInvoiceNo">INV-2026-9042</strong></span>
+          <span>Date: <strong>2026-09-03</strong></span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+          <span>Patient: <strong>Maria Garcia (OPD-4092)</strong></span>
+          <span>Payment: <strong id="recPaymentMode">Cash Tender</strong></span>
+        </div>
+
+        <div style="border-top: 1px solid #334155; border-bottom: 1px solid #334155; padding: 0.4rem 0; margin-bottom: 0.5rem;">
+          <div style="display: flex; justify-content: space-between; font-weight: bold;">
+            <span>Item / Batch</span>
+            <span>Qty × Rate</span>
+            <span>Amt ($)</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+            <span>Augmentin 625 Duo (BT-AG-25)</span>
+            <span>2 × $12.50</span>
+            <span>$25.00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+            <span>Dolo 650 Fast Tab (BT-DL-04)</span>
+            <span>1 × $3.20</span>
+            <span>$3.20</span>
+          </div>
+        </div>
+
+        <div style="border-top: 1px dashed #334155; padding-top: 0.5rem;">
+          <div style="display: flex; justify-content: space-between;">
+            <span>Subtotal:</span>
+            <span>$28.20</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span>GST (12%):</span>
+            <span>$3.38</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; color: #059669;">
+            <span>Hospital Co-pay Discount:</span>
+            <span>-$1.58</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: bold; border-top: 1px solid #334155; margin-top: 0.4rem; padding-top: 0.4rem;">
+            <span>TOTAL PAID:</span>
+            <span>$30.00</span>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 1rem; font-size: 0.75rem; color: #64748b;">
+          *** Thank You for Choosing HSM Healthcare ***<br>
+          Medicines once dispensed can only be returned within 48h if unopened and temperature-intact.
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem;">
+        <button class="btn btn-secondary" style="flex: 1;" onclick="closePosReceiptModal()">Close</button>
+        <button class="btn btn-primary" style="flex: 1;" onclick="window.print()">
+          Print Tax Invoice
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notification" id="pharmActionToast" role="status" aria-live="polite">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="pharmActionToastMsg">Action completed successfully.</span>
+  </div>
+
+  <!-- ======================================================================
+       Portal Core Script
+       ====================================================================== -->
+  <script>
+    // Toast Helper
+    function showPharmToast(msg) {
+      const toast = document.getElementById('pharmActionToast');
+      const text = document.getElementById('pharmActionToastMsg');
+      text.textContent = msg;
+      toast.classList.add('active');
+      setTimeout(() => toast.classList.remove('active'), 4000);
+    }
+
+    // Branch Switcher
+    function switchPharmacyBranch(branch) {
+      const names = {
+        main: "Central Pharmacy Bulk Store (Block B)",
+        opd: "OPD Fast-Track Dispensary (Atrium)",
+        ipd: "Inpatient (IPD) Satellite (Floor 3)",
+        icu: "Emergency & Trauma Station (ER Core)"
+      };
+      showPharmToast(`Switched terminal context to: ${names[branch] || branch}`);
+    }
+
+    // 1. Medicine Master Search & Filter
+    let activeSchedFilter = 'all';
+
+    function filterMedMasterTable() {
+      const query = document.getElementById('medMasterSearch').value.toLowerCase();
+      const rows = document.querySelectorAll('#medMasterTable tbody tr');
+
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        const sched = row.getAttribute('data-schedule');
+        const matchesQuery = text.includes(query);
+        const matchesSched = activeSchedFilter === 'all' || sched === activeSchedFilter;
+
+        if (matchesQuery && matchesSched) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    function setMedScheduleFilter(filter, btn) {
+      activeSchedFilter = filter;
+      document.querySelectorAll('#medicine-master .pill-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterMedMasterTable();
+    }
+
+    // Modals
+    function openAddMedicineModal() {
+      document.getElementById('addMedicineModal').classList.add('active');
+    }
+    function closeAddMedicineModal() {
+      document.getElementById('addMedicineModal').classList.remove('active');
+    }
+
+    function submitNewMedicine(e) {
+      e.preventDefault();
+      const brand = document.getElementById('newMedBrand').value;
+      const generic = document.getElementById('newMedGeneric').value;
+      const form = document.getElementById('newMedForm').value;
+      const sched = document.getElementById('newMedSchedule').value;
+      const mrp = document.getElementById('newMedMrp').value;
+
+      const tbody = document.querySelector('#medMasterTable tbody');
+      const newSku = `MED-${1000 + tbody.rows.length + 1}`;
+      
+      const newRow = document.createElement('tr');
+      newRow.setAttribute('data-schedule', sched);
+      newRow.innerHTML = `
+        <td><strong>${newSku}</strong></td>
+        <td>
+          <div style="font-weight: 750;">${brand}</div>
+          <small style="color: var(--pharm-muted);">${generic}</small>
+        </td>
+        <td>${form}</td>
+        <td><span class="badge-sched sched-${sched.toLowerCase()}">${sched === 'H' ? 'Schedule H' : sched === 'X' ? 'Schedule X' : sched}</span></td>
+        <td>Standard Storage</td>
+        <td>50 units</td>
+        <td><span class="stock-pill stock-in">100 units</span></td>
+        <td>$${parseFloat(mrp).toFixed(2)}</td>
+        <td><button class="btn btn-secondary btn-sm" onclick="quickEditDrug('${newSku}')">Edit</button></td>
+      `;
+      tbody.prepend(newRow);
+
+      const kpiEl = document.getElementById('kpiTotalSkus');
+      if (kpiEl) {
+        kpiEl.textContent = (parseInt(kpiEl.textContent.replace(',', '')) + 1).toLocaleString();
+      }
+
+      closeAddMedicineModal();
+      showPharmToast(`✅ Formulation '${brand}' registered successfully in Medicine Master!`);
+      e.target.reset();
+    }
+
+    function quickEditDrug(sku) {
+      showPharmToast(`Opened drug monograph & lot configuration for ${sku}`);
+    }
+
+    // 3. Suppliers & PO Modals
+    function openRegisterSupplierModal() {
+      showPharmToast('Supplier registration modal opened: Enter WHO-GMP license & GSTIN credentials.');
+    }
+
+    function openCreatePOModal(supplier = '') {
+      if (supplier) {
+        const select = document.getElementById('poSupplierSelect');
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.includes(supplier.split(' ')[0])) {
+            select.selectedIndex = i;
+            break;
+          }
+        }
+      }
+      document.getElementById('createPoModal').classList.add('active');
+    }
+    function closeCreatePoModal() {
+      document.getElementById('createPoModal').classList.remove('active');
+    }
+
+    function submitPurchaseOrder(e) {
+      e.preventDefault();
+      const supp = document.getElementById('poSupplierSelect').value;
+      const prod = document.getElementById('poProductInput').value;
+      const qty = document.getElementById('poQuantityInput').value;
+      closeCreatePoModal();
+      showPharmToast(`📦 PO Generated for ${qty}x ${prod} from ${supp}! Supplier EDI notified.`);
+    }
+
+    function triggerFastPO(sku, drugName) {
+      document.getElementById('poProductInput').value = `${drugName} (${sku})`;
+      openCreatePOModal();
+    }
+
+    function bulkReorderLowStock() {
+      showPharmToast('🚀 Auto-generated 4 Purchase Orders for all items breaching critical safety buffer!');
+    }
+
+    // 4. Batch Quarantine Toggle
+    function toggleBatchQuarantine(rowId, batchNo) {
+      const row = document.getElementById(rowId);
+      if (!row) return;
+      const statusCell = row.cells[7];
+      const btn = row.cells[8].querySelector('button');
+
+      if (statusCell.textContent.includes('Quarantined')) {
+        statusCell.innerHTML = '<span class="badge-expiry exp-safe">Active Healthy</span>';
+        btn.textContent = 'Quarantine';
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-secondary');
+        showPharmToast(`🔓 Batch ${batchNo} released from Quarantine lock! Available for dispensing.`);
+      } else {
+        statusCell.innerHTML = '<span class="badge-expiry exp-quarantine">Quarantined Locked</span>';
+        btn.textContent = 'Release Batch';
+        btn.classList.remove('btn-secondary');
+        btn.classList.add('btn-primary');
+        showPharmToast(`🔒 Batch ${batchNo} placed under QUARANTINE! Dispense blocked.`);
+      }
+    }
+
+    function simulateBarcodeScan() {
+      const barcodes = ['890123456789 (Augmentin)', '890987654321 (Clexane)', '890456123789 (Dolo 650)'];
+      const chosen = barcodes[Math.floor(Math.random() * barcodes.length)];
+      showPharmToast(`📷 Barcode Scanned: [${chosen}] • Batch verified against FEFO register.`);
+    }
+
+    function initiateRtvReturn(batchNo, reason) {
+      showPharmToast(`📤 Return-to-Vendor initiated for Batch ${batchNo}. Debit note DN-2026 generated (${reason}).`);
+    }
+
+    // 6. Physical Audit Modal
+    function openPhysicalAuditModal() {
+      showPharmToast('Physical Stock Reconciliation Tool launched: 1,482 SKUs locked for barcode count.');
+    }
+
+    // 7. Transfer & Adjustments
+    function openTransferModal() {
+      document.getElementById('transferModal').classList.add('active');
+    }
+    function closeTransferModal() {
+      document.getElementById('transferModal').classList.remove('active');
+    }
+    function submitStockTransfer(e) {
+      e.preventDefault();
+      closeTransferModal();
+      showPharmToast('🚚 Stock Transfer indent issued! Transit team and receiving nurse station notified.');
+    }
+
+    function openAdjustmentModal() {
+      document.getElementById('adjustmentModal').classList.add('active');
+    }
+    function closeAdjustmentModal() {
+      document.getElementById('adjustmentModal').classList.remove('active');
+    }
+    function submitStockAdjustment(e) {
+      e.preventDefault();
+      closeAdjustmentModal();
+      showPharmToast('⚠️ Breakage/spillage adjustment logged & deducted from Central Bulk inventory.');
+    }
+
+    // 8. Prescription CDS Review
+    function reviewPrescription(rxId, patient, doc, meds) {
+      document.getElementById('reviewRxId').textContent = rxId;
+      document.getElementById('reviewPatientName').textContent = patient;
+      document.getElementById('reviewMedList').textContent = meds;
+      document.getElementById('rxReviewModal').classList.add('active');
+    }
+    function closeRxReviewModal() {
+      document.getElementById('rxReviewModal').classList.remove('active');
+    }
+    function submitRxResolution(e) {
+      e.preventDefault();
+      closeRxReviewModal();
+      const banner = document.getElementById('cdsAlertBanner');
+      if (banner) {
+        banner.className = 'cds-alert-box cds-warning';
+        banner.innerHTML = `
+          <div class="cds-alert-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="cds-alert-title">CDS Clinical Resolution Approved</div>
+            <p class="cds-alert-text">Prescription <strong>#RX-8841 (Robert Chen)</strong> verified by Elena Vance, PharmD. Aspirin suspended, Warfarin 5mg authorized with INR monitoring.</p>
+          </div>
+        `;
+      }
+      showPharmToast('✅ Prescriber consultation documented. Rx approved for dispensing!');
+    }
+
+    function loadToDispenseCounter(rxId, patient) {
+      document.getElementById('dispensePatientTitle').textContent = `Active Dispense: ${patient} (${rxId})`;
+      const target = document.getElementById('dispensing-counter');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+      showPharmToast(`Loaded ${rxId} (${patient}) into Point of Dispensing station.`);
+    }
+
+    // 9. Dispensing Execution
+    function executeDispenseDeduction(rxId, patient) {
+      const rightsChecked = ['rightPatient', 'rightDrug', 'rightDose', 'rightRoute', 'rightTime']
+        .every(id => document.getElementById(id).checked);
+
+      if (!rightsChecked) {
+        alert('Please complete all 5-Rights medication safety checklist checks before dispensing!');
+        return;
+      }
+
+      showPharmToast(`💊 Dispense verified & completed for ${patient}! Stock deducted from FEFO lot.`);
+      const queueEl = document.getElementById('kpiRxQueue');
+      if (queueEl) {
+        let current = parseInt(queueEl.textContent);
+        if (current > 0) queueEl.innerHTML = `${current - 1} <small style="font-size: 0.85rem; color: #64748b;">Pending</small>`;
+      }
+    }
+
+    function printMedicineLabel() {
+      window.print();
+    }
+
+    // 10. POS Sales Register
+    function recalcPosTotal() {
+      const table = document.getElementById('posItemsTable');
+      let subtotal = 0;
+      const rows = table.querySelectorAll('tbody tr');
+
+      rows.forEach(row => {
+        const qtyInput = row.querySelector('input[type="number"]');
+        const rateText = row.cells[3].textContent.replace('$', '');
+        const qty = parseInt(qtyInput.value) || 0;
+        const rate = parseFloat(rateText) || 0;
+        const total = qty * rate;
+        row.cells[5].innerHTML = `<strong>$${total.toFixed(2)}</strong>`;
+        subtotal += total;
+      });
+
+      const tax = subtotal * 0.12;
+      const discount = subtotal * 0.05;
+      const grandTotal = subtotal + tax - discount;
+
+      document.getElementById('posSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById('posTax').textContent = `$${tax.toFixed(2)}`;
+      document.getElementById('posDiscount').textContent = `-$${discount.toFixed(2)}`;
+      document.getElementById('posGrandTotal').textContent = `$${grandTotal.toFixed(2)}`;
+    }
+
+    function removePosRow(btn) {
+      const row = btn.closest('tr');
+      row.remove();
+      recalcPosTotal();
+      showPharmToast('Item removed from active POS register.');
+    }
+
+    function posQuickAddDrug() {
+      const input = document.getElementById('posDrugInput');
+      const val = input.value.trim() || "Paracetamol 500mg (Strip of 10)";
+      const tbody = document.querySelector('#posItemsTable tbody');
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${val}</td>
+        <td><code>BT-GEN-2026</code></td>
+        <td><input type="number" value="1" min="1" max="10" style="width: 50px; padding: 2px 4px;" onchange="recalcPosTotal()"></td>
+        <td>$5.00</td>
+        <td>12%</td>
+        <td><strong>$5.00</strong></td>
+        <td><button class="btn btn-secondary btn-sm" onclick="removePosRow(this)" style="color: #dc2626;">×</button></td>
+      `;
+      tbody.appendChild(tr);
+      input.value = '';
+      recalcPosTotal();
+      showPharmToast(`Added '${val}' to POS checkout register.`);
+    }
+
+    let activePaymentMode = 'Cash Tender';
+    function setPosPayment(mode, btn) {
+      document.querySelectorAll('.pos-summary-card .pill-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activePaymentMode = mode === 'cash' ? 'Cash Tender' : mode === 'card' ? 'Credit/Debit Card' : mode === 'insurance' ? 'Insurance / TPA Copay' : 'IPD Bed Folio';
+    }
+
+    function finalizePosSale() {
+      document.getElementById('recPaymentMode').textContent = activePaymentMode;
+      document.getElementById('posReceiptModal').classList.add('active');
+      showPharmToast('🧾 Transaction authorized! Tax invoice generated.');
+    }
+
+    function closePosReceiptModal() {
+      document.getElementById('posReceiptModal').classList.remove('active');
+    }
+
+    function openPatientReturnModal() {
+      const inv = prompt("Enter Patient Sales Invoice Number (e.g. INV-2026-8910):", "INV-2026-8910");
+      if (inv) {
+        showPharmToast(`✅ Invoice ${inv} loaded. Unopened blisters verified & credited to patient ledger.`);
+      }
+    }
+
+    // 13. Pricing & Tax Interactive Calculator
+    function runPricingCalc() {
+      const cost = parseFloat(document.getElementById('calcCost').value) || 0;
+      const markup = parseFloat(document.getElementById('calcMarkup').value) || 0;
+      const gstPercent = parseFloat(document.getElementById('calcGst').value) || 0;
+
+      const preTax = cost * (1 + markup / 100);
+      const taxAmt = preTax * (gstPercent / 100);
+      const suggestedMrp = preTax + taxAmt;
+      const netProfit = preTax - cost;
+      const profitMarginPct = preTax > 0 ? ((netProfit / preTax) * 100).toFixed(1) : 0;
+
+      document.getElementById('calcPreTax').textContent = `$${preTax.toFixed(2)}`;
+      document.getElementById('calcTaxAmt').textContent = `$${taxAmt.toFixed(2)}`;
+      document.getElementById('calcSuggestedMrp').textContent = `$${suggestedMrp.toFixed(2)}`;
+      document.getElementById('calcNetProfit').textContent = `$${netProfit.toFixed(2)} (${profitMarginPct}% Margin)`;
+    }
+
+    // 14. Reports Export
+    function exportPharmacyCsv() {
+      const csvContent = "data:text/csv;charset=utf-8," 
+        + "Drug SKU,Brand,Generic,Dosage Form,Stock Level,Unit Price,GST Slab\n"
+        + "MED-1001,Augmentin 625 Duo,Amoxicillin+Clavulanic,Tablet,240,12.50,12%\n"
+        + "MED-1002,Clexane 40mg,Enoxaparin Sodium,Pre-filled Syringe,14,28.00,12%\n"
+        + "MED-1003,Dolo 650,Paracetamol,Tablet,850,3.20,12%\n"
+        + "MED-1004,Morphine Sulfate 10mg,Morphine,Ampoule,68,45.00,12%\n"
+        + "MED-1005,Lantus SoloStar,Insulin Glargine,Cartridge Pen,0,34.50,12%\n"
+        + "MED-1006,Normal Saline 0.9%,Sodium Chloride,IV Bottle,420,2.10,5%\n";
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "HSM_Pharmacy_Formulary_Audit.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showPharmToast('📁 Pharmacy Formulary & Stock Audit CSV downloaded successfully.');
+    }
+
+    // ScrollSpy for Sidebar Navigation
+    const navLinks = document.querySelectorAll('.pharm-nav-item');
+    window.addEventListener('scroll', () => {
+      let scrollPos = window.scrollY + 140;
+      navLinks.forEach(item => {
+        const targetId = item.getAttribute('href').substring(1);
+        const section = document.getElementById(targetId);
+        if (section) {
+          const top = section.offsetTop;
+          const height = section.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            navLinks.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+          }
+        }
+      });
+    }, { passive: true });
+
+    // Run pricing calc on load
+    runPricingCalc();
+  </script>
+</body>
+</html>

@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Portal & Electronic Health Record | HSM Healthcare</title>
+  <meta name="description" content="HSM Comprehensive Patient Portal: UHID, duplicate detection, demographics, allergies, medical history, appointments, e-prescriptions, lab reports, billing, insurance, and longitudinal timeline.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;750;800;850&display=swap" rel="stylesheet">
+
+  <!-- Core & Portal Styles -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/portal.css">
+</head>
+<body class="portal-body">
+
+  <div class="portal-layout">
+    <!-- ======================================================================
+         Sidebar Navigation (Jump to all 15 Clinical Modules)
+         ====================================================================== -->
+    <aside class="portal-sidebar" id="portalSidebar">
+      <div class="portal-brand">
+        <div class="logo-icon-wrapper" style="width: 34px; height: 34px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2v20M2 12h20M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24"/>
+          </svg>
+        </div>
+        <span>HSM Patient Portal</span>
+      </div>
+
+      <div class="portal-nav-scroll">
+        <div class="portal-nav-category">Identification & Profile</div>
+        <a href="#uhid-registration" class="portal-nav-link active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          1. UHID & Registration
+        </a>
+        <a href="#duplicate-detection" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          2. Duplicate Detection
+        </a>
+        <a href="#demographics" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          3. Demographics & Contact
+        </a>
+        <a href="#emergency-contacts" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          4. Emergency Contacts
+        </a>
+
+        <div class="portal-nav-category">Clinical Health Record</div>
+        <a href="#allergies-blood" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          5. Allergies & Blood Group
+        </a>
+        <a href="#medical-surgical-history" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+          6. Medical & Surgical History
+        </a>
+        <a href="#medication-history" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+          7. Medication History
+        </a>
+        <a href="#appointments-visits" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          8. Appointments & Visits
+        </a>
+        <a href="#prescriptions" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          9. Prescriptions
+        </a>
+        <a href="#lab-imaging" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/></svg>
+          10. Lab & Imaging Reports
+        </a>
+        <a href="#admissions-discharges" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          11. Admissions & Discharges
+        </a>
+
+        <div class="portal-nav-category">Financial & Legal</div>
+        <a href="#billing-payments" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          12. Billing & Payments
+        </a>
+        <a href="#insurance" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          13. Insurance Policies
+        </a>
+        <a href="#documents-consent" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          14. Documents & Consent
+        </a>
+        <a href="#longitudinal-timeline" class="portal-nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+          15. Longitudinal Timeline
+        </a>
+      </div>
+
+      <div class="portal-sidebar-footer">
+        <a href="index.html" class="btn btn-secondary btn-sm" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to HSM Home
+        </a>
+      </div>
+    </aside>
+
+    <!-- ======================================================================
+         Main Area
+         ====================================================================== -->
+    <div class="portal-main-area">
+      <!-- Topbar -->
+      <header class="portal-topbar">
+        <div class="portal-topbar-title">
+          <h1>Electronic Health Record (EHR)</h1>
+        </div>
+
+        <div class="portal-topbar-actions">
+          <div class="uhid-header-chip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            UHID: HSM-2026-89412
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="printRecordBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Print Record
+          </button>
+          <a href="index.html" class="btn btn-primary btn-sm">
+            Sign Out
+          </a>
+        </div>
+      </header>
+
+      <div class="portal-content-container">
+        <!-- ====================================================================
+             1. Registration & UHID / Patient Identifier
+             ==================================================================== -->
+        <div class="patient-master-card" id="uhid-registration">
+          <div class="master-card-grid">
+            <div class="patient-photo-box">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&h=200&q=80" alt="Eleanor Rigby">
+            </div>
+
+            <div class="master-info-col">
+              <h2>
+                Eleanor Rigby 
+                <span class="gender-age-tag">Female • 38 yrs</span>
+                <span style="font-size: 0.75rem; background: #059669; color: #fff; padding: 0.2rem 0.6rem; border-radius: 9999px; font-weight: 700;">ACTIVE PATIENT</span>
+              </h2>
+              <div class="master-pills-row">
+                <span><strong>UHID:</strong> HSM-2026-89412</span>
+                <span>•</span>
+                <span><strong>DOB:</strong> 14 May 1988</span>
+                <span>•</span>
+                <span><strong>Blood Type:</strong> O+ Positive</span>
+                <span>•</span>
+                <span><strong>Primary Physician:</strong> Dr. Sarah Jenkins, MD</span>
+              </div>
+              <div class="master-pills-row" style="margin-top: 0.4rem; font-size: 0.85rem;">
+                <span>Registered: Jan 18, 2026 • Metro General Hospital • Hospital Registry UUID: #89412-MGH</span>
+              </div>
+            </div>
+
+            <div class="master-qr-box">
+              <!-- Simulated Medical Barcode / QR -->
+              <svg class="qr-code-svg" viewBox="0 0 100 100" fill="#0f172a">
+                <rect x="10" y="10" width="25" height="25" fill="#0f172a"/>
+                <rect x="15" y="15" width="15" height="15" fill="#ffffff"/>
+                <rect x="18" y="18" width="9" height="9" fill="#0f172a"/>
+                
+                <rect x="65" y="10" width="25" height="25" fill="#0f172a"/>
+                <rect x="70" y="15" width="15" height="15" fill="#ffffff"/>
+                <rect x="73" y="18" width="9" height="9" fill="#0f172a"/>
+                
+                <rect x="10" y="65" width="25" height="25" fill="#0f172a"/>
+                <rect x="15" y="70" width="15" height="15" fill="#ffffff"/>
+                <rect x="18" y="73" width="9" height="9" fill="#0f172a"/>
+                
+                <rect x="42" y="15" width="8" height="20" fill="#0f172a"/>
+                <rect x="52" y="25" width="8" height="10" fill="#0f172a"/>
+                <rect x="42" y="45" width="16" height="16" fill="#0f172a"/>
+                <rect x="65" y="45" width="20" height="8" fill="#0f172a"/>
+                <rect x="45" y="70" width="10" height="20" fill="#0f172a"/>
+                <rect x="65" y="70" width="22" height="18" fill="#0f172a"/>
+              </svg>
+              <span class="qr-label">SMART SCAN UHID</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             2. Duplicate Patient Detection Banner
+             ==================================================================== -->
+        <div class="duplicate-check-banner" id="duplicate-detection">
+          <div class="dup-banner-left">
+            <div class="dup-icon-shield">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+            </div>
+            <div>
+              <div class="dup-banner-title">Duplicate Patient Detection: 0 Duplicates Found (Record Verified Unique)</div>
+              <div class="dup-banner-desc">Automated cross-check validated against National ID (SSN/Aadhaar: ***-**-4910), Mobile (+1 555-234-8901), and Biometrics across 48 network hospitals.</div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="recheckDupBtn">Run Live Verification</button>
+        </div>
+
+        <!-- ====================================================================
+             3. Demographics and Contact Information & 4. Emergency Contacts
+             ==================================================================== -->
+        <div class="portal-two-col">
+          <!-- 3. Demographics -->
+          <div class="portal-section-card" id="demographics">
+            <div class="section-card-header">
+              <h3 class="section-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                3. Demographics & Contact Information
+              </h3>
+              <button class="btn btn-ghost btn-sm">Edit</button>
+            </div>
+
+            <div class="portal-two-col">
+              <div class="info-field-group">
+                <div class="info-field-label">Full Legal Name</div>
+                <div class="info-field-value">Eleanor Claire Rigby</div>
+              </div>
+              <div class="info-field-group">
+                <div class="info-field-label">Date of Birth (Age)</div>
+                <div class="info-field-value">May 14, 1988 (38 Years)</div>
+              </div>
+              <div class="info-field-group">
+                <div class="info-field-label">Gender & Pronouns</div>
+                <div class="info-field-value">Female (She/Her)</div>
+              </div>
+              <div class="info-field-group">
+                <div class="info-field-label">Marital Status</div>
+                <div class="info-field-value">Married</div>
+              </div>
+              <div class="info-field-group">
+                <div class="info-field-label">Primary Mobile Phone</div>
+                <div class="info-field-value">+1 (555) 234-8901</div>
+              </div>
+              <div class="info-field-group">
+                <div class="info-field-label">Email Address</div>
+                <div class="info-field-value">eleanor.rigby@healthmail.com</div>
+              </div>
+              <div class="info-field-group" style="grid-column: span 2;">
+                <div class="info-field-label">Residential Address</div>
+                <div class="info-field-value">742 Evergreen Terrace, Suite 4B, Springfield, MA 01104</div>
+              </div>
+              <div class="info-field-group">
+                <div class="info-field-label">Preferred Language</div>
+                <div class="info-field-value">English (US)</div>
+              </div>
+              <div class="info-field-group">
+                <div class="info-field-label">Occupation</div>
+                <div class="info-field-value">Architectural Consultant</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Emergency Contacts -->
+          <div class="portal-section-card" id="emergency-contacts">
+            <div class="section-card-header">
+              <h3 class="section-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                4. Emergency Contacts
+              </h3>
+              <span class="status-pill confirmed">2 Contacts On File</span>
+            </div>
+
+            <div style="margin-bottom: 1.5rem; padding: 1rem; border-radius: 8px; background: var(--slate-50); border: 1px solid var(--slate-200);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <strong style="font-size: 1rem; color: var(--slate-900);">Thomas Rigby (Primary Contact)</strong>
+                <span class="status-pill in-progress">Spouse</span>
+              </div>
+              <div style="font-size: 0.875rem; color: var(--slate-600); display: flex; flex-direction: column; gap: 0.25rem;">
+                <span>📞 Phone: <strong>+1 (555) 234-8902</strong> (Mobile 24/7)</span>
+                <span>✉️ Email: thomas.rigby@healthmail.com</span>
+                <span>🏠 Address: Same as Patient</span>
+              </div>
+            </div>
+
+            <div style="padding: 1rem; border-radius: 8px; background: var(--slate-50); border: 1px solid var(--slate-200);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <strong style="font-size: 1rem; color: var(--slate-900);">Clara Oswald (Secondary Contact)</strong>
+                <span class="status-pill scheduled">Sister</span>
+              </div>
+              <div style="font-size: 0.875rem; color: var(--slate-600); display: flex; flex-direction: column; gap: 0.25rem;">
+                <span>📞 Phone: <strong>+1 (555) 876-5432</strong></span>
+                <span>🏠 Location: Boston, MA</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             5. Allergies and Blood Group & 6. Medical and Surgical History
+             ==================================================================== -->
+        <div class="portal-two-col">
+          <!-- 5. Allergies & Blood Group -->
+          <div class="portal-section-card" id="allergies-blood">
+            <div class="section-card-header">
+              <h3 class="section-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                5. Allergies & Blood Group
+              </h3>
+              <div class="blood-group-badge">
+                <span>🩸 Blood Group:</span>
+                <strong>O+</strong>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1.25rem;">
+              <div class="info-field-label">Documented Clinical Allergies</div>
+              <div class="allergy-tags-list">
+                <div class="allergy-tag allergy-danger">
+                  ⚠️ Penicillin (Severe • Anaphylaxis Alert)
+                </div>
+                <div class="allergy-tag allergy-warning">
+                  🥜 Peanuts / Tree Nuts (Moderate • Hives)
+                </div>
+                <div class="allergy-tag allergy-info">
+                  🧤 Medical Latex (Mild • Contact Dermatitis)
+                </div>
+              </div>
+            </div>
+
+            <div style="padding: 0.75rem 1rem; border-radius: 8px; background: #fff1f2; border: 1px solid #fecdd3; font-size: 0.825rem; color: #9f1239;">
+              <strong>Clinical Alert:</strong> Patient has a high-severity contraindication to all Beta-Lactam antibiotics (Penicillins, Cephalosporins). Always check cross-reactivity before administering.
+            </div>
+          </div>
+
+          <!-- 6. Medical and Surgical History -->
+          <div class="portal-section-card" id="medical-surgical-history">
+            <div class="section-card-header">
+              <h3 class="section-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+                6. Medical & Surgical History
+              </h3>
+              <span class="status-pill confirmed">Verified History</span>
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+              <div class="info-field-label">Chronic / Past Medical Conditions</div>
+              <ul style="font-size: 0.9rem; color: var(--slate-700); padding-left: 1.25rem; list-style-type: disc; display: flex; flex-direction: column; gap: 0.35rem;">
+                <li><strong>Essential Hypertension</strong> (Diagnosed 2021 • Well controlled on Lisinopril 10mg)</li>
+                <li><strong>Mild Chronic Bronchial Asthma</strong> (Diagnosed 2018 • Exercise & winter induced)</li>
+              </ul>
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+              <div class="info-field-label">Surgical History & Procedures</div>
+              <ul style="font-size: 0.9rem; color: var(--slate-700); padding-left: 1.25rem; list-style-type: disc; display: flex; flex-direction: column; gap: 0.35rem;">
+                <li><strong>Laparoscopic Appendectomy</strong> (Nov 13, 2021 • Metro General Hospital • Dr. Miller)</li>
+                <li><strong>Left Knee Arthroscopic Meniscus Repair</strong> (July 2016 • Boston Orthopedic)</li>
+              </ul>
+            </div>
+
+            <div>
+              <div class="info-field-label">Family Medical History</div>
+              <div style="font-size: 0.85rem; color: var(--slate-600);">Mother: Type 2 Diabetes (Age 52) • Father: Myocardial Infarction (Age 64)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             7. Medication History & 8. Appointments and Visits
+             ==================================================================== -->
+        <div class="portal-two-col">
+          <!-- 7. Medication History -->
+          <div class="portal-section-card" id="medication-history">
+            <div class="section-card-header">
+              <h3 class="section-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+                7. Medication History
+              </h3>
+              <button class="btn btn-sm btn-secondary">Request Refill</button>
+            </div>
+
+            <table class="portal-table">
+              <thead>
+                <tr>
+                  <th>Drug Name</th>
+                  <th>Dosage & Instructions</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Lisinopril</strong></td>
+                  <td>10 mg Oral Tablet • Once daily in the morning</td>
+                  <td><span class="status-pill confirmed">Active (Current)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Albuterol HFA</strong></td>
+                  <td>90 mcg Inhaler • 1-2 puffs as needed for wheeze</td>
+                  <td><span class="status-pill confirmed">Active (PRN)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Vitamin D3</strong></td>
+                  <td>1000 IU Daily supplement</td>
+                  <td><span class="status-pill confirmed">Active</span></td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--slate-400);">Amoxicillin</strong></td>
+                  <td>500 mg • Discontinued due to rash</td>
+                  <td><span class="status-pill" style="background: #f1f5f9; color: #94a3b8;">Discontinued</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 8. Appointments & Visits -->
+          <div class="portal-section-card" id="appointments-visits">
+            <div class="section-card-header">
+              <h3 class="section-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                8. Appointments & Visits
+              </h3>
+              <button class="btn btn-sm btn-primary">Book New Visit</button>
+            </div>
+
+            <table class="portal-table">
+              <thead>
+                <tr>
+                  <th>Date & Time</th>
+                  <th>Doctor & Department</th>
+                  <th>Visit Type</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: var(--teal-50);">
+                  <td><strong>Sep 15, 2026<br><small>10:30 AM</small></strong></td>
+                  <td>Dr. Sarah Jenkins<br><small>Cardiology Pavilion (Suite 302)</small></td>
+                  <td>Follow-Up Consult</td>
+                  <td><span class="status-pill scheduled">Upcoming</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Aug 12, 2026<br><small>09:15 AM</small></strong></td>
+                  <td>Dr. David Miller<br><small>General Internal Medicine</small></td>
+                  <td>Routine Physical</td>
+                  <td><span class="status-pill confirmed">Completed</span></td>
+                </tr>
+                <tr>
+                  <td><strong>June 04, 2026<br><small>02:00 PM</small></strong></td>
+                  <td>Dr. Rachel Adams<br><small>Pulmonology Clinic</small></td>
+                  <td>Asthma Spirometry</td>
+                  <td><span class="status-pill confirmed">Completed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             9. Prescriptions & 10. Laboratory and Imaging Reports
+             ==================================================================== -->
+        <div class="portal-two-col">
+          <!-- 9. Prescriptions -->
+          <div class="portal-section-card" id="prescriptions">
+            <div class="section-card-header">
+              <h3 class="section-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                9. Digital Prescriptions (e-Rx)
+              </h3>
+              <span class="status-pill confirmed">E-Signed</span>
+            </div>
+
+            <div style="border: 1px solid var(--portal-border); border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; background: var(--slate-50);">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+                <strong style="color: var(--slate-900); font-size: 1rem;">Rx #RX-884102: Lisinopril 10mg Tablets</strong>
+                <span style="font-size: 0.8rem; color: var(--teal-700); font-weight: 700;">Refills: 2 Remaining</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--slate-600); margin-bottom: 0.75rem;">
+                Qty: 90 Tablets • Dispensed by Metro Central Pharmacy • Prescribed by Dr. Sarah Jenkins (NPI: #1982741029)
+              </p>
+              <div style="display: flex; gap: 0.75rem;">
+                <button class="btn btn-secondary btn-sm" onclick="alert('Downloading e-Prescription PDF with digital signature...');">Download e-Rx PDF</button>
+                <button class="btn btn-primary btn-sm" onclick="alert('Order sent to Hospital Pharmacy for pickup!');">Send to Pharmacy</button>
+              </div>
+            </div>
+
+            <div style="border: 1px solid var(--portal-border); border-radius: 8px; padding: 1.25rem; background: var(--slate-50);">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+                <strong style="color: var(--slate-900); font-size: 1rem;">Rx #RX-794018: Albuterol Sulfate Inhalation Aerosol</strong>
+                <span style="font-size: 0.8rem; color: var(--teal-700); font-weight: 700;">Refills: 1 Remaining</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--slate-600); margin-bottom: 0.75rem;">
+                Qty: 1 Inhaler (8.5g canister) • Prescribed by Dr. Rachel Adams
+              </p>
+              <button class="btn btn-secondary btn-sm" onclick="alert('Downloading e-Prescription PDF with digital signature...');">Download e-Rx PDF</button>
+            </div>
+          </div>
+
+          <!-- 10. Laboratory and Imaging Reports -->
+          <div class="portal-section-card" id="lab-imaging">
+            <div class="section-card-header">
+              <h3 class="section-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/></svg>
+                10. Laboratory & Imaging Reports
+              </h3>
+              <span class="status-pill in-progress">Synced with LIS</span>
+            </div>
+
+            <table class="portal-table">
+              <thead>
+                <tr>
+                  <th>Test / Diagnostic</th>
+                  <th>Date</th>
+                  <th>Clinical Result</th>
+                  <th>Report</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Complete Blood Count (CBC)</strong><br><small>Venous Blood</small></td>
+                  <td>Aug 12, 2026</td>
+                  <td><span class="status-pill confirmed">Normal (Hb 13.8)</span></td>
+                  <td><a href="javascript:void(0)" onclick="alert('Viewing CBC Lab PDF Report');" style="color: var(--teal-600); font-weight: 700;">View PDF</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Comprehensive Lipid Panel</strong><br><small>Fasting Serum</small></td>
+                  <td>Aug 12, 2026</td>
+                  <td><span class="status-pill confirmed">Normal (Chol 185)</span></td>
+                  <td><a href="javascript:void(0)" onclick="alert('Viewing Lipid Panel Lab Report');" style="color: var(--teal-600); font-weight: 700;">View PDF</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Chest Radiograph (X-Ray PA)</strong><br><small>Radiology Suite 2</small></td>
+                  <td>June 04, 2026</td>
+                  <td><span class="status-pill confirmed">Clear Lungs</span></td>
+                  <td><a href="javascript:void(0)" onclick="alert('Opening Cloud DICOM Radiography Viewer');" style="color: var(--primary-600); font-weight: 700;">DICOM Viewer</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             11. Admissions and Discharges & 12. Billing and Payment History
+             ==================================================================== -->
+        <div class="portal-two-col">
+          <!-- 11. Admissions & Discharges -->
+          <div class="portal-section-card" id="admissions-discharges">
+            <div class="section-card-header">
+              <h3 class="section-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                11. Admissions & Discharges
+              </h3>
+              <span class="status-pill confirmed">1 Inpatient Stay</span>
+            </div>
+
+            <div style="border: 1px solid var(--slate-200); border-radius: 8px; padding: 1.25rem; background: var(--slate-50);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <strong style="color: var(--slate-900); font-size: 1rem;">IP Admission #ADM-2021-042</strong>
+                <span class="status-pill confirmed">Discharged Stable</span>
+              </div>
+              <div style="font-size: 0.85rem; color: var(--slate-600); line-height: 1.6; margin-bottom: 0.75rem;">
+                <div>📅 <strong>Admitted:</strong> Nov 12, 2021 • <strong>Discharged:</strong> Nov 15, 2021 (3 Days)</div>
+                <div>🏥 <strong>Ward / Room:</strong> Surgical Pavilion Bed 402B</div>
+                <div>🩺 <strong>Admitting Diagnosis:</strong> Acute Appendicitis (ICD-10: K35.80)</div>
+                <div>📋 <strong>Intervention:</strong> Uneventful Emergency Laparoscopic Appendectomy</div>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="alert('Downloading Discharge Summary PDF');">
+                Download Official Discharge Summary
+              </button>
+            </div>
+          </div>
+
+          <!-- 12. Billing & Payment History -->
+          <div class="portal-section-card" id="billing-payments">
+            <div class="section-card-header">
+              <h3 class="section-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                12. Billing & Payment History
+              </h3>
+              <span class="status-pill confirmed">Balance: $0.00</span>
+            </div>
+
+            <table class="portal-table">
+              <thead>
+                <tr>
+                  <th>Invoice #</th>
+                  <th>Service Description</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>#INV-2026-091</strong></td>
+                  <td>Consultation + Lipid Profile</td>
+                  <td>$140.00</td>
+                  <td><span class="status-pill confirmed">Paid in Full (Copay)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>#INV-2026-044</strong></td>
+                  <td>Pharmacy Prescription Dispense</td>
+                  <td>$45.00</td>
+                  <td><span class="status-pill confirmed">Paid (Visa ****8912)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>#INV-2021-889</strong></td>
+                  <td>Inpatient Stay & Surgery</td>
+                  <td>$4,850.00</td>
+                  <td><span class="status-pill confirmed">Settled by Insurance</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             13. Insurance & 14. Documents and Consent
+             ==================================================================== -->
+        <div class="portal-two-col">
+          <!-- 13. Insurance -->
+          <div class="portal-section-card" id="insurance">
+            <div class="section-card-header">
+              <h3 class="section-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                13. Health Insurance Coverage
+              </h3>
+              <span class="status-pill confirmed">Active Policy</span>
+            </div>
+
+            <div class="insurance-card-mockup" style="margin-bottom: 1.25rem;">
+              <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.85;">Primary PPO Health Coverage</div>
+              <div style="font-size: 1.4rem; font-weight: 850; margin: 0.25rem 0 0.75rem 0;">BlueCross BlueShield Premier</div>
+              <div style="font-size: 0.9rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                <div>Member ID: <strong>BCBS-89410294-A</strong></div>
+                <div>Group #: <strong>GRP-774012</strong></div>
+                <div>Copay: <strong>$25 Specialist / $15 PCP</strong></div>
+                <div>Pre-Auth Status: <strong>Pre-Approved</strong></div>
+              </div>
+            </div>
+
+            <div style="font-size: 0.875rem; color: var(--slate-600); display: flex; justify-content: space-between;">
+              <span>Annual Deductible: <strong>$350 / $1,000 Met</strong></span>
+              <span>TPA Administrator: <strong>Optum Healthcare</strong></span>
+            </div>
+          </div>
+
+          <!-- 14. Documents and Consent -->
+          <div class="portal-section-card" id="documents-consent">
+            <div class="section-card-header">
+              <h3 class="section-card-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                14. Legal Documents & Signed Consent
+              </h3>
+              <button class="btn btn-secondary btn-sm" onclick="alert('Upload new ID proof or medical document');">Upload Document</button>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: 8px;">
+                <div>
+                  <strong>General Consent for Medical Treatment</strong>
+                  <div style="font-size: 0.75rem; color: var(--slate-500);">Signed electronically on Jan 18, 2026 • Valid for 1 year</div>
+                </div>
+                <span class="status-pill confirmed">Signed</span>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: 8px;">
+                <div>
+                  <strong>HIPAA Notice of Privacy Practices & Disclosure</strong>
+                  <div style="font-size: 0.75rem; color: var(--slate-500);">Acknowledged & Signed • 256-Bit Cryptographic Hash Recorded</div>
+                </div>
+                <span class="status-pill confirmed">Active</span>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: 8px;">
+                <div>
+                  <strong>Patient State Photo ID / Driver's License</strong>
+                  <div style="font-size: 0.75rem; color: var(--slate-500);">Verified by Hospital Desk • Expiration: 2029</div>
+                </div>
+                <span class="status-pill confirmed">Verified</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             15. Longitudinal Patient Timeline
+             ==================================================================== -->
+        <div class="portal-section-card" id="longitudinal-timeline">
+          <div class="section-card-header">
+            <h3 class="section-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+              15. Longitudinal Clinical Patient Timeline
+            </h3>
+            <span class="status-pill in-progress">Full Chronological Journey</span>
+          </div>
+
+          <div class="timeline-track">
+            <!-- Event 1: Upcoming Cardiology -->
+            <div class="timeline-node">
+              <div class="timeline-node-marker">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="timeline-card-content">
+                <span class="timeline-date-badge">UPCOMING • Sep 15, 2026 (10:30 AM)</span>
+                <h4 class="timeline-event-title">Cardiology Consultation & ECG Review</h4>
+                <p class="timeline-event-body">
+                  Scheduled outpatient follow-up with Dr. Sarah Jenkins at Suite 302. Routine blood pressure evaluation and Lisinopril efficacy assessment.
+                </p>
+              </div>
+            </div>
+
+            <!-- Event 2: Annual Checkup & Lab Work -->
+            <div class="timeline-node">
+              <div class="timeline-node-marker">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="timeline-card-content">
+                <span class="timeline-date-badge">Aug 12, 2026</span>
+                <h4 class="timeline-event-title">Comprehensive Physical & Clinical Diagnostic Panel</h4>
+                <p class="timeline-event-body">
+                  Consultation completed by Dr. David Miller. Routine CBC and lipid panel drawn; results within normal clinical limits (Hemoglobin: 13.8 g/dL, Total Cholesterol: 185 mg/dL).
+                </p>
+              </div>
+            </div>
+
+            <!-- Event 3: Pulmonology Spirometry -->
+            <div class="timeline-node">
+              <div class="timeline-node-marker">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+              </div>
+              <div class="timeline-card-content">
+                <span class="timeline-date-badge">June 04, 2026</span>
+                <h4 class="timeline-event-title">Asthma Spirometry & Chest Radiograph</h4>
+                <p class="timeline-event-body">
+                  FEV1/FVC ratio stable at 82%. Chest X-Ray clear. Albuterol HFA inhaler refill authorized for exercise prophylaxis.
+                </p>
+              </div>
+            </div>
+
+            <!-- Event 4: Initial HSM Registration -->
+            <div class="timeline-node">
+              <div class="timeline-node-marker">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+              </div>
+              <div class="timeline-card-content">
+                <span class="timeline-date-badge">Jan 18, 2026</span>
+                <h4 class="timeline-event-title">HSM Electronic Health Record Inception & Digital Onboarding</h4>
+                <p class="timeline-event-body">
+                  Assigned permanent Universal Health Identifier <strong>UHID #HSM-2026-89412</strong>. Automated duplicate verification cleared across regional hospital databases. Consents signed.
+                </p>
+              </div>
+            </div>
+
+            <!-- Event 5: Past Inpatient Surgery -->
+            <div class="timeline-node">
+              <div class="timeline-node-marker">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              </div>
+              <div class="timeline-card-content">
+                <span class="timeline-date-badge">Nov 12 - 15, 2021</span>
+                <h4 class="timeline-event-title">Inpatient Admission: Laparoscopic Appendectomy</h4>
+                <p class="timeline-event-body">
+                  Admitted to Metro General Hospital Surgical Pavilion Bed 402B for acute appendicitis. Successful minimally invasive procedure performed by surgical team. Discharged fully recovered.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="toast-notification" id="portalToast" role="status" aria-live="polite">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="portalToastMsg">Action completed successfully.</span>
+  </div>
+
+  <script>
+    // Live Duplicate Patient Verification simulation
+    document.getElementById('recheckDupBtn').addEventListener('click', () => {
+      const toast = document.getElementById('portalToast');
+      const msg = document.getElementById('portalToastMsg');
+      msg.textContent = '🔍 Running real-time biometrics & registry check... Record is 100% Unique (0 Duplicates).';
+      toast.classList.add('active');
+      setTimeout(() => toast.classList.remove('active'), 4000);
+    });
+
+    // Print Record Handler
+    document.getElementById('printRecordBtn').addEventListener('click', () => {
+      window.print();
+    });
+
+    // Smooth ScrollSpy for Sidebar links
+    const sidebarLinks = document.querySelectorAll('.portal-nav-link');
+    window.addEventListener('scroll', () => {
+      let scrollPosition = window.scrollY + 120;
+      sidebarLinks.forEach(link => {
+        const targetId = link.getAttribute('href').substring(1);
+        const section = document.getElementById(targetId);
+        if (section) {
+          const top = section.offsetTop;
+          const height = section.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            sidebarLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+          }
+        }
+      });
+    }, { passive: true });
+  </script>
+</body>
+</html>

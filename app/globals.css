@@ -1,0 +1,1460 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Exact Primary Color Tokens (Light Mode) */
+    --color-navy: #0B1F33;
+    --color-blue: #1479FF;
+    --color-cyan: #18C7C9;
+    --color-soft-blue: #EAF4FF;
+    --color-bg: #F7FAFC;
+    --color-white: #FFFFFF;
+    --color-text-primary: #102A43;
+    --color-text-secondary: #627D98;
+    --color-success: #20B26B;
+
+    /* Theme Tokens (Alpine Medical Precision - Default) */
+    --background: #F8FAFC;
+    --background-card: #FFFFFF;
+    --surface-glass: rgba(255, 255, 255, 0.88);
+    --border-subtle: rgba(203, 213, 225, 0.7);
+    --border-focus: #0284C7;
+    --text-heading: #0F172A;
+    --text-body: #475569;
+    --accent-blue: #0284C7;
+    --accent-cyan: #0D9488;
+
+    --shadow-soft: 0 4px 20px rgba(15, 23, 42, 0.05);
+    --shadow-card: 0 12px 35px rgba(15, 23, 42, 0.08);
+    --shadow-glow: 0 0 25px rgba(2, 132, 199, 0.15);
+  }
+
+  /* Alpine Medical Precision Mode */
+  .light {
+    --background: #F8FAFC;
+    --background-card: #FFFFFF;
+    --surface-glass: rgba(255, 255, 255, 0.92);
+    --border-subtle: rgba(203, 213, 225, 0.8);
+    --border-focus: #0284C7;
+    --text-heading: #0F172A;
+    --text-body: #475569;
+    --accent-blue: #0284C7;
+    --accent-cyan: #0D9488;
+  }
+
+  /* Dark Clinical Mode (Default) */
+  .dark {
+    --background: #071521;
+    --background-card: #0E2438;
+    --surface-glass: rgba(14, 36, 56, 0.85);
+    --border-subtle: rgba(54, 163, 255, 0.18);
+    --border-focus: #36A3FF;
+    --text-heading: #F0F6FC;
+    --text-body: #9FB3C8;
+    --accent-blue: #36A3FF;
+    --accent-cyan: #18C7C9;
+  }
+
+  /* High Contrast Clinical Mode */
+  .high-contrast {
+    --background: #000000;
+    --background-card: #071018;
+    --border-subtle: rgba(255, 255, 255, 0.5);
+    --border-focus: #FFFF00;
+    --text-heading: #FFFFFF;
+    --text-body: #E2E8F0;
+    --accent-cyan: #00FFFF;
+    --accent-blue: #00E5FF;
+  }
+
+  /* Theme 1: Deep Navy + Cyan + White (Default) */
+  .theme-navy-cyan {
+    --theme-primary: #18C7C9;
+    --theme-secondary: #1479FF;
+    --theme-accent: #20B26B;
+  }
+
+  /* Theme 2: Teal + Mint + White */
+  .theme-teal-mint {
+    --theme-primary: #14B8A6;
+    --theme-secondary: #0D9488;
+    --theme-accent: #10B981;
+  }
+
+  /* Theme 3: Indigo + Violet + Cyan */
+  .theme-indigo-violet {
+    --theme-primary: #8B5CF6;
+    --theme-secondary: #6366F1;
+    --theme-accent: #18C7C9;
+  }
+
+  /* Theme 4: Dark Navy + Electric Blue + Purple */
+  .theme-dark-purple {
+    --theme-primary: #3B82F6;
+    --theme-secondary: #A855F7;
+    --theme-accent: #EC4899;
+  }
+
+  /* Theme 5: White + Soft Blue + Emerald */
+  .theme-softblue-emerald {
+    --theme-primary: #38BDF8;
+    --theme-secondary: #0284C7;
+    --theme-accent: #10B981;
+  }
+
+  /* Typography Scaling */
+  html[data-font-size="large"] {
+    font-size: 17.5px;
+  }
+
+  html[data-font-size="xl"] {
+    font-size: 19px;
+  }
+
+  /* Keyboard Navigation Focus Rings */
+  .keyboard-nav-active *:focus-visible {
+    outline: 3px solid #18C7C9 !important;
+    outline-offset: 3px !important;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--text-heading);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   CUSTOM ANIMATIONS FOR HEALTHCARE COMMAND CENTER
+   -------------------------------------------------------------------------- */
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes ecgScroll {
+  0% {
+    stroke-dashoffset: 400;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scannerOrbit {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes floatCard1 {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes floatCard2 {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.animate-ecg-trace {
+  animation: ecgScroll 3s linear infinite;
+}
+
+.animate-scanner-orbit {
+  animation: scannerOrbit 22s linear infinite;
+  transform-origin: center center;
+}
+
+.animate-float-1 {
+  animation: floatCard1 5.5s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: floatCard2 6.5s ease-in-out infinite;
+}
+
+@keyframes scanlineSweep {
+  0% {
+    left: 0%;
+  }
+  50% {
+    left: 99%;
+  }
+  100% {
+    left: 0%;
+  }
+}
+
+.animate-scanline-sweep {
+  animation: scanlineSweep 6s ease-in-out infinite;
+}
+
+@keyframes gyroCw {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes gyroCcw {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes laserSweepFast {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes conduitDash {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+@keyframes holographicShimmer {
+
+  0%,
+  100% {
+    opacity: 0.7;
+    filter: drop-shadow(0 0 12px rgba(24, 199, 201, 0.4));
+  }
+
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 24px rgba(20, 121, 255, 0.8));
+  }
+}
+
+.animate-gyro-cw {
+  animation: gyroCw 28s linear infinite;
+  transform-origin: center center;
+}
+
+.animate-gyro-ccw {
+  animation: gyroCcw 20s linear infinite;
+  transform-origin: center center;
+}
+
+.animate-gyro-fast {
+  animation: gyroCw 10s linear infinite;
+  transform-origin: center center;
+}
+
+.animate-laser-scan {
+  animation: laserSweepFast 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transform-origin: center center;
+}
+
+.animate-conduit-flow {
+  stroke-dasharray: 6 6;
+  animation: conduitDash 1.2s linear infinite;
+}
+
+.animate-hologram-glow {
+  animation: holographicShimmer 3s ease-in-out infinite;
+}
+
+/* Reduced Motion Compliance (Both Media Query & User Class) */
+@media (prefers-reduced-motion: reduce) {
+
+  .animate-pulse-glow,
+  .animate-ecg-trace,
+  .animate-scanner-orbit,
+  .animate-float-1,
+  .animate-float-2,
+  .animate-spin,
+  .animate-pulse,
+  .animate-ping,
+  .animate-aurora-blob-1,
+  .animate-aurora-blob-2,
+  .animate-aurora-blob-3,
+  .animate-aurora-blob-4,
+  .animate-aurora-pulse,
+  .animate-telemetry-scan,
+  .animate-pulse-particle {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+.reduced-motion *,
+.reduced-motion .animate-pulse-glow,
+.reduced-motion .animate-ecg-trace,
+.reduced-motion .animate-scanner-orbit,
+.reduced-motion .animate-float-1,
+.reduced-motion .animate-float-2,
+.reduced-motion .animate-spin,
+.reduced-motion .animate-pulse,
+.reduced-motion .animate-ping,
+.reduced-motion .animate-aurora-blob-1,
+.reduced-motion .animate-aurora-blob-2,
+.reduced-motion .animate-aurora-blob-3,
+.reduced-motion .animate-aurora-blob-4,
+.reduced-motion .animate-aurora-pulse,
+.reduced-motion .animate-telemetry-scan,
+.reduced-motion .animate-pulse-particle {
+  animation: none !important;
+  transform: none !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Custom Healthcare Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(20, 121, 255, 0.2);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(20, 121, 255, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   GLOBAL SCROLL-TRIGGERED REVEAL UTILITIES
+   -------------------------------------------------------------------------- */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes subtleFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-subtle-float {
+  animation: subtleFloat 4s ease-in-out infinite;
+}
+
+@keyframes ecgSweep {
+  0% {
+    stroke-dashoffset: 1200;
+  }
+
+  100% {
+    stroke-dashoffset: -1200;
+  }
+}
+
+.animate-ecg-sweep {
+  animation: ecgSweep 4.5s linear infinite;
+}
+
+/* --------------------------------------------------------------------------
+   LIVING CLINICAL BACKGROUND AURORA & TELEMETRY KEYFRAMES
+   -------------------------------------------------------------------------- */
+@keyframes auroraBlob1 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate3d(90px, 60px, 0) scale(1.12);
+  }
+
+  66% {
+    transform: translate3d(-60px, 110px, 0) scale(0.94);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes auroraBlob2 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate3d(-100px, -60px, 0) scale(1.15);
+  }
+
+  66% {
+    transform: translate3d(-130px, 70px, 0) scale(0.92);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes auroraBlob3 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.96);
+  }
+
+  50% {
+    transform: translate3d(110px, -70px, 0) scale(1.16);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(0.96);
+  }
+}
+
+@keyframes auroraBlob4 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-80px, 90px, 0) rotate(180deg) scale(1.1);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(360deg) scale(1);
+  }
+}
+
+@keyframes auroraPulse {
+
+  0%,
+  100% {
+    transform: scale(0.92);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 0.85;
+  }
+}
+
+@keyframes telemetryScan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 0.5;
+  }
+
+  88% {
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+@keyframes pulseParticle {
+
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.85) translateY(0);
+  }
+
+  50% {
+    opacity: 0.95;
+    transform: scale(1.3) translateY(-16px);
+  }
+}
+
+.animate-aurora-blob-1 {
+  animation: auroraBlob1 24s ease-in-out infinite alternate;
+}
+
+.animate-aurora-blob-2 {
+  animation: auroraBlob2 28s ease-in-out infinite alternate;
+}
+
+.animate-aurora-blob-3 {
+  animation: auroraBlob3 22s ease-in-out infinite alternate;
+}
+
+.animate-aurora-blob-4 {
+  animation: auroraBlob4 32s ease-in-out infinite alternate;
+}
+
+.animate-aurora-pulse {
+  animation: auroraPulse 14s ease-in-out infinite;
+}
+
+.animate-telemetry-scan {
+  animation: telemetryScan 14s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-pulse-particle {
+  animation: pulseParticle 8s ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------------------
+   3D INTERACTIVE HEADING KEYFRAMES
+   -------------------------------------------------------------------------- */
+@keyframes pop3D {
+  0% {
+    transform: scale(0.94) translateY(2px);
+  }
+
+  50% {
+    transform: scale(1.04) translateY(-3px);
+  }
+
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes spin3D {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.animate-pop-3d {
+  animation: pop3D 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-spin-3d {
+  animation: spin3D 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --------------------------------------------------------------------------
+   3D HORIZONTAL MOVE CAROUSEL KEYFRAMES
+   -------------------------------------------------------------------------- */
+@keyframes horizontalMove3D {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-horizontal-move-3d {
+  animation: horizontalMove3D 24s linear infinite;
+  will-change: transform;
+}
+
+.animate-horizontal-move-3d-fast {
+  animation: horizontalMove3D 14s linear infinite;
+  will-change: transform;
+}
+
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.card-3d-tilt {
+  transform: perspective(1000px) rotateY(-4deg) rotateX(2deg) translateZ(0);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.card-3d-tilt:hover {
+  transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(30px) translateY(-8px) scale(1.04);
+}
+
+/* --------------------------------------------------------------------------
+   2D CIRCULAR ROTATION & ORBIT KEYFRAMES FOR HUMAN BODY
+   -------------------------------------------------------------------------- */
+@keyframes spinCircular2D {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinCircularReverse2D {
+  0% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes circularOrbit2D {
+  0% {
+    transform: rotate(0deg) translate(0px, 0px);
+  }
+
+  25% {
+    transform: rotate(0.8deg) translate(4px, -5px);
+  }
+
+  50% {
+    transform: rotate(0deg) translate(0px, -8px);
+  }
+
+  75% {
+    transform: rotate(-0.8deg) translate(-4px, -5px);
+  }
+
+  100% {
+    transform: rotate(0deg) translate(0px, 0px);
+  }
+}
+
+@keyframes radarSweep2D {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pedestalSpin2D {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-circular-2d {
+  animation: spinCircular2D 25s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.animate-spin-circular-reverse-2d {
+  animation: spinCircularReverse2D 35s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.animate-circular-orbit-2d {
+  animation: circularOrbit2D 9s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-radar-sweep-2d {
+  animation: radarSweep2D 12s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.animate-pedestal-spin-2d {
+  animation: pedestalSpin2D 22s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   2X SPEED MOVING CAROUSEL ANIMATION FOR KPI BOXES
+   -------------------------------------------------------------------------- */
+@keyframes movingCarousel2X {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-carousel-2x {
+  animation: movingCarousel2X 12s linear infinite;
+  will-change: transform;
+}
+
+.animate-carousel-2x:hover {
+  animation-play-state: paused;
+}
+
+/* --------------------------------------------------------------------------
+   VIBRANT HIGH-CLASS 3D CADUCEUS ANIMATIONS & SPATIAL KEYFRAMES
+   -------------------------------------------------------------------------- */
+@keyframes caduceusLevitate3D {
+  0% {
+    transform: perspective(1200px) translate3d(0, 0, 40px) rotateY(-16deg) rotateX(4deg) rotateZ(-1deg);
+    filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.6)) drop-shadow(0 0 45px rgba(16, 185, 129, 0.4)) brightness(1.05);
+  }
+
+  25% {
+    transform: perspective(1200px) translate3d(6px, -14px, 70px) rotateY(0deg) rotateX(-5deg) rotateZ(1deg);
+    filter: drop-shadow(0 0 32px rgba(0, 240, 255, 0.8)) drop-shadow(0 0 65px rgba(16, 185, 129, 0.55)) brightness(1.18);
+  }
+
+  50% {
+    transform: perspective(1200px) translate3d(0, -22px, 88px) rotateY(16deg) rotateX(3deg) rotateZ(2deg);
+    filter: drop-shadow(0 0 42px rgba(0, 240, 255, 0.95)) drop-shadow(0 0 85px rgba(16, 185, 129, 0.65)) brightness(1.25);
+  }
+
+  75% {
+    transform: perspective(1200px) translate3d(-6px, -10px, 65px) rotateY(2deg) rotateX(6deg) rotateZ(-1deg);
+    filter: drop-shadow(0 0 30px rgba(0, 240, 255, 0.75)) drop-shadow(0 0 55px rgba(16, 185, 129, 0.48)) brightness(1.14);
+  }
+
+  100% {
+    transform: perspective(1200px) translate3d(0, 0, 40px) rotateY(-16deg) rotateX(4deg) rotateZ(-1deg);
+    filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.6)) drop-shadow(0 0 45px rgba(16, 185, 129, 0.4)) brightness(1.05);
+  }
+}
+
+@keyframes caduceusGleam {
+  0% {
+    transform: translateX(-160%) skewX(-25deg);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translateX(160%) skewX(-25deg);
+    opacity: 0;
+  }
+}
+
+@keyframes globeRaysPulse {
+
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes orbitGimbalClockwise3D {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes orbitGimbalCounter3D {
+  0% {
+    transform: rotateZ(360deg);
+  }
+
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
+
+@keyframes orbitGimbalVertical3D {
+  0% {
+    transform: rotateY(0deg) rotateX(15deg);
+  }
+
+  100% {
+    transform: rotateY(360deg) rotateX(15deg);
+  }
+}
+
+@keyframes helixOrbit3D {
+  0% {
+    transform: rotateY(0deg) translateX(85px) rotateY(0deg) translateZ(50px) scale(1.2);
+    opacity: 1;
+  }
+
+  25% {
+    transform: rotateY(90deg) translateX(85px) rotateY(-90deg) translateZ(0px) scale(0.95);
+    opacity: 0.75;
+  }
+
+  50% {
+    transform: rotateY(180deg) translateX(85px) rotateY(-180deg) translateZ(-40px) scale(0.7);
+    opacity: 0.4;
+  }
+
+  75% {
+    transform: rotateY(270deg) translateX(85px) rotateY(-270deg) translateZ(0px) scale(0.95);
+    opacity: 0.75;
+  }
+
+  100% {
+    transform: rotateY(360deg) translateX(85px) rotateY(-360deg) translateZ(50px) scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes helixOrbitCounter3D {
+  0% {
+    transform: rotateY(360deg) translateX(70px) rotateY(-360deg) translateZ(-35px) scale(0.75);
+    opacity: 0.45;
+  }
+
+  25% {
+    transform: rotateY(270deg) translateX(70px) rotateY(-270deg) translateZ(0px) scale(0.95);
+    opacity: 0.75;
+  }
+
+  50% {
+    transform: rotateY(180deg) translateX(70px) rotateY(-180deg) translateZ(55px) scale(1.25);
+    opacity: 1;
+  }
+
+  75% {
+    transform: rotateY(90deg) translateX(70px) rotateY(-90deg) translateZ(0px) scale(0.95);
+    opacity: 0.75;
+  }
+
+  100% {
+    transform: rotateY(0deg) translateX(70px) rotateY(0deg) translateZ(-35px) scale(0.75);
+    opacity: 0.45;
+  }
+}
+
+@keyframes auroraMeshPulse {
+
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.75;
+  }
+
+  50% {
+    transform: scale(1.12) rotate(6deg);
+    opacity: 1;
+  }
+}
+
+@keyframes photonOrbFloat {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translate3d(8px, -14px, 20px) scale(1.35);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.6;
+  }
+}
+
+.animate-caduceus-levitate-3d {
+  animation: caduceusLevitate3D 7s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform, filter;
+  transform-origin: center center;
+}
+
+.animate-orbit-gimbal-vert {
+  animation: orbitGimbalVertical3D 14s linear infinite;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.animate-helix-orbit-1 {
+  animation: helixOrbit3D 6s linear infinite;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.animate-helix-orbit-2 {
+  animation: helixOrbitCounter3D 6s linear infinite;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.animate-caduceus-gleam {
+  animation: caduceusGleam 5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-globe-rays {
+  animation: globeRaysPulse 5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-orbit-gimbal-cw {
+  animation: orbitGimbalClockwise3D 20s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.animate-orbit-gimbal-ccw {
+  animation: orbitGimbalCounter3D 28s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.animate-aurora-mesh {
+  animation: auroraMeshPulse 8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-photon-orb {
+  animation: photonOrbFloat 4s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* --------------------------------------------------------------------------
+   3D ECOSYSTEM WORKFLOWS & CLINICAL PULSE ANIMATIONS
+   -------------------------------------------------------------------------- */
+
+@keyframes heartbeatClinical {
+
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px rgba(24, 199, 201, 0));
+  }
+
+  14% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 14px rgba(24, 199, 201, 0.45));
+  }
+
+  28% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba(24, 199, 201, 0.1));
+  }
+
+  42% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 10px rgba(32, 178, 107, 0.4));
+  }
+
+  56% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px rgba(32, 178, 107, 0));
+  }
+}
+
+@keyframes textGradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes ecgTravel {
+  0% {
+    stroke-dashoffset: 600;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes holographicScan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 0.6;
+  }
+
+  70% {
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translateY(200%);
+    opacity: 0;
+  }
+}
+
+@keyframes floatTilt3D {
+
+  0%,
+  100% {
+    transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(0px);
+  }
+
+  50% {
+    transform: perspective(1000px) rotateX(-2deg) rotateY(2deg) translateZ(12px);
+  }
+}
+
+@keyframes pulsePingSlow {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
+.animate-heartbeat-clinical {
+  animation: heartbeatClinical 2.2s ease-in-out infinite;
+}
+
+.animate-text-gradient-flow {
+  background-size: 200% 200%;
+  animation: textGradientShift 5s ease-in-out infinite;
+}
+
+.animate-ecg-travel {
+  stroke-dasharray: 600;
+  animation: ecgTravel 3s linear infinite;
+}
+
+.animate-holographic-scan {
+  animation: holographicScan 3.5s ease-in-out infinite;
+}
+
+.animate-float-tilt-3d {
+  animation: floatTilt3D 8s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.animate-ping-slow {
+  animation: pulsePingSlow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* --------------------------------------------------------------------------
+   PHASED 3D HARMONIC DOCTOR CARD OSCILLATION & PEDESTAL GIMBAL
+   -------------------------------------------------------------------------- */
+
+@keyframes doctorHarmonic3D {
+
+  0%,
+  100% {
+    transform: perspective(1000px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg);
+  }
+
+  25% {
+    transform: perspective(1000px) translateY(-8px) translateZ(24px) rotateX(2deg) rotateY(-1.8deg);
+  }
+
+  50% {
+    transform: perspective(1000px) translateY(-16px) translateZ(38px) rotateX(-2deg) rotateY(1.8deg);
+  }
+
+  75% {
+    transform: perspective(1000px) translateY(-8px) translateZ(18px) rotateX(-1deg) rotateY(-1.2deg);
+  }
+}
+
+@keyframes pedestalGlowOrbit {
+  0% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.1);
+    opacity: 0.95;
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+    opacity: 0.6;
+  }
+}
+
+.animate-doctor-wave-1 {
+  animation: doctorHarmonic3D 5.6s ease-in-out infinite 0s;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.animate-doctor-wave-2 {
+  animation: doctorHarmonic3D 5.6s ease-in-out infinite 1.86s;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.animate-doctor-wave-3 {
+  animation: doctorHarmonic3D 5.6s ease-in-out infinite 3.72s;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.animate-pedestal-orbit {
+  animation: pedestalGlowOrbit 8s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   CONTINUOUS SCROLLING TICKER MARQUEE
+   -------------------------------------------------------------------------- */
+
+@keyframes continuousMarquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-scroll {
+  display: flex;
+  width: max-content;
+  animation: continuousMarquee 26s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-scroll:hover {
+  animation-play-state: paused;
+}
+
+/* --------------------------------------------------------------------------
+   ANTI-GRAVITY HOVERBOARD ANIMATIONS & THRUSTER UNDERGLOW
+   -------------------------------------------------------------------------- */
+
+@keyframes hoverboardFloat {
+
+  0%,
+  100% {
+    transform: perspective(1000px) translateY(0px) rotateX(0deg) rotateZ(0deg);
+  }
+
+  25% {
+    transform: perspective(1000px) translateY(-10px) rotateX(1.8deg) rotateZ(-0.8deg);
+  }
+
+  50% {
+    transform: perspective(1000px) translateY(-18px) rotateX(-1.5deg) rotateZ(0.8deg);
+  }
+
+  75% {
+    transform: perspective(1000px) translateY(-9px) rotateX(1deg) rotateZ(-0.5deg);
+  }
+}
+
+@keyframes thrusterGlowPulse {
+
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scaleX(1) scaleY(1);
+    filter: blur(12px);
+  }
+
+  50% {
+    opacity: 0.95;
+    transform: scaleX(1.15) scaleY(1.25);
+    filter: blur(16px);
+  }
+}
+
+.animate-hoverboard-1 {
+  animation: hoverboardFloat 5.8s ease-in-out infinite 0s;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.animate-hoverboard-2 {
+  animation: hoverboardFloat 5.8s ease-in-out infinite 1.93s;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.animate-hoverboard-3 {
+  animation: hoverboardFloat 5.8s ease-in-out infinite 3.86s;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.animate-thruster-pulse {
+  animation: thrusterGlowPulse 2.4s ease-in-out infinite;
+  will-change: transform, opacity, filter;
+}
+
+/* --------------------------------------------------------------------------
+   FUTURISTIC 3D HEALTHCARE HUB KEYFRAMES & UTILITIES
+   -------------------------------------------------------------------------- */
+
+@keyframes hudFloat1 {
+
+  0%,
+  100% {
+    transform: perspective(1200px) translateY(0px) translateZ(48px) rotateX(0deg) rotateY(0deg);
+  }
+
+  50% {
+    transform: perspective(1200px) translateY(-10px) translateZ(68px) rotateX(2deg) rotateY(-1.5deg);
+  }
+}
+
+@keyframes hudFloat2 {
+
+  0%,
+  100% {
+    transform: perspective(1200px) translateY(0px) translateZ(44px) rotateX(0deg) rotateY(0deg);
+  }
+
+  50% {
+    transform: perspective(1200px) translateY(-12px) translateZ(64px) rotateX(-2deg) rotateY(1.8deg);
+  }
+}
+
+@keyframes hudFloat3 {
+
+  0%,
+  100% {
+    transform: perspective(1200px) translateY(0px) translateZ(52px) rotateX(0deg) rotateY(0deg);
+  }
+
+  50% {
+    transform: perspective(1200px) translateY(-9px) translateZ(72px) rotateX(1.8deg) rotateY(1.2deg);
+  }
+}
+
+@keyframes hudFloat4 {
+
+  0%,
+  100% {
+    transform: perspective(1200px) translateY(0px) translateZ(46px) rotateX(0deg) rotateY(0deg);
+  }
+
+  50% {
+    transform: perspective(1200px) translateY(-11px) translateZ(66px) rotateX(-1.5deg) rotateY(-1.5deg);
+  }
+}
+
+@keyframes coreHoloFloat {
+
+  0%,
+  100% {
+    transform: perspective(1200px) translateY(0px) translateZ(55px) scale(1);
+    filter: drop-shadow(0 0 25px rgba(24, 199, 201, 0.35));
+  }
+
+  50% {
+    transform: perspective(1200px) translateY(-8px) translateZ(75px) scale(1.03);
+    filter: drop-shadow(0 0 40px rgba(24, 199, 201, 0.65));
+  }
+}
+
+@keyframes gyroRotate3D {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes gyroRotateCounter3D {
+  0% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes scannerSweep360 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes conduitPulseFlow {
+  0% {
+    stroke-dashoffset: 200;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ecgNeonDraw {
+  0% {
+    stroke-dashoffset: 280;
+  }
+
+  50% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -280;
+  }
+}
+
+.animate-hud-float-1 {
+  animation: hudFloat1 5.2s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.animate-hud-float-2 {
+  animation: hudFloat2 5.8s ease-in-out infinite 0.8s;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.animate-hud-float-3 {
+  animation: hudFloat3 5.4s ease-in-out infinite 1.6s;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.animate-hud-float-4 {
+  animation: hudFloat4 6.0s ease-in-out infinite 2.4s;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.animate-core-holo-float {
+  animation: coreHoloFloat 4.6s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform, filter;
+}
+
+.animate-gyro-rotate-cw {
+  animation: gyroRotate3D 24s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.animate-gyro-rotate-ccw {
+  animation: gyroRotateCounter3D 18s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.animate-scanner-360 {
+  animation: scannerSweep360 4s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.animate-conduit-pulse {
+  animation: conduitPulseFlow 2.4s linear infinite;
+}
+
+.animate-ecg-neon {
+  stroke-dasharray: 280;
+  animation: ecgNeonDraw 2.8s ease-in-out infinite;
+}

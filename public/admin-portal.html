@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Admin Operations Portal | HSM Healthcare</title>
+  <meta name="description" content="HSM Hospital Admin Portal: Doctor schedules, slot management, appointment lifecycle, token queue, admissions, bed matrix, clinical care, OT procedures, discharge, and final billing.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;750;800;850&display=swap" rel="stylesheet">
+
+  <!-- Core & Admin Styles -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/super-admin.css">
+</head>
+<body class="admin-body">
+
+  <div class="admin-layout">
+    <!-- ======================================================================
+         Sidebar Navigation (Hospital Admin 22 Modules)
+         ====================================================================== -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="admin-sidebar-brand">
+        <div class="admin-logo-flex">
+          <div class="logo-icon-wrapper" style="width: 32px; height: 32px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 2v20M2 12h20M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24"/>
+            </svg>
+          </div>
+          <span>HSM Admin</span>
+        </div>
+        <span class="admin-role-badge" style="background: rgba(2, 132, 199, 0.2); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">
+          ADMIN CONSOLE
+        </span>
+      </div>
+
+      <div class="admin-nav-scroll">
+        <div class="admin-nav-heading">OPD & Scheduling Management</div>
+        <a href="#doc-avail" class="admin-nav-item active">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          1. Doctor Availability
+        </a>
+        <a href="#slot-mgmt" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          2. Slot Management
+        </a>
+        <a href="#booking-lifecycle" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          3. Booking & Rescheduling
+        </a>
+        <a href="#queue-tokens" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          4. Check-in & Queue / Token
+        </a>
+        <a href="#noshow-mgmt" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          5. No-Show Tracking
+        </a>
+        <a href="#consult-flow" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          6. Consultation Start/Done
+        </a>
+        <a href="#followup-mgmt" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          7. Follow-Up Management
+        </a>
+
+        <div class="admin-nav-heading">Inpatient Operations (IPD)</div>
+        <a href="#ipd-admission" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          8. Admission Intake
+        </a>
+        <a href="#doctor-assign" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+          9. Doctor Assignment
+        </a>
+        <a href="#ward-bed-alloc" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          10. Ward & Bed Allocation
+        </a>
+        <a href="#bed-transfer-sec" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          11. Bed Transfer
+        </a>
+
+        <div class="admin-nav-heading">Clinical Care & Surgery</div>
+        <a href="#nursing-care-sec" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          12. Nursing Care
+        </a>
+        <a href="#vitals-sec" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          13. Vitals Monitoring
+        </a>
+        <a href="#doctor-rounds-sec" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+          14. Doctor Rounds Log
+        </a>
+        <a href="#med-admin-sec" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+          15. Medication Admin (eMAR)
+        </a>
+        <a href="#investigations-sec" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/></svg>
+          16. Investigations & Pathology
+        </a>
+        <a href="#procedures-surgery-sec" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m14 12-4-4v8z"/></svg>
+          17. Surgery & Procedures
+        </a>
+        <a href="#diet-sec" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/></svg>
+          18. Diet & Nutrition
+        </a>
+        <a href="#progress-notes-sec" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          19. Progress Notes (SOAP)
+        </a>
+
+        <div class="admin-nav-heading" style="color: #38bdf8; display: flex; align-items: center; justify-content: space-between;">
+          <span>Laboratory Information System (LIS)</span>
+          <span style="font-size: 0.65rem; background: rgba(56, 189, 248, 0.2); color: #38bdf8; padding: 0.1rem 0.35rem; border-radius: 4px;">12 MODS</span>
+        </div>
+        <a href="#lab-test-master" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          1. Test Master
+        </a>
+        <a href="#lab-sample-types" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.31M14 2v7.31M8.5 2h7M14 9.3a6.5 6.5 0 1 1-4 0"/></svg>
+          2. Sample Types
+        </a>
+        <a href="#lab-orders" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+          3. Lab Orders
+        </a>
+        <a href="#lab-sample-collection" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/><path d="M12 9v12"/></svg>
+          4. Sample Collection
+        </a>
+        <a href="#lab-barcode-tracking" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="8" x2="7" y2="16"/><line x1="10" y1="8" x2="10" y2="16"/><line x1="13" y1="8" x2="13" y2="16"/><line x1="17" y1="8" x2="17" y2="16"/></svg>
+          5. Barcode / Tracking
+        </a>
+        <a href="#lab-processing" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          6. Processing
+        </a>
+        <a href="#lab-result-entry" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          7. Result Entry
+        </a>
+        <a href="#lab-verification" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          8. Verification
+        </a>
+        <a href="#lab-reference-ranges" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+          9. Reference Ranges
+        </a>
+        <a href="#lab-critical-results" class="admin-nav-item" style="color: #fca5a5;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          10. Critical Results
+        </a>
+        <a href="#lab-report-generation" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          11. Report Generation
+        </a>
+        <a href="#lab-billing" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/><line x1="12" y1="1" x2="12" y2="23"/></svg>
+          12. Lab Billing
+        </a>
+
+        <div class="admin-nav-heading">Discharge & Billing</div>
+        <a href="#discharge-plan-sec" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          20. Discharge Planning
+        </a>
+        <a href="#discharge-sum-sec" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          21. Discharge Summary
+        </a>
+        <a href="#final-billing-sec" class="admin-nav-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/><line x1="12" y1="1" x2="12" y2="23"/></svg>
+          22. Final Billing & Settle
+        </a>
+      </div>
+
+      <div class="admin-sidebar-footer" style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <a href="pharmacist-portal.html" class="btn btn-secondary btn-sm" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: rgba(5, 150, 105, 0.25); color: #34d399; border-color: rgba(52, 211, 153, 0.3);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+          Pharmacist Portal
+        </a>
+        <a href="index.html" class="btn btn-secondary btn-sm" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Return to HSM Home
+        </a>
+      </div>
+    </aside>
+
+    <!-- ======================================================================
+         Main Content Area
+         ====================================================================== -->
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div class="admin-topbar-title">
+          <h1>Hospital Administration & Clinical Flow Console</h1>
+          <div class="admin-live-badge" style="background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe;">
+            <span class="pulse-dot" style="background: #3b82f6;"></span>
+            Administrator Mode Active
+          </div>
+        </div>
+
+        <div class="admin-topbar-actions">
+          <!-- Animated Vital Heartbeat Line -->
+          <div class="admin-topbar-ecg" title="Clinical Hub Vitals Telemetry Live">
+            <span class="ecg-heart-icon" style="font-size: 0.95rem;">❤️</span>
+            <svg class="nav-ecg-mini" viewBox="0 0 120 28" preserveAspectRatio="none">
+              <path class="nav-ecg-trace-bg" d="M0,14 L20,14 L25,14 L30,4 L35,24 L40,8 L45,18 L50,14 L70,14 L75,14 L80,4 L85,24 L90,8 L95,18 L100,14 L120,14" />
+              <path class="nav-ecg-trace-anim" d="M0,14 L20,14 L25,14 L30,4 L35,24 L40,8 L45,18 L50,14 L70,14 L75,14 L80,4 L85,24 L90,8 L95,18 L100,14 L120,14" />
+            </svg>
+            <span style="font-size: 0.75rem; font-weight: 800; color: #34d399; font-family: monospace;">74 BPM</span>
+          </div>
+          <div style="font-size: 0.85rem; color: var(--slate-500); font-weight: 600;">
+            Clinic Unit: <strong>Metro Care Administration Hub</strong>
+          </div>
+          <div class="admin-user-info">
+            <div class="admin-user-avatar" style="background: var(--admin-blue);">HA</div>
+            <div>
+              <strong style="display: block; font-size: 0.85rem;">Marcus Brody, PhD</strong>
+              <span style="font-size: 0.725rem; color: var(--slate-400);">Clinical Operations Director</span>
+            </div>
+          </div>
+          <a href="index.html" class="btn btn-secondary btn-sm">Log Out</a>
+        </div>
+      </header>
+
+      <div class="admin-container">
+        <!-- Executive Operations KPI Banner -->
+        <div class="admin-kpi-banner">
+          <div class="admin-kpi-box">
+            <div class="admin-kpi-label">Active Doctor Shifts</div>
+            <div class="admin-kpi-val">42</div>
+            <div class="admin-kpi-sub">● All Rosters Assigned</div>
+          </div>
+
+          <div class="admin-kpi-box">
+            <div class="admin-kpi-label">OPD Consultations</div>
+            <div class="admin-kpi-val">84 <small style="font-size: 0.9rem; color: #64748b;">(18 In Queue)</small></div>
+            <div class="admin-kpi-sub">Wait Time: 4.8m</div>
+          </div>
+
+          <div class="admin-kpi-box">
+            <div class="admin-kpi-label">Hospital Bed Census</div>
+            <div class="admin-kpi-val">188 <small style="font-size: 0.9rem; color: #64748b;">/ 200 Beds</small></div>
+            <div class="admin-kpi-sub" style="color: #ea580c;">94% Occupancy (12 Free)</div>
+          </div>
+
+          <div class="admin-kpi-box">
+            <div class="admin-kpi-label">Active Surgeries (OT)</div>
+            <div class="admin-kpi-val">6</div>
+            <div class="admin-kpi-sub">4 Suites Operational</div>
+          </div>
+
+          <div class="admin-kpi-box">
+            <div class="admin-kpi-label">Discharges Ready</div>
+            <div class="admin-kpi-val">14</div>
+            <div class="admin-kpi-sub" style="color: #059669;">Final Bills Ready</div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             1. Doctor Availability and Schedules & 2. Slot Management
+             ==================================================================== -->
+        <div class="admin-module-card" id="doc-avail">
+          <div class="admin-module-header">
+            <div>
+              <h2 class="admin-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                1. Doctor Availability and Schedules & 2. Slot Management
+              </h2>
+              <p class="admin-module-desc">Manage clinical duty rotas, specialty allocations, and outpatient consultation slot booking boundaries.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="showAdminFeedback('Doctor scheduling modal opened: Configured weekly rotation.');">+ Configure Shifts</button>
+          </div>
+
+          <div class="admin-three-col" id="slot-mgmt">
+            <!-- Doctor A -->
+            <div class="doc-schedule-card">
+              <div class="doc-header-row">
+                <div>
+                  <div class="doc-name">Dr. Sarah Jenkins, MD</div>
+                  <div class="doc-dept">Cardiology • Suite 302</div>
+                </div>
+                <span class="status-pill confirmed">On Duty</span>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--slate-600); margin: 0.4rem 0;">Duty: <strong>08:00 AM - 04:00 PM</strong> • 15min / Slot</div>
+              <div class="doc-slots-bar">
+                <span class="slot-pill booked">09:00 (Booked)</span>
+                <span class="slot-pill booked">09:30 (Booked)</span>
+                <span class="slot-pill booked">10:00 (Booked)</span>
+                <span class="slot-pill available">10:30 (Available)</span>
+                <span class="slot-pill available">11:00 (Available)</span>
+                <span class="slot-pill buffer">Buffer Slot</span>
+              </div>
+            </div>
+
+            <!-- Doctor B -->
+            <div class="doc-schedule-card">
+              <div class="doc-header-row">
+                <div>
+                  <div class="doc-name">Dr. David Miller, MD</div>
+                  <div class="doc-dept">Internal Medicine • Room 104</div>
+                </div>
+                <span class="status-pill confirmed">On Duty</span>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--slate-600); margin: 0.4rem 0;">Duty: <strong>09:00 AM - 05:00 PM</strong> • 20min / Slot</div>
+              <div class="doc-slots-bar">
+                <span class="slot-pill booked">09:15 (Booked)</span>
+                <span class="slot-pill booked">09:45 (Booked)</span>
+                <span class="slot-pill available">10:15 (Available)</span>
+                <span class="slot-pill available">10:45 (Available)</span>
+                <span class="slot-pill booked">11:15 (Booked)</span>
+              </div>
+            </div>
+
+            <!-- Doctor C -->
+            <div class="doc-schedule-card">
+              <div class="doc-header-row">
+                <div>
+                  <div class="doc-name">Dr. Rachel Adams, PhD</div>
+                  <div class="doc-dept">Pulmonology & ICU</div>
+                </div>
+                <span class="status-pill in-progress">In Consultation</span>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--slate-600); margin: 0.4rem 0;">Duty: <strong>07:00 AM - 03:00 PM</strong> • Critical Rounds</div>
+              <div class="doc-slots-bar">
+                <span class="slot-pill booked">ICU Bed Rounds</span>
+                <span class="slot-pill booked">11:00 (Consult)</span>
+                <span class="slot-pill available">12:30 (Available)</span>
+                <span class="slot-pill buffer">Spirometry Lab</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             3. Booking, Confirmation, Rescheduling and Cancellation
+             ==================================================================== -->
+        <div class="admin-module-card" id="booking-lifecycle">
+          <div class="admin-module-header">
+            <div>
+              <h2 class="admin-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                3. Booking, Confirmation, Rescheduling and Cancellation
+              </h2>
+              <p class="admin-module-desc">Centralized appointment lifecycle registry with immediate rescheduling and cancellation workflows.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Booking new outpatient appointment...');">+ New Booking</button>
+          </div>
+
+          <table class="portal-table">
+            <thead>
+              <tr>
+                <th>Booking Ref</th>
+                <th>Patient Name & UHID</th>
+                <th>Attending Doctor</th>
+                <th>Appointment Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>#BK-9941</strong></td>
+                <td>Eleanor Rigby (UHID-89412)</td>
+                <td>Dr. Sarah Jenkins</td>
+                <td>Sep 15, 2026 - 10:30 AM</td>
+                <td><span class="status-pill confirmed">Confirmed</span></td>
+                <td>
+                  <button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Reschedule dialog opened for #BK-9941.');">Reschedule</button>
+                  <button class="btn btn-ghost btn-sm" style="color: #dc2626;" onclick="showAdminFeedback('Booking #BK-9941 cancelled and patient notified.');">Cancel</button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>#BK-9942</strong></td>
+                <td>Michael Chen (UHID-77210)</td>
+                <td>Dr. David Miller</td>
+                <td>Today - 10:00 AM</td>
+                <td><span class="status-pill in-progress">In Consultation</span></td>
+                <td><span style="font-size: 0.8rem; color: var(--teal-700); font-weight: 700;">Consulting (14m)</span></td>
+              </tr>
+              <tr>
+                <td><strong>#BK-9943</strong></td>
+                <td>Amara Okafor (UHID-66129)</td>
+                <td>Dr. Rachel Adams</td>
+                <td>Today - 10:30 AM</td>
+                <td><span class="status-pill scheduled">Booked (Pending Check-in)</span></td>
+                <td>
+                  <button class="btn btn-primary btn-sm" onclick="showAdminFeedback('Confirmed booking & dispatched reminder SMS to Amara Okafor.');">Confirm</button>
+                  <button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Reschedule requested for #BK-9943.');">Reschedule</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ====================================================================
+             4. Check-in and Queue/Token Management & 5. No-Show Tracking
+             ==================================================================== -->
+        <div class="admin-two-col">
+          <!-- 4. Queue / Token Caller -->
+          <div class="admin-module-card" id="queue-tokens">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                  4. Check-in and Queue / Token Management
+                </h2>
+                <p class="admin-module-desc">Live waiting room call system and triage priority token allocator.</p>
+              </div>
+            </div>
+
+            <div class="queue-caller-box">
+              <div>
+                <span style="font-size: 0.825rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.05em;">NOW SERVING TOKEN</span>
+                <div class="current-token-num" id="adminTokenDisplay">#A-104</div>
+                <div style="font-size: 0.85rem; color: #cbd5e1;">Patient: <strong>Eleanor Rigby</strong> • Proceed to <strong>Room 302</strong></div>
+              </div>
+              <button class="btn btn-white" id="adminCallTokenBtn">
+                Call Next Token 📢
+              </button>
+            </div>
+
+            <div style="font-size: 0.85rem; color: var(--slate-600); display: flex; justify-content: space-between;">
+              <span>Tokens Issued: <strong>84</strong></span>
+              <span>Waiting in Lobby: <strong>6 Patients</strong></span>
+              <span>Counters: <strong>Desks 1 to 4 Active</strong></span>
+            </div>
+          </div>
+
+          <!-- 5. No-Show Tracking -->
+          <div class="admin-module-card" id="noshow-mgmt">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                  5. No-Show Tracking & Automated Recalls
+                </h2>
+                <p class="admin-module-desc">Track missed consultations and automatically trigger follow-up recall SMS.</p>
+              </div>
+              <span class="status-pill confirmed">No-Show Rate: 3.8%</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 8px;">
+                <div>
+                  <strong>James Wilson (UHID-55194)</strong>
+                  <div style="font-size: 0.75rem; color: #9f1239;">Missed Slot: 09:30 AM (Orthopedics) • 2nd No-Show</div>
+                </div>
+                <button class="btn btn-sm btn-secondary" onclick="showAdminFeedback('Sent WhatsApp/SMS recall message to James Wilson.');">Send Recall SMS</button>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: 8px;">
+                <div>
+                  <strong>Karen Peterson (UHID-44102)</strong>
+                  <div style="font-size: 0.75rem; color: var(--slate-500);">Missed Slot: 08:45 AM (Dermatology) • Recalled</div>
+                </div>
+                <span class="status-pill scheduled">Recalled</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             6. Consultation Start and Completion & 7. Follow-Up
+             ==================================================================== -->
+        <div class="admin-two-col">
+          <!-- 6. Consultation Flow -->
+          <div class="admin-module-card" id="consult-flow">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                  6. Consultation Start and Completion
+                </h2>
+                <p class="admin-module-desc">Real-time doctor encounter tracking with electronic prescription dispatch.</p>
+              </div>
+            </div>
+
+            <div style="padding: 1.25rem; border: 1.5px solid var(--teal-200); background: var(--teal-50); border-radius: var(--radius-md);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <strong>Room 302: Dr. Sarah Jenkins & Eleanor Rigby</strong>
+                <span class="status-pill confirmed">Duration: 14m 22s</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--slate-600); margin-bottom: 1rem;">
+                Vitals reviewed: BP 122/82. Prescription generated for Lisinopril 10mg. Clinical notes locked.
+              </p>
+              <button class="btn btn-primary btn-sm" onclick="showAdminFeedback('Consultation marked complete. EHR updated and pharmacy pinged.');">
+                Mark Complete & Handover to Pharmacy
+              </button>
+            </div>
+          </div>
+
+          <!-- 7. Follow-Up -->
+          <div class="admin-module-card" id="followup-mgmt">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                  7. Follow-up Management
+                </h2>
+                <p class="admin-module-desc">Schedule follow-up visits and trigger automated recall intervals.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.875rem;">
+              <div style="padding: 0.85rem; border: 1px solid var(--slate-200); border-radius: 8px; background: var(--slate-50);">
+                <strong>Eleanor Rigby: Follow-up in 30 Days (Oct 15, 2026)</strong>
+                <div style="font-size: 0.8rem; color: var(--slate-500); margin-top: 0.2rem;">Condition: Hypertension review & renal panel re-check.</div>
+              </div>
+              <div style="padding: 0.85rem; border: 1px solid var(--slate-200); border-radius: 8px; background: var(--slate-50);">
+                <strong>Michael Chen: Follow-up in 14 Days (Sep 18, 2026)</strong>
+                <div style="font-size: 0.8rem; color: var(--slate-500); margin-top: 0.2rem;">Condition: Post-op surgical suture inspection.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             8. Admission, 9. Doctor Assignment, 10. Ward / Room / Bed Allocation & 11. Bed Transfer
+             ==================================================================== -->
+        <div class="admin-module-card" id="ipd-admission">
+          <div class="admin-module-header">
+            <div>
+              <h2 class="admin-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                8. Admission, 9. Doctor Assignment, 10. Ward / Room / Bed Allocation & 11. Bed Transfer
+              </h2>
+              <p class="admin-module-desc">Centralized inpatient census grid, bed occupancy tracking, and bed transfer execution engine.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="showAdminFeedback('Admission intake window initiated.');">+ New Patient Admission</button>
+          </div>
+
+          <!-- Bed Allocation Grid -->
+          <div style="margin-bottom: 1.25rem;" id="ward-bed-alloc">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <strong style="font-size: 0.95rem;">Live Inpatient Bed Census (ICU, Deluxe & General Pavilions)</strong>
+              <div style="display: flex; gap: 1rem; font-size: 0.8rem;">
+                <span style="display: flex; align-items: center; gap: 0.35rem;"><span style="width: 10px; height: 10px; background: #f87171; border-radius: 50%;"></span> Occupied (188)</span>
+                <span style="display: flex; align-items: center; gap: 0.35rem;"><span style="width: 10px; height: 10px; background: #34d399; border-radius: 50%;"></span> Available (12)</span>
+                <span style="display: flex; align-items: center; gap: 0.35rem;"><span style="width: 10px; height: 10px; background: #fbbf24; border-radius: 50%;"></span> Cleaning (4)</span>
+              </div>
+            </div>
+
+            <div class="bed-matrix-grid">
+              <div class="bed-box occupied" onclick="triggerAdminTransfer('ICU-101', 'Robert Davis', 'Dr. Adams')">
+                <div class="bed-id">ICU-101</div>
+                <div class="bed-patient">Robert Davis</div>
+                <span class="bed-status-indicator" style="color: #dc2626;">Occupied</span>
+              </div>
+
+              <div class="bed-box occupied" onclick="triggerAdminTransfer('ICU-102', 'Linda Morales', 'Dr. Jenkins')">
+                <div class="bed-id">ICU-102</div>
+                <div class="bed-patient">Linda Morales</div>
+                <span class="bed-status-indicator" style="color: #dc2626;">Occupied</span>
+              </div>
+
+              <div class="bed-box available" onclick="showAdminFeedback('Bed ICU-103 is ready for new inpatient admission.');">
+                <div class="bed-id">ICU-103</div>
+                <div class="bed-patient" style="color: #059669;">Ready for Intake</div>
+                <span class="bed-status-indicator" style="color: #059669;">Available</span>
+              </div>
+
+              <div class="bed-box occupied" onclick="triggerAdminTransfer('WD-401', 'Eleanor Rigby', 'Dr. Miller')">
+                <div class="bed-id">WD-401 (Deluxe)</div>
+                <div class="bed-patient">Eleanor Rigby</div>
+                <span class="bed-status-indicator" style="color: #dc2626;">Occupied</span>
+              </div>
+
+              <div class="bed-box cleaning" onclick="showAdminFeedback('Bed WD-402 is undergoing terminal post-discharge cleaning.');">
+                <div class="bed-id">WD-402 (Deluxe)</div>
+                <div class="bed-patient">Cleaning In Progress</div>
+                <span class="bed-status-indicator" style="color: #d97706;">Cleaning</span>
+              </div>
+
+              <div class="bed-box available" onclick="showAdminFeedback('Bed WD-403 (Deluxe Suite) is vacant.');">
+                <div class="bed-id">WD-403 (Deluxe)</div>
+                <div class="bed-patient" style="color: #059669;">Ready for Intake</div>
+                <span class="bed-status-indicator" style="color: #059669;">Available</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bed Transfer Box -->
+          <div id="bed-transfer-sec" style="padding: 1rem; border-radius: 8px; background: var(--slate-50); border: 1px solid var(--slate-200); display: flex; justify-content: space-between; align-items: center;">
+            <div id="doctor-assign">
+              <strong>9. Doctor Assignment & 11. Bed Transfer:</strong> Reallocate primary consultant or transfer patient between wards.
+              <div style="font-size: 0.8rem; color: var(--slate-500);">Synchronizes medical records, nurse rosters, and housekeeping terminal disinfection queues.</div>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="triggerAdminTransfer('ICU-101', 'Robert Davis', 'Dr. Adams')">Execute Bed Transfer</button>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             12. Nursing Care & 13. Vitals
+             ==================================================================== -->
+        <div class="admin-two-col">
+          <!-- 12. Nursing Care -->
+          <div class="admin-module-card" id="nursing-care-sec">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                  12. Nursing Care & Station Handover
+                </h2>
+                <p class="admin-module-desc">Nursing care plan execution, shift handovers, and patient fall-risk index.</p>
+              </div>
+              <span class="status-pill confirmed">Lead: S. Martinez, RN</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.875rem;">
+              <div style="padding: 0.75rem; background: var(--slate-50); border-radius: 6px; border: 1px solid var(--slate-200);">
+                <strong>Deluxe Ward 401 (Eleanor Rigby):</strong> IV Saline infusing at 75 mL/hr • Surgical incision dry & intact • Fall Risk Score: 1 (Low).
+              </div>
+              <div style="padding: 0.75rem; background: var(--slate-50); border-radius: 6px; border: 1px solid var(--slate-200);">
+                <strong>ICU Bed 101 (Robert Davis):</strong> Ventilator weaning protocol active • Arterial line patent • Suctioning cleared.
+              </div>
+            </div>
+          </div>
+
+          <!-- 13. Vitals -->
+          <div class="admin-module-card" id="vitals-sec">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  13. Inpatient Vitals Monitoring &amp; Live ECG Stream
+                </h2>
+                <p class="admin-module-desc">Real-time bedside continuous telemetry with dynamic heartbeat animation.</p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="status-pill confirmed">● All Vitals Stable</span>
+                <span class="status-pill" style="background: #0f172a; color: #34d399; border: 1px solid #059669; font-family: monospace;">LEAD II • 25mm/s</span>
+              </div>
+            </div>
+
+            <!-- Real-Time Cardiac Monitor Display -->
+            <div class="vital-ecg-monitor" style="margin-bottom: 1.25rem;">
+              <div class="ecg-monitor-topbar">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="ecg-heart-icon" title="Pulsing cardiac sinus rhythm">❤️</span>
+                  <div>
+                    <span style="font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Heart Rate (ECG)</span>
+                    <div style="display: flex; align-items: baseline; gap: 0.35rem;">
+                      <span class="ecg-bpm-val" id="liveBpmDisplayAdmin">74</span>
+                      <span style="font-size: 0.8rem; color: #34d399; font-weight: 750;">BPM</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ecg-hud-stats">
+                  <div class="ecg-hud-item">
+                    <span class="ecg-hud-label">Cardiac Rhythm</span>
+                    <span class="ecg-hud-val" style="color: #34d399;">Normal Sinus</span>
+                  </div>
+                  <div class="ecg-hud-item">
+                    <span class="ecg-hud-label">SpO2 (Oxygen)</span>
+                    <span class="ecg-hud-val" style="color: #38bdf8;">99% <small style="font-size: 0.65rem;">Pleth 1.0</small></span>
+                  </div>
+                  <div class="ecg-hud-item">
+                    <span class="ecg-hud-label">NIBP (Blood Pressure)</span>
+                    <span class="ecg-hud-val" style="color: #fbbf24;">120/80 <small style="font-size: 0.65rem;">(93 MAP)</small></span>
+                  </div>
+                  <div class="ecg-hud-item">
+                    <span class="ecg-hud-label">Respiratory Rate</span>
+                    <span class="ecg-hud-val" style="color: #cbd5e1;">16 <small style="font-size: 0.65rem;">rpm</small></span>
+                  </div>
+                  <div class="ecg-hud-item">
+                    <span class="ecg-hud-label">ST Segment</span>
+                    <span class="ecg-hud-val" style="color: #34d399;">+0.02 mV</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Animated ECG Heartbeat Waveform Canvas -->
+              <div class="ecg-canvas-wrapper">
+                <div class="ecg-grid-overlay"></div>
+                <div class="ecg-scan-beam"></div>
+                <svg class="ecg-svg-stream" viewBox="0 0 600 60" preserveAspectRatio="none">
+                  <!-- Background Dim Trace -->
+                  <path class="ecg-bg-trace" d="M0,30 L30,30 Q40,24 50,30 L60,30 L65,35 L75,5 L85,50 L95,30 Q110,18 125,30 L150,30 L180,30 Q190,24 200,30 L210,30 L215,35 L225,5 L235,50 L245,30 Q260,18 275,30 L300,30 L330,30 Q340,24 350,30 L360,30 L365,35 L375,5 L385,50 L395,30 Q410,18 425,30 L450,30 L480,30 Q490,24 500,30 L510,30 L515,35 L525,5 L535,50 L545,30 Q560,18 575,30 L600,30" />
+                  <!-- Live Animated Neon Green Trace -->
+                  <path class="ecg-animated-path" d="M0,30 L30,30 Q40,24 50,30 L60,30 L65,35 L75,5 L85,50 L95,30 Q110,18 125,30 L150,30 L180,30 Q190,24 200,30 L210,30 L215,35 L225,5 L235,50 L245,30 Q260,18 275,30 L300,30 L330,30 Q340,24 350,30 L360,30 L365,35 L375,5 L385,50 L395,30 Q410,18 425,30 L450,30 L480,30 Q490,24 500,30 L510,30 L515,35 L525,5 L535,50 L545,30 Q560,18 575,30 L600,30" />
+                </svg>
+              </div>
+
+              <div class="ecg-monitor-footer">
+                <span>Patient: Eleanor Rigby • Bed: WD-401 • ICU Telemetry Channel #3</span>
+                <span>Real-Time Sweep: 25 mm/s • Amplitude: 10 mm/mV • Filter: Diagnostic 0.05-150Hz</span>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; text-align: center;">
+              <div style="background: var(--slate-50); border: 1px solid var(--slate-200); padding: 0.75rem; border-radius: 6px;">
+                <div style="font-size: 0.7rem; color: var(--slate-500); font-weight: 700;">BLOOD PRESSURE</div>
+                <div style="font-size: 1.25rem; font-weight: 800; color: #0f172a;">120/80</div>
+                <span style="font-size: 0.65rem; color: #059669; font-weight: 700;">Normal</span>
+              </div>
+              <div style="background: var(--slate-50); border: 1px solid var(--slate-200); padding: 0.75rem; border-radius: 6px;">
+                <div style="font-size: 0.7rem; color: var(--slate-500); font-weight: 700;">HEART RATE</div>
+                <div style="font-size: 1.25rem; font-weight: 800; color: #0f172a;">74 <small style="font-size: 0.7rem;">BPM</small></div>
+                <span style="font-size: 0.65rem; color: #059669; font-weight: 700;">Sinus Rhythm</span>
+              </div>
+              <div style="background: var(--slate-50); border: 1px solid var(--slate-200); padding: 0.75rem; border-radius: 6px;">
+                <div style="font-size: 0.7rem; color: var(--slate-500); font-weight: 700;">SPO2 (OXYGEN)</div>
+                <div style="font-size: 1.25rem; font-weight: 800; color: #0f172a;">99%</div>
+                <span style="font-size: 0.65rem; color: #059669; font-weight: 700;">Room Air</span>
+              </div>
+              <div style="background: var(--slate-50); border: 1px solid var(--slate-200); padding: 0.75rem; border-radius: 6px;">
+                <div style="font-size: 0.7rem; color: var(--slate-500); font-weight: 700;">TEMPERATURE</div>
+                <div style="font-size: 1.25rem; font-weight: 800; color: #0f172a;">98.6°F</div>
+                <span style="font-size: 0.65rem; color: #059669; font-weight: 700;">Afebrile</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             14. Doctor Rounds & 15. Medication Administration (eMAR)
+             ==================================================================== -->
+        <div class="admin-two-col">
+          <!-- 14. Doctor Rounds -->
+          <div class="admin-module-card" id="doctor-rounds-sec">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+                  14. Doctor Rounds Log
+                </h2>
+                <p class="admin-module-desc">Physician bedside round findings, orders, and treatment updates.</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Doctor round notes logged.');">+ Add Round Notes</button>
+            </div>
+
+            <div style="font-size: 0.85rem; color: var(--slate-700); line-height: 1.6;">
+              <div style="padding: 0.85rem; border-left: 3px solid var(--admin-blue); background: var(--slate-50); margin-bottom: 0.6rem;">
+                <strong>Morning Round (08:30 AM) • Dr. Sarah Jenkins:</strong>
+                <div>Patient is ambulating well with minimal post-op pain. Bowel sounds present. Tolerating soft diet. Transition to oral medications approved.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 15. Medication Administration -->
+          <div class="admin-module-card" id="med-admin-sec">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+                  15. Medication Administration (eMAR)
+                </h2>
+                <p class="admin-module-desc">Electronic Medication Administration Record with barcode verification.</p>
+              </div>
+            </div>
+
+            <div class="emar-checklist">
+              <div class="emar-item administered">
+                <div>
+                  <strong>Lisinopril 10 mg Oral Tablet</strong>
+                  <div style="font-size: 0.75rem; color: #15803d;">Administered at 08:00 AM by Nurse S. Martinez (RN) • Wristband Barcode Scanned</div>
+                </div>
+                <span class="status-pill confirmed">Administered</span>
+              </div>
+              <div class="emar-item">
+                <div>
+                  <strong>Normal Saline IV 1000mL</strong>
+                  <div style="font-size: 0.75rem; color: var(--slate-500);">Scheduled for 12:00 PM (Infusion drip check)</div>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Signed dose given.');">Sign Given</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             16. Investigations, 17. Procedures and Surgery, 18. Diet, 19. Progress Notes
+             ==================================================================== -->
+        <div class="admin-two-col">
+          <!-- 16. Investigations & 17. Surgery -->
+          <div class="admin-module-card" id="investigations-sec">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/></svg>
+                  16. Investigations & 17. Procedures & Surgery (OT)
+                </h2>
+                <p class="admin-module-desc">Laboratory order status and Operating Theater surgical execution.</p>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+              <div class="info-field-label">16. Laboratory Diagnostic Investigations</div>
+              <div style="font-size: 0.85rem; color: var(--slate-700); background: var(--slate-50); padding: 0.65rem; border-radius: 6px; border: 1px solid var(--slate-200);">
+                🧪 <strong>Electrolyte Panel & Renal Function:</strong> Completed at 07:15 AM • <span style="color: #059669; font-weight: 700;">Normal Findings</span>
+              </div>
+            </div>
+
+            <div id="procedures-surgery-sec">
+              <div class="info-field-label">17. Procedures and Surgery (OT Log)</div>
+              <div style="font-size: 0.85rem; color: var(--slate-700); background: #f0fdfa; padding: 0.75rem; border-radius: 6px; border: 1px solid var(--teal-200);">
+                🏥 <strong>OT Suite 02:</strong> Laparoscopic Surgery Completed • Lead Surgeon: Dr. Miller • Recovery PACU Stable.
+              </div>
+            </div>
+          </div>
+
+          <!-- 18. Diet & 19. Progress Notes -->
+          <div class="admin-module-card" id="diet-sec">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg>
+                  18. Diet & 19. Progress Notes (SOAP)
+                </h2>
+                <p class="admin-module-desc">Dietary prescription fulfillment and clinical SOAP progress notes.</p>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+              <div class="info-field-label">18. Clinical Diet & Nutrition</div>
+              <div style="font-size: 0.85rem; color: var(--slate-700); padding: 0.65rem; background: var(--slate-50); border-radius: 6px; border: 1px solid var(--slate-200);">
+                🥗 <strong>Diet:</strong> Diabetic-Renal Soft Diet (Low Sodium < 2g) • Meal Delivered & Finished.
+              </div>
+            </div>
+
+            <div id="progress-notes-sec">
+              <div class="info-field-label">19. Clinical SOAP Progress Documentation</div>
+              <div style="font-size: 0.8rem; color: var(--slate-600); line-height: 1.5; background: var(--slate-50); padding: 0.75rem; border-radius: 6px; border: 1px solid var(--slate-200);">
+                <div><strong>S (Subjective):</strong> Patient reports pain score 1/10. Appetite returned.</div>
+                <div><strong>O (Objective):</strong> Afebrile (98.4°F), HR 74, soft abdomen, incisions clean.</div>
+                <div><strong>A (Assessment):</strong> Post-operative Day 2 recovery on target.</div>
+                <div><strong>P (Plan):</strong> Discontinue IV line; proceed to discharge clearance.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             LABORATORY INFORMATION SYSTEM (LIS) - 12 COMPREHENSIVE MODULES
+             1. Test master
+             2. Sample types
+             3. Lab orders
+             4. Sample collection
+             5. Barcode / tracking
+             6. Processing
+             7. Result entry
+             8. Verification
+             9. Reference ranges
+             10. Critical results
+             11. Report generation
+             12. Lab billing
+             ==================================================================== -->
+        <div style="margin-top: 3rem; margin-bottom: 1.5rem; padding-top: 1.5rem; border-top: 2px dashed var(--admin-border);">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <span class="admin-role-badge" style="background: rgba(2, 132, 199, 0.2); color: #0284c7; border-color: rgba(2, 132, 199, 0.4); font-size: 0.8rem; padding: 0.3rem 0.75rem;">
+                DIAGNOSTIC PATHOLOGY &amp; LIS
+              </span>
+              <h2 style="font-size: 1.65rem; font-weight: 850; color: var(--slate-900); margin-top: 0.5rem;">
+                Laboratory Information System (LIS)
+              </h2>
+              <p style="font-size: 0.9rem; color: var(--slate-500); margin-top: 0.2rem;">
+                End-to-end clinical pathology lifecycle: test catalog, specimen collection, barcode accessioning, automated analyzer interfaces, two-tier verification, critical panic alerts, accredited reports, and billing.
+              </p>
+            </div>
+            <div style="display: flex; gap: 0.75rem;">
+              <span class="status-pill confirmed" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">● Analyzers Online (3/3)</span>
+              <span class="status-pill in-progress" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">142 Tests Processed Today</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 1: Test Master -->
+        <div class="admin-module-card" id="lab-test-master">
+          <div class="admin-module-header">
+            <div>
+              <h2 class="admin-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                1. Test Master Catalog
+              </h2>
+              <p class="admin-module-desc">Centralized formulary of clinical laboratory investigations, LOINC mappings, turnaround times, and pricing.</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <input type="text" id="labTestSearch" placeholder="Search test name, LOINC, code..." style="padding: 0.45rem 0.85rem; border: 1px solid var(--admin-border); border-radius: var(--radius-md); font-size: 0.85rem;" oninput="filterLabTests()">
+              <button class="btn btn-primary btn-sm" onclick="addNewTestPrompt()">+ Add Test to Master</button>
+            </div>
+          </div>
+
+          <div style="overflow-x: auto;">
+            <table class="admin-table" id="labTestMasterTable">
+              <thead>
+                <tr>
+                  <th>Test Code</th>
+                  <th>Test Name</th>
+                  <th>Department</th>
+                  <th>LOINC Code</th>
+                  <th>Specimen &amp; Tube</th>
+                  <th>Standard TAT</th>
+                  <th>Base Price</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>CBC-01</strong></td>
+                  <td>Complete Blood Count (5-Part Diff)</td>
+                  <td><span class="lab-dept-tag">Hematology</span></td>
+                  <td><code>57021-8</code></td>
+                  <td>Whole Blood • EDTA Lavender</td>
+                  <td>45 mins</td>
+                  <td>$25.00</td>
+                  <td><span class="status-pill confirmed">Active</span></td>
+                  <td><button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Editing CBC-01 specifications...')">Edit</button></td>
+                </tr>
+                <tr>
+                  <td><strong>GLUC-F</strong></td>
+                  <td>Fasting Blood Glucose (Hexokinase)</td>
+                  <td><span class="lab-dept-tag">Biochemistry</span></td>
+                  <td><code>1558-6</code></td>
+                  <td>Fluoride Plasma • Grey</td>
+                  <td>30 mins</td>
+                  <td>$15.00</td>
+                  <td><span class="status-pill confirmed">Active</span></td>
+                  <td><button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Editing GLUC-F specifications...')">Edit</button></td>
+                </tr>
+                <tr>
+                  <td><strong>KFT-01</strong></td>
+                  <td>Renal Function Panel (BUN/Cr/eGFR/Uric)</td>
+                  <td><span class="lab-dept-tag">Biochemistry</span></td>
+                  <td><code>24325-3</code></td>
+                  <td>Serum • SST Gold Gel</td>
+                  <td>60 mins</td>
+                  <td>$35.00</td>
+                  <td><span class="status-pill confirmed">Active</span></td>
+                  <td><button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Editing KFT-01 specifications...')">Edit</button></td>
+                </tr>
+                <tr>
+                  <td><strong>LIPID-P</strong></td>
+                  <td>Comprehensive Lipid Profile</td>
+                  <td><span class="lab-dept-tag">Biochemistry</span></td>
+                  <td><code>57698-3</code></td>
+                  <td>Serum • SST Gold Gel</td>
+                  <td>60 mins</td>
+                  <td>$40.00</td>
+                  <td><span class="status-pill confirmed">Active</span></td>
+                  <td><button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Editing LIPID-P specifications...')">Edit</button></td>
+                </tr>
+                <tr>
+                  <td><strong>TROP-I</strong></td>
+                  <td>High Sensitivity Troponin-I (STAT)</td>
+                  <td><span class="lab-dept-tag">Immunology</span></td>
+                  <td><code>49563-0</code></td>
+                  <td>Heparin Plasma • Green</td>
+                  <td>20 mins <span style="color:#ef4444; font-weight:700;">STAT</span></td>
+                  <td>$55.00</td>
+                  <td><span class="status-pill confirmed">Active</span></td>
+                  <td><button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Editing TROP-I specifications...')">Edit</button></td>
+                </tr>
+                <tr>
+                  <td><strong>HBA1C</strong></td>
+                  <td>Glycated Hemoglobin (HPLC Method)</td>
+                  <td><span class="lab-dept-tag">Hematology</span></td>
+                  <td><code>4548-4</code></td>
+                  <td>Whole Blood • EDTA Lavender</td>
+                  <td>90 mins</td>
+                  <td>$30.00</td>
+                  <td><span class="status-pill confirmed">Active</span></td>
+                  <td><button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Editing HBA1C specifications...')">Edit</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Module 2: Sample Types -->
+        <div class="admin-module-card" id="lab-sample-types">
+          <div class="admin-module-header">
+            <div>
+              <h2 class="admin-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.31M14 2v7.31M8.5 2h7M14 9.3a6.5 6.5 0 1 1-4 0"/></svg>
+                2. Sample Types &amp; Vacutainer Specifications
+              </h2>
+              <p class="admin-module-desc">Biological specimen catalog, primary container specs, preservation additives, and rejection criteria.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Specimen rejection policy guidelines displayed.')">Rejection Criteria (CLSI)</button>
+          </div>
+
+          <div class="lab-tube-grid">
+            <!-- Whole Blood EDTA -->
+            <div class="tube-card">
+              <div class="tube-cap-bar cap-lavender"></div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: #7e22ce; margin-top: 0.25rem;">Whole Blood (EDTA)</div>
+              <div style="font-size: 0.775rem; color: var(--slate-500); margin-bottom: 0.5rem;">Vacutainer: <strong>Lavender Cap</strong> (K2 / K3 EDTA)</div>
+              <ul style="font-size: 0.775rem; color: var(--slate-600); line-height: 1.5; padding-left: 1.1rem;">
+                <li>Volume: 3.0 mL • Invert 8-10 times</li>
+                <li>Uses: CBC, ESR, HbA1c, Blood Grouping</li>
+                <li>Stability: 24h at 2-8°C • <strong>No Clots Allowed</strong></li>
+              </ul>
+            </div>
+
+            <!-- Serum SST -->
+            <div class="tube-card">
+              <div class="tube-cap-bar cap-gold"></div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: #b45309; margin-top: 0.25rem;">Serum (SST Gel Separator)</div>
+              <div style="font-size: 0.775rem; color: var(--slate-500); margin-bottom: 0.5rem;">Vacutainer: <strong>Gold / Yellow Cap</strong> (Silica Clot Activator)</div>
+              <ul style="font-size: 0.775rem; color: var(--slate-600); line-height: 1.5; padding-left: 1.1rem;">
+                <li>Volume: 4.0 mL • Allow 30m clotting</li>
+                <li>Centrifuge: 3500 RPM for 10 minutes</li>
+                <li>Uses: LFT, KFT, Lipid Profile, Hormones, Serology</li>
+              </ul>
+            </div>
+
+            <!-- Sodium Citrate -->
+            <div class="tube-card">
+              <div class="tube-cap-bar cap-blue"></div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: #0284c7; margin-top: 0.25rem;">Citrate Plasma (Coagulation)</div>
+              <div style="font-size: 0.775rem; color: var(--slate-500); margin-bottom: 0.5rem;">Vacutainer: <strong>Light Blue Cap</strong> (3.2% Na-Citrate)</div>
+              <ul style="font-size: 0.775rem; color: var(--slate-600); line-height: 1.5; padding-left: 1.1rem;">
+                <li>Strict 9:1 blood-to-anticoagulant ratio</li>
+                <li>Uses: PT/INR, aPTT, D-Dimer, Fibrinogen</li>
+                <li>Rejection: Underfilled (&lt;90% fill line)</li>
+              </ul>
+            </div>
+
+            <!-- Fluoride Plasma -->
+            <div class="tube-card">
+              <div class="tube-cap-bar cap-grey"></div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: #475569; margin-top: 0.25rem;">Fluoride Plasma (Glycolytic)</div>
+              <div style="font-size: 0.775rem; color: var(--slate-500); margin-bottom: 0.5rem;">Vacutainer: <strong>Grey Cap</strong> (Na-Fluoride + K-Oxalate)</div>
+              <ul style="font-size: 0.775rem; color: var(--slate-600); line-height: 1.5; padding-left: 1.1rem;">
+                <li>Inhibits glycolysis; preserves glucose</li>
+                <li>Volume: 2.0 mL • Invert 8 times</li>
+                <li>Uses: Fasting Glucose, Oral GTT, Lactate</li>
+              </ul>
+            </div>
+
+            <!-- Heparin Green -->
+            <div class="tube-card">
+              <div class="tube-cap-bar cap-green"></div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: #15803d; margin-top: 0.25rem;">Lithium Heparin Plasma</div>
+              <div style="font-size: 0.775rem; color: var(--slate-500); margin-bottom: 0.5rem;">Vacutainer: <strong>Green Cap</strong> (Li-Heparin)</div>
+              <ul style="font-size: 0.775rem; color: var(--slate-600); line-height: 1.5; padding-left: 1.1rem;">
+                <li>Volume: 3.0 mL • Rapid plasma turnaround</li>
+                <li>Uses: STAT Cardiac Troponin-I, Electrolytes</li>
+                <li>Advantage: Zero clotting delay</li>
+              </ul>
+            </div>
+
+            <!-- Urine Container -->
+            <div class="tube-card">
+              <div class="tube-cap-bar cap-yellow"></div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: #d97706; margin-top: 0.25rem;">Clean-Catch Urine</div>
+              <div style="font-size: 0.775rem; color: var(--slate-500); margin-bottom: 0.5rem;">Container: <strong>Sterile 60mL Amber Cup</strong></div>
+              <ul style="font-size: 0.775rem; color: var(--slate-600); line-height: 1.5; padding-left: 1.1rem;">
+                <li>Mid-stream clean catch specimen</li>
+                <li>Uses: Routine Urinalysis, Microscopic, Culture</li>
+                <li>Process within 1 hour or refrigerate at 4°C</li>
+              </ul>
+            </div>
+
+            <!-- CSF Conical -->
+            <div class="tube-card">
+              <div class="tube-cap-bar cap-clear"></div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: #0891b2; margin-top: 0.25rem;">Cerebrospinal Fluid (CSF)</div>
+              <div style="font-size: 0.775rem; color: var(--slate-500); margin-bottom: 0.5rem;">Container: <strong>Sterile Clear Tubes 1-4</strong></div>
+              <ul style="font-size: 0.775rem; color: var(--slate-600); line-height: 1.5; padding-left: 1.1rem;">
+                <li>Lumbar puncture collection by physician</li>
+                <li>Immediate hand delivery • <strong>DO NOT REFRIGERATE</strong></li>
+                <li>Uses: Cell count, Protein, Glucose, Gram Stain</li>
+              </ul>
+            </div>
+
+            <!-- Viral Transport Medium -->
+            <div class="tube-card">
+              <div class="tube-cap-bar cap-red"></div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: #b91c1c; margin-top: 0.25rem;">Swabs / VTM (Respiratory)</div>
+              <div style="font-size: 0.775rem; color: var(--slate-500); margin-bottom: 0.5rem;">Container: <strong>3mL Viral Transport Medium (VTM)</strong></div>
+              <ul style="font-size: 0.775rem; color: var(--slate-600); line-height: 1.5; padding-left: 1.1rem;">
+                <li>Synthetic Dacron swab (no calcium alginate)</li>
+                <li>Uses: RT-PCR Influenza, SARS-CoV-2, RSV</li>
+                <li>Store at 2-8°C up to 72h</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 3: Lab Orders & Module 4: Sample Collection (2-Column) -->
+        <div class="admin-two-col">
+          <!-- Module 3: Lab Orders -->
+          <div class="admin-module-card" id="lab-orders">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                  3. Inpatient &amp; Outpatient Lab Orders
+                </h2>
+                <p class="admin-module-desc">Incoming electronic requisitions with triage priority and specimen routing.</p>
+              </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table class="admin-table" style="font-size: 0.8rem;">
+                <thead>
+                  <tr>
+                    <th>Order #</th>
+                    <th>Patient &amp; UHID</th>
+                    <th>Ordered Tests</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="labOrdersTableBody">
+                  <tr>
+                    <td><strong>ORD-9801</strong></td>
+                    <td>Robert Langdon<br><small style="color:var(--slate-500);">UHID-10824 • Bed 302</small></td>
+                    <td>KFT-01, Electrolytes, Troponin-I</td>
+                    <td><span class="flag-pill critical">STAT 🚨</span></td>
+                    <td><span class="status-pill in-progress">In Analysis</span></td>
+                    <td><button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Tracking sample for ORD-9801')">Track</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>ORD-9802</strong></td>
+                    <td>Maria Santos<br><small style="color:var(--slate-500);">UHID-10492 • Bed 204</small></td>
+                    <td>CBC-01, Glycated Hb (HbA1c)</td>
+                    <td><span class="flag-pill high">Urgent</span></td>
+                    <td><span class="status-pill confirmed">Collected</span></td>
+                    <td><button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Accessioning ORD-9802')">Process</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>ORD-9803</strong></td>
+                    <td>David Kim<br><small style="color:var(--slate-500);">UHID-10955 • OPD Walk-in</small></td>
+                    <td>Comprehensive Lipid Panel</td>
+                    <td><span class="flag-pill low">Routine</span></td>
+                    <td><span class="status-pill">Pending Draw</span></td>
+                    <td><button class="btn btn-primary btn-sm" onclick="loadOrderToPhlebotomy('ORD-9803', 'David Kim', 'UHID-10955', 'LIPID-P')">Draw Sample</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Module 4: Sample Collection (Phlebotomy Intake) -->
+          <div class="admin-module-card" id="lab-sample-collection">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/><path d="M12 9v12"/></svg>
+                  4. Sample Collection (Phlebotomy)
+                </h2>
+                <p class="admin-module-desc">Bedside &amp; outpatient specimen procurement with verification checklists.</p>
+              </div>
+            </div>
+
+            <form id="phlebotomyForm" onsubmit="executePhlebotomyCollection(event)">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
+                <div>
+                  <label class="form-label" style="font-size: 0.775rem;">Selected Patient &amp; Order</label>
+                  <input type="text" id="phlebOrderInput" class="form-control" value="ORD-9803 • David Kim (UHID-10955)" readonly style="background: var(--slate-100);">
+                </div>
+                <div>
+                  <label class="form-label" style="font-size: 0.775rem;">Phlebotomist on Duty</label>
+                  <select class="form-control" id="phlebStaffSelect" style="font-size: 0.85rem;">
+                    <option value="Nurse Elena Vance, CPT">Elena Vance, CPT (Station Alpha)</option>
+                    <option value="Technician Marcus Cole">Marcus Cole (Bedside Mobile Unit)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
+                <div>
+                  <label class="form-label" style="font-size: 0.775rem;">Venipuncture Anatomical Site</label>
+                  <select class="form-control" id="phlebSiteSelect" style="font-size: 0.85rem;">
+                    <option value="Right Median Cubital Vein">Right Median Cubital Vein</option>
+                    <option value="Left Median Cubital Vein">Left Median Cubital Vein</option>
+                    <option value="Right Cephalic Vein">Right Cephalic Vein</option>
+                    <option value="Dorsal Hand Vein">Dorsal Hand Vein</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label" style="font-size: 0.775rem;">Fasting &amp; Prep Verification</label>
+                  <select class="form-control" id="phlebFastingSelect" style="font-size: 0.85rem;">
+                    <option value="Verified: 12-Hour Fasting Complied">Verified: 12-Hour Fasting Complied</option>
+                    <option value="Non-Fasting (Random Specimen)">Non-Fasting (Random Specimen)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="background: #f8fafc; border: 1px solid var(--admin-border); border-radius: 6px; padding: 0.75rem; margin-bottom: 1rem; font-size: 0.8rem;">
+                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--slate-700);">
+                  <input type="checkbox" id="phlebConfirmIds" checked required> Two patient identifiers verified (UHID + Wristband Barcode)
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--slate-700); margin-top: 0.35rem;">
+                  <input type="checkbox" id="phlebTubesCheck" checked required> Correct Vacutainer tubes filled &amp; inverted per protocol
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">
+                ✓ Confirm Phlebotomy Collection &amp; Generate Barcode
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Module 5: Barcode / Tracking & Module 6: Processing (2-Column) -->
+        <div class="admin-two-col">
+          <!-- Module 5: Barcode / Tracking -->
+          <div class="admin-module-card" id="lab-barcode-tracking">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="8" x2="7" y2="16"/><line x1="10" y1="8" x2="10" y2="16"/><line x1="13" y1="8" x2="13" y2="16"/><line x1="17" y1="8" x2="17" y2="16"/></svg>
+                  5. Barcode Specimen Accessioning &amp; Chain of Custody
+                </h2>
+                <p class="admin-module-desc">Code-128 specimen accession barcodes and pneumatic/courier transit tracking.</p>
+              </div>
+            </div>
+
+            <!-- Live SVG Barcode Visualization -->
+            <div class="barcode-badge-container">
+              <div style="font-size: 0.75rem; font-weight: 750; color: var(--slate-500); text-transform: uppercase;">
+                Hospital Diagnostic Laboratory • Accession #
+              </div>
+              <!-- Code 128 Simulated Barcode SVG -->
+              <svg class="barcode-svg" viewBox="0 0 260 50" fill="#0f172a">
+                <rect x="10" y="0" width="3" height="42"/>
+                <rect x="15" y="0" width="2" height="42"/>
+                <rect x="20" y="0" width="4" height="42"/>
+                <rect x="27" y="0" width="1" height="42"/>
+                <rect x="32" y="0" width="5" height="42"/>
+                <rect x="40" y="0" width="2" height="42"/>
+                <rect x="45" y="0" width="3" height="42"/>
+                <rect x="52" y="0" width="6" height="42"/>
+                <rect x="62" y="0" width="2" height="42"/>
+                <rect x="68" y="0" width="4" height="42"/>
+                <rect x="76" y="0" width="3" height="42"/>
+                <rect x="83" y="0" width="2" height="42"/>
+                <rect x="88" y="0" width="5" height="42"/>
+                <rect x="96" y="0" width="1" height="42"/>
+                <rect x="100" y="0" width="4" height="42"/>
+                <rect x="108" y="0" width="2" height="42"/>
+                <rect x="114" y="0" width="6" height="42"/>
+                <rect x="124" y="0" width="2" height="42"/>
+                <rect x="130" y="0" width="3" height="42"/>
+                <rect x="136" y="0" width="5" height="42"/>
+                <rect x="145" y="0" width="2" height="42"/>
+                <rect x="151" y="0" width="4" height="42"/>
+                <rect x="158" y="0" width="3" height="42"/>
+                <rect x="165" y="0" width="2" height="42"/>
+                <rect x="170" y="0" width="6" height="42"/>
+                <rect x="180" y="0" width="2" height="42"/>
+                <rect x="186" y="0" width="4" height="42"/>
+                <rect x="194" y="0" width="3" height="42"/>
+                <rect x="200" y="0" width="5" height="42"/>
+                <rect x="209" y="0" width="2" height="42"/>
+                <rect x="215" y="0" width="4" height="42"/>
+                <rect x="222" y="0" width="2" height="42"/>
+                <rect x="228" y="0" width="5" height="42"/>
+                <rect x="237" y="0" width="3" height="42"/>
+                <rect x="244" y="0" width="2" height="42"/>
+              </svg>
+              <div class="barcode-text" id="activeAccessionBarcode">*HSM-LAB-2026-98014*</div>
+              <div style="font-size: 0.75rem; color: var(--slate-500); margin-top: 0.2rem;">
+                UHID: 10824 • Specimen: Serum SST • Rack: <strong>BIO-04 (Slot 12)</strong>
+              </div>
+            </div>
+
+            <!-- Chain of Custody Timeline -->
+            <div style="margin-top: 1rem; font-size: 0.8rem;">
+              <div style="font-weight: 750; color: var(--slate-700); margin-bottom: 0.4rem;">Chain of Custody Events:</div>
+              <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <div style="display: flex; justify-content: space-between; background: var(--slate-50); padding: 0.4rem 0.6rem; border-radius: 4px;">
+                  <span>1. Collected at ICU Bedside</span>
+                  <span style="color: var(--teal-600); font-weight: 600;">08:15 AM (Elena Vance)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; background: var(--slate-50); padding: 0.4rem 0.6rem; border-radius: 4px;">
+                  <span>2. Pneumatic Tube Station Arrival</span>
+                  <span style="color: var(--teal-600); font-weight: 600;">08:24 AM (Tube #04)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.4rem 0.6rem; border-radius: 4px;">
+                  <span>3. Centrifuged &amp; Loaded on Rack</span>
+                  <span style="color: #059669; font-weight: 750;">08:32 AM (Analyzers Unit)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 6: Processing -->
+          <div class="admin-module-card" id="lab-processing">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  6. Instrument Processing &amp; Analyzer Queue
+                </h2>
+                <p class="admin-module-desc">Real-time telemetry of clinical chemistry, hematology, and immunoassay auto-analyzers.</p>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="simulateBatchRun()">▶ Execute Run Cycle</button>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <!-- Analyzer 1 -->
+              <div class="lab-analyzer-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                  <strong style="font-size: 0.9rem; color: var(--slate-900);">Roche Cobas 8000 (c702 Chemistry)</strong>
+                  <span class="status-pill confirmed">● Online &amp; Calibrated</span>
+                </div>
+                <div style="font-size: 0.775rem; color: var(--slate-600); margin-bottom: 0.4rem;">
+                  Assays: KFT, Electrolytes, Liver Panel, Lipid • Reagent Pack: <strong>88% Full</strong>
+                </div>
+                <div style="background: var(--slate-100); border-radius: 4px; height: 6px; overflow: hidden;">
+                  <div style="background: var(--teal-500); width: 65%; height: 100%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.725rem; color: var(--slate-400); margin-top: 0.25rem;">
+                  <span>Batch Run #481: 18 Samples in queue</span>
+                  <span>Est. Completion: 12 mins</span>
+                </div>
+              </div>
+
+              <!-- Analyzer 2 -->
+              <div class="lab-analyzer-card" style="border-left-color: #0284c7;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                  <strong style="font-size: 0.9rem; color: var(--slate-900);">Sysmex XN-1000 Automated Hematology</strong>
+                  <span class="status-pill in-progress">● Running Batch</span>
+                </div>
+                <div style="font-size: 0.775rem; color: var(--slate-600); margin-bottom: 0.4rem;">
+                  Assays: CBC, 5-Part Differential, Reticulocyte Count • Laser Flow Cytometry
+                </div>
+                <div style="background: var(--slate-100); border-radius: 4px; height: 6px; overflow: hidden;">
+                  <div style="background: #0284c7; width: 85%; height: 100%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.725rem; color: var(--slate-400); margin-top: 0.25rem;">
+                  <span>Active Rack: 12 Samples analyzed</span>
+                  <span>Est. Completion: 3 mins</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 7: Result Entry -->
+        <div class="admin-module-card" id="lab-result-entry">
+          <div class="admin-module-header">
+            <div>
+              <h2 class="admin-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                7. Diagnostic Result Entry &amp; Automated Flag Calculation
+              </h2>
+              <p class="admin-module-desc">Quantitative analyzer sync with dynamic high/low/panic flag computation upon numeric entry.</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-secondary btn-sm" onclick="syncWithAnalyzerInstrument()">⚡ Sync Analyzer Interface</button>
+              <button class="btn btn-primary btn-sm" onclick="saveResultEntries()">Save Diagnostic Batch</button>
+            </div>
+          </div>
+
+          <div style="overflow-x: auto;">
+            <table class="admin-table" id="resultEntryTable">
+              <thead>
+                <tr>
+                  <th>Analyte / Parameter</th>
+                  <th>Observed Value</th>
+                  <th>Units</th>
+                  <th>Biological Reference Range</th>
+                  <th>Flag Status</th>
+                  <th>Methodology / Analyzer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Hemoglobin (Hb)</strong></td>
+                  <td>
+                    <input type="number" step="0.1" class="form-control" style="width: 110px; padding: 0.35rem 0.5rem; font-weight: 700;" value="14.2" id="res_hb" oninput="evaluateLabFlags()">
+                  </td>
+                  <td>g/dL</td>
+                  <td>13.5 - 17.5</td>
+                  <td><span class="flag-pill normal" id="flag_hb">NORMAL</span></td>
+                  <td>Photometric Cyanmethemoglobin</td>
+                </tr>
+                <tr>
+                  <td><strong>White Blood Cells (WBC)</strong></td>
+                  <td>
+                    <input type="number" step="0.1" class="form-control" style="width: 110px; padding: 0.35rem 0.5rem; font-weight: 700;" value="12.8" id="res_wbc" oninput="evaluateLabFlags()">
+                  </td>
+                  <td>x10³/µL</td>
+                  <td>4.5 - 11.0</td>
+                  <td><span class="flag-pill high" id="flag_wbc">HIGH ▲</span></td>
+                  <td>Laser Flow Cytometry (Sysmex)</td>
+                </tr>
+                <tr>
+                  <td><strong>Serum Creatinine</strong></td>
+                  <td>
+                    <input type="number" step="0.1" class="form-control" style="width: 110px; padding: 0.35rem 0.5rem; font-weight: 700;" value="1.1" id="res_creat" oninput="evaluateLabFlags()">
+                  </td>
+                  <td>mg/dL</td>
+                  <td>0.7 - 1.3</td>
+                  <td><span class="flag-pill normal" id="flag_creat">NORMAL</span></td>
+                  <td>Enzymatic (Roche Cobas)</td>
+                </tr>
+                <tr style="background: #fff5f5;">
+                  <td><strong>Serum Potassium (K+)</strong></td>
+                  <td>
+                    <input type="number" step="0.1" class="form-control" style="width: 110px; padding: 0.35rem 0.5rem; font-weight: 700; border-color: #ef4444; color: #dc2626;" value="6.8" id="res_potassium" oninput="evaluateLabFlags()">
+                  </td>
+                  <td>mmol/L</td>
+                  <td>3.5 - 5.1</td>
+                  <td><span class="flag-pill critical" id="flag_potassium">CRITICAL ⚠️</span></td>
+                  <td>Ion Selective Electrode (ISE)</td>
+                </tr>
+                <tr>
+                  <td><strong>Fasting Blood Glucose</strong></td>
+                  <td>
+                    <input type="number" step="1" class="form-control" style="width: 110px; padding: 0.35rem 0.5rem; font-weight: 700;" value="118" id="res_fbg" oninput="evaluateLabFlags()">
+                  </td>
+                  <td>mg/dL</td>
+                  <td>70 - 99</td>
+                  <td><span class="flag-pill high" id="flag_fbg">HIGH ▲</span></td>
+                  <td>Hexokinase Spectrophotometry</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Module 8: Verification & Module 9: Reference Ranges (2-Column) -->
+        <div class="admin-two-col">
+          <!-- Module 8: Verification -->
+          <div class="admin-module-card" id="lab-verification">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  8. Two-Tier Verification &amp; Sign-off
+                </h2>
+                <p class="admin-module-desc">Dual technical technologist approval and senior consultant pathologist digital authorization.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+              <!-- Tier 1 -->
+              <div style="background: #f8fafc; border: 1px solid var(--admin-border); border-radius: 6px; padding: 0.85rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="font-size: 0.85rem; color: var(--slate-900);">Tier 1: Technologist Review (MLT)</strong>
+                  <span class="status-pill confirmed">✓ Verified</span>
+                </div>
+                <div style="font-size: 0.775rem; color: var(--slate-600); margin-top: 0.25rem;">
+                  Signed by: <strong>Kevin Shaw, MLS(ASCP)</strong> • Instrument delta check approved (Var &lt; 8%).
+                </div>
+              </div>
+
+              <!-- Tier 2 -->
+              <div style="background: #f0fdfa; border: 1px solid var(--teal-200); border-radius: 6px; padding: 0.85rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="font-size: 0.85rem; color: #0f766e;">Tier 2: Pathologist Medical Clearance</strong>
+                  <span class="status-pill in-progress" id="pathologistSignStatus">Pending Review</span>
+                </div>
+                <div style="font-size: 0.775rem; color: var(--slate-600); margin-top: 0.25rem;">
+                  Consultant: <strong>Dr. Aris Thorne, MD, FRCPath</strong> • Reg: #MED-PATH-88419
+                </div>
+                <div style="margin-top: 0.6rem;">
+                  <textarea class="form-control" style="font-size: 0.8rem; height: 50px;" id="pathologistNotes" placeholder="Pathologist clinical impression or microscopic correlation remarks...">Hyperkalemia noted (K+ 6.8). Critical value reported immediately to cardiology attending. Specimen inspected: No hemolysis present.</textarea>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-sm" onclick="signAndAuthorizeReport()" style="width: 100%;">
+                ✍️ Authorize &amp; Apply Cryptographic Digital Signature
+              </button>
+            </div>
+          </div>
+
+          <!-- Module 9: Reference Ranges -->
+          <div class="admin-module-card" id="lab-reference-ranges">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+                  9. Reference Ranges &amp; Cohort Limits
+                </h2>
+                <p class="admin-module-desc">Age, gender, and clinical demographic reference interval calibrations.</p>
+              </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table class="admin-table" style="font-size: 0.8rem;">
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Cohort</th>
+                    <th>Biological Normal</th>
+                    <th>Panic Low</th>
+                    <th>Panic High</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Potassium (K+)</td>
+                    <td>Adult</td>
+                    <td><strong>3.5 - 5.1</strong> mmol/L</td>
+                    <td><span style="color:#2563eb; font-weight:700;">&lt; 2.8</span></td>
+                    <td><span style="color:#dc2626; font-weight:700;">&gt; 6.0</span></td>
+                  </tr>
+                  <tr>
+                    <td>Hemoglobin (Hb)</td>
+                    <td>Adult Male</td>
+                    <td><strong>13.5 - 17.5</strong> g/dL</td>
+                    <td><span style="color:#2563eb; font-weight:700;">&lt; 7.0</span></td>
+                    <td><span style="color:#dc2626; font-weight:700;">&gt; 20.0</span></td>
+                  </tr>
+                  <tr>
+                    <td>Glucose (Fasting)</td>
+                    <td>All Adults</td>
+                    <td><strong>70 - 99</strong> mg/dL</td>
+                    <td><span style="color:#2563eb; font-weight:700;">&lt; 45</span></td>
+                    <td><span style="color:#dc2626; font-weight:700;">&gt; 400</span></td>
+                  </tr>
+                  <tr>
+                    <td>Platelets</td>
+                    <td>Adult</td>
+                    <td><strong>150 - 450</strong> x10³/µL</td>
+                    <td><span style="color:#2563eb; font-weight:700;">&lt; 30</span></td>
+                    <td><span style="color:#dc2626; font-weight:700;">&gt; 1000</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 10: Critical Results (Panic Values Alert Console) -->
+        <div class="admin-module-card" id="lab-critical-results" style="border-top: 3px solid #ef4444;">
+          <div class="admin-module-header">
+            <div>
+              <h2 class="admin-module-title" style="color: #dc2626;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                10. Critical Results Alert &amp; Readback Verification Log
+              </h2>
+              <p class="admin-module-desc">Immediate life-threatening panic threshold escalation with regulatory readback audit trail.</p>
+            </div>
+            <span class="flag-pill critical" style="padding: 0.35rem 0.75rem;">1 Active Panic Alert</span>
+          </div>
+
+          <!-- Panic Alert Box -->
+          <div class="lab-critical-banner">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 850; font-size: 1.05rem; color: #991b1b;">
+                <span>🚨 PANIC VALUE DETECTED:</span>
+                <span>Serum Potassium = 6.8 mmol/L (Critical High Threshold: &gt;6.0 mmol/L)</span>
+              </div>
+              <div style="font-size: 0.85rem; color: #7f1d1d; margin-top: 0.35rem;">
+                Patient: <strong>Robert Langdon</strong> (UHID-10824) • Location: <strong>IPD Bed 302 (ICU)</strong> • Attending: <strong>Dr. Sarah Jenkins (Cardiology)</strong>
+              </div>
+            </div>
+            <button class="btn btn-sm" style="background: #dc2626; color: #fff; border: none;" onclick="triggerEmergencySmsAlert()">
+              ⚡ Dispatch Emergency Pager &amp; SMS
+            </button>
+          </div>
+
+          <!-- Readback Verification Log Form -->
+          <div style="background: var(--slate-50); border: 1px solid var(--admin-border); border-radius: var(--radius-md); padding: 1.25rem;">
+            <div style="font-weight: 750; font-size: 0.875rem; color: var(--slate-800); margin-bottom: 0.75rem;">
+              CAP / Joint Commission Mandatory Readback Documentation:
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 0.75rem;">
+              <div>
+                <label class="form-label" style="font-size: 0.75rem;">Lab Caller (Technician)</label>
+                <input type="text" class="form-control" value="Kevin Shaw, MLS" style="font-size: 0.8rem;" readonly>
+              </div>
+              <div>
+                <label class="form-label" style="font-size: 0.75rem;">Receiver Name &amp; Title</label>
+                <input type="text" class="form-control" id="readbackReceiver" value="Nurse Rebecca Gomez, RN (ICU Charge)" style="font-size: 0.8rem;">
+              </div>
+              <div>
+                <label class="form-label" style="font-size: 0.75rem;">Verification Timestamp</label>
+                <input type="text" class="form-control" id="readbackTime" value="Today 08:35:14 AM" style="font-size: 0.8rem;">
+              </div>
+              <div>
+                <label class="form-label" style="font-size: 0.75rem;">Readback Completed?</label>
+                <select class="form-control" id="readbackConfirmedSelect" style="font-size: 0.8rem;">
+                  <option value="Yes">Yes (Verbal Readback Exact)</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="logReadbackAuditTrail()">
+              ✓ Log Formal Readback Verification to Central EHR
+            </button>
+          </div>
+        </div>
+
+        <!-- Module 11: Report Generation & Module 12: Lab Billing (2-Column) -->
+        <div class="admin-two-col">
+          <!-- Module 11: Report Generation -->
+          <div class="admin-module-card" id="lab-report-generation">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                  11. Report Generation &amp; Digital Dispatch
+                </h2>
+                <p class="admin-module-desc">Accredited diagnostic report preview, cryptographic QR seal, and multi-channel delivery.</p>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="printOfficialReport()">🖨️ Print Report</button>
+            </div>
+
+            <!-- Simulated Diagnostic Report Paper -->
+            <div class="lab-report-sheet" id="printableLabReport">
+              <div class="report-header-banner">
+                <div>
+                  <div style="font-size: 1.1rem; font-weight: 850; color: #0f766e;">HSM CENTRAL DIAGNOSTIC LABORATORIES</div>
+                  <div style="font-size: 0.75rem; color: var(--slate-500);">NABL ISO 15189:2022 &amp; CAP Accredited • Center Code: LAB-NYC-08</div>
+                </div>
+                <div style="text-align: right;">
+                  <span class="status-pill confirmed" style="font-size: 0.75rem;">AUTHENTIC REPORT</span>
+                  <div style="font-size: 0.725rem; color: var(--slate-400); margin-top: 0.2rem;">Rep ID: <strong>#REP-2026-98014</strong></div>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.8rem; margin-bottom: 1rem; background: var(--slate-50); padding: 0.75rem; border-radius: 6px;">
+                <div>Patient: <strong>Robert Langdon</strong> (Male, 54y)</div>
+                <div>UHID: <strong>10824</strong> • Bed: 302-ICU</div>
+                <div>Ref. Doctor: <strong>Dr. Sarah Jenkins, MD</strong></div>
+                <div>Collected: <strong>Today 08:15 AM</strong></div>
+              </div>
+
+              <div style="font-size: 0.8rem; margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--slate-200); padding-bottom: 0.35rem; font-weight: 750;">
+                  <span>Investigation Test</span>
+                  <span>Observed Result</span>
+                  <span>Reference Range</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed var(--slate-100);">
+                  <span>Serum Potassium</span>
+                  <span style="color: #dc2626; font-weight: 800;">6.8 mmol/L [CRITICAL]</span>
+                  <span>3.5 - 5.1</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed var(--slate-100);">
+                  <span>Serum Creatinine</span>
+                  <span style="font-weight: 700;">1.1 mg/dL</span>
+                  <span>0.7 - 1.3</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 0.35rem 0;">
+                  <span>Hemoglobin (Hb)</span>
+                  <span style="font-weight: 700;">14.2 g/dL</span>
+                  <span>13.5 - 17.5</span>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--slate-200); padding-top: 0.75rem;">
+                <div style="font-size: 0.725rem; color: var(--slate-400);">
+                  Verified by: Dr. Aris Thorne, MD<br>
+                  Hash: <code>e8b4...91fa (Signed)</code>
+                </div>
+                <!-- Verification QR Code representation -->
+                <div style="width: 48px; height: 48px; background: #0f172a; padding: 4px; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M3 3h7v7H3zm2 2v3h3V5zm7-2h7v7h-7zm2 2v3h3V5zM3 12h7v7H3zm2 2v3h3v-3zm9 0h2v2h-2zm3 0h2v2h-2zm-3 3h2v2h-2zm3 0h2v2h-2zm-6 2h2v2h-2zm5 0h2v2h-2z"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+              <button class="btn btn-secondary btn-sm" style="flex: 1;" onclick="dispatchReportToPatientEHR()">
+                📲 Send to Patient Portal
+              </button>
+              <button class="btn btn-secondary btn-sm" style="flex: 1;" onclick="downloadReportPdf()">
+                ⬇ Download PDF
+              </button>
+            </div>
+          </div>
+
+          <!-- Module 12: Lab Billing -->
+          <div class="admin-module-card" id="lab-billing">
+            <div class="admin-module-header">
+              <div>
+                <h2 class="admin-module-title">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/><line x1="12" y1="1" x2="12" y2="23"/></svg>
+                  12. Diagnostic Pathology Billing &amp; Invoicing
+                </h2>
+                <p class="admin-module-desc">Itemized CPT code billing, insurance claim adjudication, and IPD folio charging.</p>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="settleLabInvoice()">✓ Settle Invoice</button>
+            </div>
+
+            <!-- Itemized Invoice Card -->
+            <div style="background: var(--slate-50); border: 1px solid var(--admin-border); border-radius: 8px; padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 750; color: var(--slate-900);">Invoice #INV-LAB-2026-8801</div>
+                  <div style="font-size: 0.75rem; color: var(--slate-500);">Linked Order: ORD-9801 • Patient: Robert Langdon</div>
+                </div>
+                <span class="status-pill confirmed" id="labBillStatusPill">Folio Billed</span>
+              </div>
+
+              <div style="font-size: 0.8rem; margin-bottom: 0.75rem;">
+                <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed var(--slate-200);">
+                  <span>Serum Electrolytes Panel (CPT 80051)</span>
+                  <strong>$25.00</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed var(--slate-200);">
+                  <span>Renal Function Panel (CPT 80069)</span>
+                  <strong>$35.00</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed var(--slate-200);">
+                  <span>STAT Cardiac Troponin-I (CPT 84484)</span>
+                  <strong>$55.00</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px dashed var(--slate-200);">
+                  <span>Routine Phlebotomy &amp; Consumables (CPT 36415)</span>
+                  <strong>$5.00</strong>
+                </div>
+              </div>
+
+              <!-- Financial Totals -->
+              <div style="background: #ffffff; border: 1px solid var(--slate-200); border-radius: 6px; padding: 0.75rem; font-size: 0.85rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                  <span style="color: var(--slate-500);">Gross Billable:</span>
+                  <span>$120.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem; color: #059669;">
+                  <span>Primary Insurance (80% Covered):</span>
+                  <span>-$96.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-weight: 850; font-size: 1rem; color: var(--slate-900); border-top: 1px solid var(--slate-100); padding-top: 0.35rem; margin-top: 0.35rem;">
+                  <span>Patient Co-Pay Payable:</span>
+                  <span>$24.00</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+              <button class="btn btn-secondary btn-sm" style="flex: 1;" onclick="printLabTaxInvoice()">
+                🖨️ Print Itemized Tax Invoice
+              </button>
+              <button class="btn btn-secondary btn-sm" style="flex: 1;" onclick="showAdminFeedback('Insurance claim submitted to payer clearinghouse.')">
+                📄 Submit Insurance Claim
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             20. Discharge Planning, 21. Discharge Summary & 22. Final Billing
+             ==================================================================== -->
+        <div class="admin-module-card" id="discharge-plan-sec">
+          <div class="admin-module-header">
+            <div>
+              <h2 class="admin-module-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                20. Discharge Planning, 21. Discharge Summary & 22. Final Billing
+              </h2>
+              <p class="admin-module-desc">Multidisciplinary discharge sign-off, medical documentation summary, and final account settlement.</p>
+            </div>
+          </div>
+
+          <div class="admin-two-col" style="margin-bottom: 1.5rem;">
+            <!-- 20. Planning Checklist -->
+            <div>
+              <div class="info-field-label">20. Discharge Planning Readiness Checklist</div>
+              <div class="discharge-checklist">
+                <div class="discharge-step ready">✅ Physician Clinical Stability</div>
+                <div class="discharge-step ready">✅ Nursing Care Handover</div>
+                <div class="discharge-step ready">✅ Pharmacy Med Reconciliation</div>
+                <div class="discharge-step ready">✅ Follow-up Consult Booked</div>
+                <div class="discharge-step ready">✅ Diagnostic Lab Clearance</div>
+                <div class="discharge-step ready">✅ Home Transport Confirmed</div>
+              </div>
+            </div>
+
+            <!-- 21. Discharge Summary -->
+            <div id="discharge-sum-sec" style="border: 1px solid var(--admin-border); border-radius: 8px; padding: 1rem; background: var(--slate-50);">
+              <div class="info-field-label">21. Official Discharge Summary Generator</div>
+              <p style="font-size: 0.85rem; color: var(--slate-600); margin-bottom: 0.75rem;">
+                Formal clinical discharge summary with surgical notes, medication schedule, and doctor digital signature ready for patient handover.
+              </p>
+              <button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Discharge summary generated.');">
+                📄 Print Discharge Summary
+              </button>
+            </div>
+          </div>
+
+          <!-- 22. Final Billing Breakdown -->
+          <div id="final-billing-sec" style="border-top: 1.5px dashed var(--admin-border); padding-top: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <strong style="font-size: 1.05rem; color: var(--slate-900);">22. Final Inpatient Bill & Insurance Settlement (#INV-FINAL-89412)</strong>
+              <span class="status-pill confirmed">Cleared for Discharge</span>
+            </div>
+
+            <table class="portal-table">
+              <thead>
+                <tr>
+                  <th>Department / Service</th>
+                  <th>Quantity / Days</th>
+                  <th>Total Cost</th>
+                  <th>Insurance Covered</th>
+                  <th>Patient Copay</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Deluxe Surgical Suite Room Charge</td>
+                  <td>3 Days</td>
+                  <td>$1,800.00</td>
+                  <td>$1,620.00 (90%)</td>
+                  <td>$180.00</td>
+                </tr>
+                <tr>
+                  <td>Laparoscopic Surgical Procedure & OT Charges</td>
+                  <td>1 Procedure</td>
+                  <td>$2,450.00</td>
+                  <td>$2,205.00 (90%)</td>
+                  <td>$245.00</td>
+                </tr>
+                <tr>
+                  <td>Inpatient Pharmacy & Medications</td>
+                  <td>Scheduled eMAR</td>
+                  <td>$320.00</td>
+                  <td>$288.00</td>
+                  <td>$32.00</td>
+                </tr>
+                <tr>
+                  <td>Diagnostic Pathology & Lab Investigations</td>
+                  <td>Full Panels</td>
+                  <td>$280.00</td>
+                  <td>$252.00</td>
+                  <td>$28.00</td>
+                </tr>
+                <tr style="background: var(--slate-50); font-weight: 800;">
+                  <td colspan="2"><strong>Total Inpatient Account Aggregation</strong></td>
+                  <td><strong>$4,850.00</strong></td>
+                  <td style="color: #059669;"><strong>$4,365.00 (Insurance Settled)</strong></td>
+                  <td><strong style="color: #0284c7;">$485.00 (Paid in Full)</strong></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="margin-top: 1.25rem; display: flex; justify-content: flex-end; gap: 1rem;">
+              <button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Tax invoice downloaded.');">Download Tax Invoice</button>
+              <button class="btn btn-primary btn-sm" onclick="showAdminFeedback('Patient Eleanor Rigby discharged. Bed WD-401 queued for cleaning.');">
+                ✅ Complete Final Discharge & Free Bed
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Bed Transfer Modal for Admin -->
+  <div class="modal-backdrop" id="adminTransferModal" aria-hidden="true" role="dialog">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeAdminTransferModal()">&times;</button>
+      <div class="modal-header">
+        <h3 class="modal-title">Admin Inpatient Bed Transfer</h3>
+        <p class="modal-subtitle">Transfer patient between wards, step-down units, or recovery suites.</p>
+      </div>
+
+      <form onsubmit="submitAdminBedTransfer(event)">
+        <div class="form-group">
+          <label class="form-label">Current Bed & Patient</label>
+          <input type="text" id="adminTransferCurrentBed" class="form-control" readonly style="background: var(--slate-50); font-weight: 700;">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Transfer Destination Bed</label>
+          <select class="form-control" required>
+            <option value="">Select available destination bed...</option>
+            <option value="WD-403">WD-403 (Surgical Deluxe - Available)</option>
+            <option value="ICU-103">ICU-103 (Intensive Care - Available)</option>
+            <option value="GEN-204">GEN-204 (General Ward - Available)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Reason for Transfer</label>
+          <select class="form-control" required>
+            <option value="stepdown">Clinical Improvement / Step-down from Intensive Care</option>
+            <option value="isolation">Infection Control / Negative Pressure Isolation</option>
+            <option value="postop">Post-Operative Recovery Ward Transfer</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
+          Authorize & Execute Bed Transfer
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notification" id="adminActionToast" role="status" aria-live="polite">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="adminActionToastMsg">Admin action completed successfully.</span>
+  </div>
+
+  <script>
+    // Live Token Queue Caller
+    let adminToken = 104;
+    document.getElementById('adminCallTokenBtn').addEventListener('click', () => {
+      adminToken++;
+      document.getElementById('adminTokenDisplay').textContent = `#A-${adminToken}`;
+      showAdminFeedback(`📢 Token #A-${adminToken} called to Consultation Room 302.`);
+    });
+
+    // Bed Transfer Modal Handlers
+    function triggerAdminTransfer(bedId, patientName, doctor) {
+      document.getElementById('adminTransferCurrentBed').value = `${bedId} • ${patientName} (${doctor})`;
+      document.getElementById('adminTransferModal').classList.add('active');
+    }
+
+    function closeAdminTransferModal() {
+      document.getElementById('adminTransferModal').classList.remove('active');
+    }
+
+    function submitAdminBedTransfer(e) {
+      e.preventDefault();
+      closeAdminTransferModal();
+      showAdminFeedback('✅ Bed transfer executed successfully! Nurse station and housekeeping notified.');
+    }
+
+    function showAdminFeedback(msg) {
+      const toast = document.getElementById('adminActionToast');
+      document.getElementById('adminActionToastMsg').textContent = msg;
+      toast.classList.add('active');
+      setTimeout(() => toast.classList.remove('active'), 4000);
+    }
+
+    /* ========================================================================
+       Laboratory Information System (LIS) Interactive Handlers
+       ======================================================================== */
+    // 1. Filter Test Master
+    function filterLabTests() {
+      const query = (document.getElementById('labTestSearch').value || '').toLowerCase();
+      const rows = document.querySelectorAll('#labTestMasterTable tbody tr');
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(query) ? '' : 'none';
+      });
+    }
+
+    function addNewTestPrompt() {
+      const testName = prompt('Enter Test Name to register in Test Master:');
+      if (testName && testName.trim()) {
+        const tbody = document.querySelector('#labTestMasterTable tbody');
+        const tr = document.createElement('tr');
+        const code = 'TEST-' + Math.floor(100 + Math.random() * 900);
+        tr.innerHTML = `
+          <td><strong>${code}</strong></td>
+          <td>${testName}</td>
+          <td><span class="lab-dept-tag">Biochemistry</span></td>
+          <td><code>${Math.floor(1000 + Math.random() * 9000)}-${Math.floor(1 + Math.random() * 9)}</code></td>
+          <td>Serum • SST Gold Gel</td>
+          <td>60 mins</td>
+          <td>$45.00</td>
+          <td><span class="status-pill confirmed">Active</span></td>
+          <td><button class="btn btn-secondary btn-sm" onclick="showAdminFeedback('Editing ${code}')">Edit</button></td>
+        `;
+        tbody.appendChild(tr);
+        showAdminFeedback(`✅ '${testName}' (${code}) added to Test Master Catalog!`);
+      }
+    }
+
+    // 4. Phlebotomy & Specimen Collection
+    function loadOrderToPhlebotomy(ordId, name, uhid, test) {
+      document.getElementById('phlebOrderInput').value = `${ordId} • ${name} (${uhid}) [${test}]`;
+      const el = document.getElementById('lab-sample-collection');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      showAdminFeedback(`Loaded ${ordId} into Phlebotomy workstation.`);
+    }
+
+    function executePhlebotomyCollection(e) {
+      e.preventDefault();
+      const orderVal = document.getElementById('phlebOrderInput').value;
+      const phleb = document.getElementById('phlebStaffSelect').value;
+      const site = document.getElementById('phlebSiteSelect').value;
+      const newAccession = '*HSM-LAB-2026-' + Math.floor(10000 + Math.random() * 90000) + '*';
+      
+      document.getElementById('activeAccessionBarcode').textContent = newAccession;
+      showAdminFeedback(`🩸 Phlebotomy completed for ${orderVal}! Accession ${newAccession} generated.`);
+    }
+
+    // 6. Processing Batch Simulator
+    function simulateBatchRun() {
+      showAdminFeedback('🧪 Running Batch #482 on Roche Cobas & Sysmex XN... Calibrating optical sensors.');
+      setTimeout(() => {
+        showAdminFeedback('✅ Batch execution complete! 18 analyte results ready for technical verification.');
+      }, 1500);
+    }
+
+    // 7. Result Entry & Auto-Flag Calculation
+    function evaluateLabFlags() {
+      // Potassium
+      const kVal = parseFloat(document.getElementById('res_potassium').value);
+      const kPill = document.getElementById('flag_potassium');
+      if (!isNaN(kVal)) {
+        if (kVal > 6.0 || kVal < 2.8) {
+          kPill.className = 'flag-pill critical';
+          kPill.textContent = 'CRITICAL ⚠️';
+        } else if (kVal > 5.1) {
+          kPill.className = 'flag-pill high';
+          kPill.textContent = 'HIGH ▲';
+        } else if (kVal < 3.5) {
+          kPill.className = 'flag-pill low';
+          kPill.textContent = 'LOW ▼';
+        } else {
+          kPill.className = 'flag-pill normal';
+          kPill.textContent = 'NORMAL';
+        }
+      }
+
+      // Hemoglobin
+      const hbVal = parseFloat(document.getElementById('res_hb').value);
+      const hbPill = document.getElementById('flag_hb');
+      if (!isNaN(hbVal)) {
+        if (hbVal < 7.0 || hbVal > 20.0) {
+          hbPill.className = 'flag-pill critical';
+          hbPill.textContent = 'CRITICAL ⚠️';
+        } else if (hbVal < 13.5) {
+          hbPill.className = 'flag-pill low';
+          hbPill.textContent = 'LOW ▼';
+        } else if (hbVal > 17.5) {
+          hbPill.className = 'flag-pill high';
+          hbPill.textContent = 'HIGH ▲';
+        } else {
+          hbPill.className = 'flag-pill normal';
+          hbPill.textContent = 'NORMAL';
+        }
+      }
+
+      // WBC
+      const wbcVal = parseFloat(document.getElementById('res_wbc').value);
+      const wbcPill = document.getElementById('flag_wbc');
+      if (!isNaN(wbcVal)) {
+        if (wbcVal > 11.0) {
+          wbcPill.className = 'flag-pill high';
+          wbcPill.textContent = 'HIGH ▲';
+        } else if (wbcVal < 4.5) {
+          wbcPill.className = 'flag-pill low';
+          wbcPill.textContent = 'LOW ▼';
+        } else {
+          wbcPill.className = 'flag-pill normal';
+          wbcPill.textContent = 'NORMAL';
+        }
+      }
+
+      // Creatinine
+      const creatVal = parseFloat(document.getElementById('res_creat').value);
+      const creatPill = document.getElementById('flag_creat');
+      if (!isNaN(creatVal)) {
+        if (creatVal > 1.3) {
+          creatPill.className = 'flag-pill high';
+          creatPill.textContent = 'HIGH ▲';
+        } else if (creatVal < 0.7) {
+          creatPill.className = 'flag-pill low';
+          creatPill.textContent = 'LOW ▼';
+        } else {
+          creatPill.className = 'flag-pill normal';
+          creatPill.textContent = 'NORMAL';
+        }
+      }
+
+      // Fasting Blood Glucose
+      const fbgVal = parseFloat(document.getElementById('res_fbg').value);
+      const fbgPill = document.getElementById('flag_fbg');
+      if (!isNaN(fbgVal)) {
+        if (fbgVal > 99) {
+          fbgPill.className = 'flag-pill high';
+          fbgPill.textContent = 'HIGH ▲';
+        } else if (fbgVal < 70) {
+          fbgPill.className = 'flag-pill low';
+          fbgPill.textContent = 'LOW ▼';
+        } else {
+          fbgPill.className = 'flag-pill normal';
+          fbgPill.textContent = 'NORMAL';
+        }
+      }
+    }
+
+    function syncWithAnalyzerInstrument() {
+      document.getElementById('res_hb').value = (13.8 + Math.random() * 1.5).toFixed(1);
+      document.getElementById('res_wbc').value = (11.5 + Math.random() * 2.0).toFixed(1);
+      document.getElementById('res_creat').value = (1.0 + Math.random() * 0.3).toFixed(1);
+      evaluateLabFlags();
+      showAdminFeedback('⚡ Direct ASTM/HL7 sync complete: Pulled 5 raw telemetry values from Roche Cobas!');
+    }
+
+    function saveResultEntries() {
+      evaluateLabFlags();
+      showAdminFeedback('💾 Laboratory results saved and queued for Pathologist verification.');
+    }
+
+    // 8. Two-tier Verification
+    function signAndAuthorizeReport() {
+      const statusPill = document.getElementById('pathologistSignStatus');
+      statusPill.className = 'status-pill confirmed';
+      statusPill.textContent = '✓ Approved & Signed';
+      showAdminFeedback('✍️ Report signed cryptographically by Dr. Aris Thorne, MD! Diagnostic report released.');
+    }
+
+    // 10. Critical Panic Alert & Readback
+    function triggerEmergencySmsAlert() {
+      showAdminFeedback('🚨 Emergency SMS & Voicemail sent to Dr. Sarah Jenkins (Cardiology) for K+ 6.8 mmol/L.');
+    }
+
+    function logReadbackAuditTrail() {
+      const rec = document.getElementById('readbackReceiver').value;
+      const conf = document.getElementById('readbackConfirmedSelect').value;
+      showAdminFeedback(`✅ Verified: Emergency critical readback recorded by ${rec} (${conf}). Logged to Central EHR Audit.`);
+    }
+
+    // 11. Report Generation Actions
+    function printOfficialReport() {
+      window.print();
+    }
+
+    function dispatchReportToPatientEHR() {
+      showAdminFeedback('📲 Accredited PDF dispatched to Patient Portal (Eleanor Rigby / Robert Langdon) and Doctor Console.');
+    }
+
+    function downloadReportPdf() {
+      showAdminFeedback('⬇ Downloading accredited diagnostic report: REP-2026-98014.pdf');
+    }
+
+    // 12. Lab Billing
+    function settleLabInvoice() {
+      const pill = document.getElementById('labBillStatusPill');
+      pill.className = 'status-pill confirmed';
+      pill.textContent = 'Paid & Settled';
+      showAdminFeedback('✅ Lab Invoice #INV-LAB-2026-8801 settled successfully ($24.00 copay received).');
+    }
+
+    function printLabTaxInvoice() {
+      showAdminFeedback('🖨️ Printing Itemized Laboratory Tax Invoice #INV-LAB-2026-8801.');
+    }
+
+    // Real-Time Heart Rate Telemetry Simulation
+    const liveBpmAdminEl = document.getElementById('liveBpmDisplayAdmin');
+    if (liveBpmAdminEl) {
+      setInterval(() => {
+        const delta = Math.floor(Math.random() * 3) - 1; // -1, 0, +1
+        const current = parseInt(liveBpmAdminEl.textContent) || 74;
+        let next = current + delta;
+        if (next < 72) next = 72;
+        if (next > 76) next = 76;
+        liveBpmAdminEl.textContent = next;
+      }, 3500);
+    }
+
+    // ScrollSpy for Sidebar
+    const adminNavLinks = document.querySelectorAll('.admin-nav-item');
+    window.addEventListener('scroll', () => {
+      let scrollPos = window.scrollY + 140;
+      adminNavLinks.forEach(item => {
+        const targetId = item.getAttribute('href').substring(1);
+        const section = document.getElementById(targetId);
+        if (section) {
+          const top = section.offsetTop;
+          const height = section.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            adminNavLinks.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+          }
+        }
+      });
+    }, { passive: true });
+  </script>
+</body>
+</html>

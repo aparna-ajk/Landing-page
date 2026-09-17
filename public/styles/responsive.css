@@ -1,0 +1,264 @@
+/* ==========================================================================
+   HSM HEALTH-TECH SAAS COMMAND CENTER — RESPONSIVE STYLES
+   Breakpoints: 1200px, 1024px, 768px, 480px
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Desktop & Laptop (max-width: 1200px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .cockpit-kpi-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cockpit-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cockpit-floating-alerts-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tablet Landscape (max-width: 1024px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+
+  .hero-visual-wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .hero-floating-card {
+    display: none; /* Hide floating satellites on medium screens to keep layout clean */
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .stat-item:nth-child(2)::after {
+    display: none;
+  }
+
+  .ai-container-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .security-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .role-preview-card {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .devices-mockup-scene {
+    height: 420px;
+  }
+
+  .device-desktop {
+    width: 540px;
+    height: 330px;
+  }
+
+  .device-tablet {
+    width: 200px;
+    height: 270px;
+    left: 0;
+  }
+
+  .device-mobile {
+    width: 130px;
+    height: 250px;
+    right: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tablet Portrait & Small Screens (max-width: 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 70px;
+  }
+
+  .container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .section {
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+
+  /* Mobile Navigation Drawer */
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    background: rgba(5, 11, 20, 0.98);
+    backdrop-filter: var(--glass-blur-heavy);
+    -webkit-backdrop-filter: var(--glass-blur-heavy);
+    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 1.5rem;
+    gap: 1.25rem;
+    transform: translateY(-120%);
+    transition: transform var(--trans-smooth);
+    z-index: 999;
+  }
+
+  .nav-menu.active {
+    transform: translateY(0);
+  }
+
+  .nav-actions {
+    display: none; /* Handled in mobile menu */
+  }
+
+  .mobile-menu-actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .hero-title {
+    font-size: 2.4rem;
+  }
+
+  .hero-trust-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .console-kpi-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cockpit-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cockpit-floating-alerts-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .security-pillars-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .module-showcase-card {
+    flex: 0 0 300px;
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .footer-brand-col {
+    grid-column: span 2;
+  }
+
+  .cta-box-glow {
+    padding: 3rem 1.5rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Phones (max-width: 480px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .stat-item::after {
+    display: none !important;
+  }
+
+  .stats-card-container {
+    padding: 1.5rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .cockpit-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-brand-col {
+    grid-column: span 1;
+  }
+
+  .modal-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .devices-mockup-scene {
+    height: 300px;
+  }
+
+  .device-desktop {
+    width: 95%;
+    height: 240px;
+  }
+
+  .device-tablet,
+  .device-mobile {
+    display: none;
+  }
+}
